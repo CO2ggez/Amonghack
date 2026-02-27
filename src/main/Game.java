@@ -53,13 +53,43 @@
 
 package main;
 
-import core.TimeManager;
+import core.GamePanel;
+import javax.swing.*;
+import java.awt.*;
 
 public class Game {
     public Game() {
-        // ทดสอบระบบ Logic เวลาเพียวๆ
-        TimeManager tm = new TimeManager();
-        tm.start();
+        JFrame frame = new JFrame("Amonghack - Test Time UI");
+        frame.setUndecorated(true);
+        frame.setSize(800, 600); // ขนาดจอ 800x600
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // กูเอา frame.setLayout(null); ออกแล้วนะ ปล่อยให้มันขยายเต็มจออัตโนมัติ
+
+        // โค้ดสร้างปุ่มปิดของมึง
+        ImageIcon icon = new ImageIcon(getClass().getResource("close.png"));
+        Image scaled = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        JButton btn_close = new JButton(new ImageIcon(scaled));
+        btn_close.setBounds(740, 10, 50, 50); // วางไว้มุมขวาบน
+        btn_close.setBorderPainted(false);
+        btn_close.setContentAreaFilled(false);
+        btn_close.setFocusPainted(false);
+        btn_close.addActionListener(e -> System.exit(0));
+
+        // สร้างกระดานเกม
+        GamePanel gamePanel = new GamePanel();
+        gamePanel.setLayout(null); // ให้กระดานจัดวางปุ่มแบบกำหนดพิกัดได้
+
+        // **หัวใจหลัก:** เอาปุ่มกากบาทยัดลง GamePanel โดยตรงเลย!
+        gamePanel.add(btn_close);
+
+        // เอากระดานยัดลง Frame (กระดานจะขยายเต็มจอ 800x600 อัตโนมัติ)
+        frame.add(gamePanel);
+
+        // เริ่มเกม
+        gamePanel.startGameThread();
+
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public static void main(String[] args) {

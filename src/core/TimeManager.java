@@ -36,14 +36,14 @@ public class TimeManager implements Runnable {
     public void run() {
         while (running) {
             try {
-                Thread.sleep(10); //ค่าปกติ 2000 เทสเลยใช้ 10
+                Thread.sleep(2000); //ค่าปกติ 2000 เทสใช้ 10
 
                 if (!isPaused && !isDayEnded) {
                     inGameMinutes++;
                     System.out.println("เวลาในเกม: " + getTimeString());
                     if (inGameMinutes >= 360) {
                         isDayEnded = true;
-                        System.out.println("!!! จบวัน !!!");
+                        System.out.println("End of the day");
                     }
                 }
             } catch (InterruptedException e) {
