@@ -12,7 +12,7 @@ public class Game {
 
         frame_main = new JFrame("Amonghack");
         frame_main.setUndecorated(true);
-        frame_main.setSize(380, 120);
+        frame_main.setSize(1720, 800);
         frame_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame_main.setLayout(null);
 
@@ -24,8 +24,7 @@ public class Game {
         int newWidth = 50;
         int newHeight = (originalHeight * newWidth) / originalWidth;
 
-        Image scaledImage = originalIcon.getImage()
-                .getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        Image scaledImage = originalIcon.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
 
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
