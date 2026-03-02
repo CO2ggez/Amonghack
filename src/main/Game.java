@@ -1,9 +1,8 @@
 package main;
 
 import entity.Player;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class Game {
     Player player=new Player();
@@ -49,7 +48,7 @@ public class Game {
         frame_main.setVisible(true);
     }
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         new Game();
     }
 }
