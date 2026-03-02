@@ -1,10 +1,12 @@
 package main;
 
+import entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Game {
-
+    Player player=new Player();
     JFrame frame_main;
     JButton btn_close;
 
@@ -15,7 +17,8 @@ public class Game {
         frame_main.setSize(1720, 800);
         frame_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame_main.setLayout(null);
-
+        player.setSize(400,200);
+        player.setLocation(800,300);
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("close.png"));
 
         int originalWidth = originalIcon.getIconWidth();
@@ -38,14 +41,15 @@ public class Game {
         btn_close.setOpaque(false);
 
         btn_close.addActionListener(e -> System.exit(0));
-
+        player.setVisible(true);
         frame_main.add(btn_close);
+        frame_main.add(player);
 
         frame_main.setLocationRelativeTo(null);
         frame_main.setVisible(true);
     }
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         new Game();
     }
 }
