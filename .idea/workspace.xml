@@ -69,10 +69,12 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Windows10\Documents\NEW project\Amonghack\src\core" />
       <recent name="C:\Y1\1-2\OP LAB\Project_op\src\main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
