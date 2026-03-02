@@ -63,9 +63,7 @@ public class Game {
         frame.setUndecorated(true);
         frame.setSize(800, 600); // ขนาดจอ 800x600
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // กูเอา frame.setLayout(null); ออกแล้วนะ ปล่อยให้มันขยายเต็มจออัตโนมัติ
 
-        // โค้ดสร้างปุ่มปิดของมึง
         ImageIcon icon = new ImageIcon(getClass().getResource("close.png"));
         Image scaled = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         JButton btn_close = new JButton(new ImageIcon(scaled));
@@ -77,12 +75,10 @@ public class Game {
 
         // สร้างกระดานเกม
         GamePanel gamePanel = new GamePanel();
-        gamePanel.setLayout(null); // ให้กระดานจัดวางปุ่มแบบกำหนดพิกัดได้
+        gamePanel.setLayout(null);
 
-        // **หัวใจหลัก:** เอาปุ่มกากบาทยัดลง GamePanel โดยตรงเลย!
         gamePanel.add(btn_close);
 
-        // เอากระดานยัดลง Frame (กระดานจะขยายเต็มจอ 800x600 อัตโนมัติ)
         frame.add(gamePanel);
 
         // เริ่มเกม

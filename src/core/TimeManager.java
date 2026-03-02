@@ -57,4 +57,11 @@ public class TimeManager implements Runnable {
         int m = inGameMinutes % 60;
         return String.format("%02d:%02d AM", h, m);
     }
+
+    // คำสั่งใช้ตอนจะขึ้นวันใหม่
+    public void resetDay() {
+        this.inGameMinutes = 0; // กลับไปเริ่มที่ 00:00 AM
+        this.isDayEnded = false; // เอาป้ายจบวันออก
+        System.out.println("System: Time reset.");
+    }
 }
