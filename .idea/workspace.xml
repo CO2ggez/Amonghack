@@ -76,6 +76,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Y1\1-2\OP LAB\Project_op\src\main" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Windows10\Documents\NEW project\Amonghack\out\production\Project_op\core" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -114,7 +117,7 @@
       <updated>1771945757014</updated>
       <workItem from="1771945758935" duration="5874000" />
       <workItem from="1772355419976" duration="1265000" />
-      <workItem from="1772446350681" duration="7428000" />
+      <workItem from="1772446350681" duration="8037000" />
     </task>
     <servers />
   </component>
