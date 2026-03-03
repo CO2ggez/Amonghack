@@ -5,7 +5,7 @@ public class GameLoop implements Runnable{
     private boolean running = false; //เอาไว้คุมการทำงานloop
     private Thread gameThread;
 
-    private GamePanel panel;
+    private final GamePanel panel;
 
     private double frame_game = 0;
     private long lastTime;

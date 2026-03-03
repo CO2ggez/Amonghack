@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 public class Player extends JPanel{
     private int xDelta = 0;
-    private int yDelta = 0;
+    private int yDelta = 520;
 
 
     //Animation
@@ -81,7 +81,7 @@ public class Player extends JPanel{
         super.paintComponent(g);
         //g.fillRect(100+xDelta,100,200,50);
 
-        //ใส่ตัวละคร
+        //อันนี้ใส่พื้นลองใครบางคนทำgravityให้นะจ๊ะ
         Graphics2D g2 = (Graphics2D) g;
 
         int drawX = 100 + xDelta;

@@ -6,59 +6,52 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Game {
-    Player player = new Player();
-    JFrame frame_main;
-    JButton btn_close;
-    GamePanel panel;
+    private Player player = new Player();
+    private JFrame frame_main;
+    private JButton btn_close;
+    private GamePanel panel;
 
     public Game() {
-
-        panel = new GamePanel();
+        panel = new GamePanel(player);
+        panel.setLayout(null);
 
         frame_main = new JFrame("Amonghack");
         frame_main.setUndecorated(true);
         frame_main.setSize(1720, 800);
         frame_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame_main.setLayout(null);
-        player.setSize(400,200);
-        player.setLocation(800,300);
+        frame_main.setLayout(new BorderLayout());
+
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("close.png"));
-
-        int originalWidth = originalIcon.getIconWidth();
-        int originalHeight = originalIcon.getIconHeight();
-
-        int newWidth = 50;
-        int newHeight = (originalHeight * newWidth) / originalWidth;
-
-        Image scaledImage = originalIcon.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-
+        int width  = originalIcon.getIconWidth();
+        int h = originalIcon.getIconHeight();
+        int new_width  = 50;
+        int new_h = (h * new_width) / width;
+        Image scaledImage = originalIcon.getImage().getScaledInstance(new_width, new_h, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
         btn_close = new JButton(scaledIcon);
-
-        btn_close.setBounds(frame_main.getWidth() - newWidth - 10, 10, newWidth, newHeight);
-
+        btn_close.setBounds(1660, 10, new_width, new_h);
         btn_close.setBorderPainted(false);
         btn_close.setContentAreaFilled(false);
         btn_close.setFocusPainted(false);
         btn_close.setOpaque(false);
-
         btn_close.addActionListener(e -> System.exit(0));
-        player.setVisible(true);
-        frame_main.add(btn_close);
-        //frame_main.add(player);
 
-        frame_main.add(panel);
+        player.setBounds(0, 0, 1720, 800);
+        player.setOpaque(false);           //ลบ background ของ Player
 
+        panel.add(player);
+        panel.add(btn_close);
+        panel.setComponentZOrder(player, 0); //ดึง player ขึ้นมาข้างหน้าสุด
+
+        frame_main.add(panel, BorderLayout.CENTER);
         frame_main.setLocationRelativeTo(null);
         frame_main.setVisible(true);
 
-        frame_main.add(player);
-        frame_main.setVisible(true);
         player.requestFocusInWindow();
     }
 
     public static void main(String[] args) {
-        new Game();
+        SwingUtilities.invokeLater(Game::new);
     }
 }
