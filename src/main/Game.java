@@ -1,15 +1,19 @@
 package main;
 
+import core.GamePanel;
 import entity.Player;
 import java.awt.*;
 import javax.swing.*;
 
 public class Game {
-    Player player=new Player();
+    Player player = new Player();
     JFrame frame_main;
     JButton btn_close;
+    GamePanel panel;
 
     public Game() {
+
+        panel = new GamePanel();
 
         frame_main = new JFrame("Amonghack");
         frame_main.setUndecorated(true);
@@ -42,10 +46,16 @@ public class Game {
         btn_close.addActionListener(e -> System.exit(0));
         player.setVisible(true);
         frame_main.add(btn_close);
-        frame_main.add(player);
+        //frame_main.add(player);
+
+        frame_main.add(panel);
 
         frame_main.setLocationRelativeTo(null);
         frame_main.setVisible(true);
+
+        frame_main.add(player);
+        frame_main.setVisible(true);
+        player.requestFocusInWindow();
     }
 
     public static void main(String[] args) {
