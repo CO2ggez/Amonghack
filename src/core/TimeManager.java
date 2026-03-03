@@ -40,7 +40,7 @@ public class TimeManager implements Runnable {
 
                 if (!isPaused && !isDayEnded) {
                     inGameMinutes++;
-                    System.out.println("เวลาในเกม: " + getTimeString());
+                    System.out.println(getTimeString());
                     if (inGameMinutes >= 360) {
                         isDayEnded = true;
                         System.out.println("End of the day");
