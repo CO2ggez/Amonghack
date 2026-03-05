@@ -1,12 +1,15 @@
 package core;
 
 import entity.Player;
+import ui.TimeUI;
 import java.awt.*;
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     private final int FPS = 60;
+    private TimeManager timeManager;
+    private TimeUI timeUI;
 
     public void update() {
         // wait logic
@@ -17,10 +20,15 @@ public class GamePanel extends JPanel implements Runnable {
         setLayout(null);
         setBackground(Color.BLACK);
         setOpaque(true);
+        timeManager = new TimeManager();
+        timeUI = new TimeUI(timeManager);
         startGameThread();
     }
 
     private void startGameThread() {
+        if (timeManager != null) {
+            timeManager.start();
+        }
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -35,6 +43,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         g2.setColor(new Color(64, 64, 64, 150/*ปรับความโปร่งใส*/)); //พื้น
         g2.fillRect(0, 700, getWidth(), 100);
+
+        if (timeUI != null) {
+            timeUI.draw(g2);
+        }
     }
 
     @Override
