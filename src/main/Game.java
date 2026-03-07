@@ -2,6 +2,8 @@ package main;
 
 import core.GamePanel;
 import entity.Player;
+import ui.TextBook;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -10,6 +12,7 @@ public class Game {
     private JFrame frame_main;
     private JButton btn_close;
     private GamePanel panel;
+    private TextBook textbook;
 
     public Game() {
         panel = new GamePanel(player);
@@ -39,7 +42,9 @@ public class Game {
 
         player.setBounds(0, 0, 1720, 800);
         player.setOpaque(false);           //ลบ background ของ Player
+        //textbook
 
+        
         panel.add(player);
         panel.add(btn_close);
         panel.setComponentZOrder(player, 0); //ดึง player ขึ้นมาข้างหน้าสุด
