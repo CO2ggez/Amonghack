@@ -82,6 +82,7 @@ public class Player extends JPanel{
         //g.fillRect(100+xDelta,100,200,50);
 
         //อันนี้ใส่พื้นลองใครบางคนทำgravityให้นะจ๊ะ
+        //gravity ไม่น่าต้องใช้นะ-v
         Graphics2D g2 = (Graphics2D) g;
 
         int drawX = 100 + xDelta;
