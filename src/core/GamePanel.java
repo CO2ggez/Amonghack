@@ -5,23 +5,42 @@ import ui.TimeUI;
 import java.awt.*;
 import javax.swing.*;
 
+import map.MapLoader;
+import ui.Camera;
+
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     private final int FPS = 60;
     private TimeManager timeManager;
     private TimeUI timeUI;
 
+    private int screenWidth = 1920; //เพื่ออิงขนาดจอจากอันนี้ที่เดียว
+    private int screenHeight = 1080;
+
+    private Player player;
+
+    private MapLoader mapLoader;
+    private Camera camera;
+
     public void update() {
+        camera.update(player);
         // wait logic
     }
 
     public GamePanel(Player player) {
+        this.player = player;
+
         setPreferredSize(new Dimension(1720, 800));
         setLayout(null);
         setBackground(Color.BLACK);
         setOpaque(true);
         timeManager = new TimeManager();
         timeUI = new TimeUI(timeManager);
+
+        mapLoader = new MapLoader("mapServerRoom");
+        camera = new Camera(this,mapLoader);
+        player.setCamera(camera);
+
         startGameThread();
     }
 
@@ -38,11 +57,9 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
+        mapLoader.drawMap(g, camera);//วาดแมพ
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        g2.setColor(new Color(64, 64, 64, 150/*ปรับความโปร่งใส*/)); //พื้น
-        g2.fillRect(0, 700, getWidth(), 100);
 
         if (timeUI != null) {
             timeUI.draw(g2);
@@ -66,5 +83,13 @@ public class GamePanel extends JPanel implements Runnable {
                 delta--;
             }
         }
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
     }
 }

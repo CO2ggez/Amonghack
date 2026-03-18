@@ -1,13 +1,18 @@
 package entity;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
+import ui.Camera;
+
 public class Player extends JPanel{
     private int xDelta = 0;
-    private int yDelta = 520;
+    private int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
 
+    private Camera camera;
 
     //Animation
     private Image[] frames;
@@ -47,16 +52,25 @@ public class Player extends JPanel{
                     moving = true;
                 }
 
-
                 if (e.getKeyCode() == KeyEvent.VK_A) {
                     checkLeft = true;
                     xDelta -= speed;  // ซ้าย
+
+                    if (xDelta < 0) {//เพิ่มกรณีตอนชนขอบแมพ ไม่ให้ทะลุ
+                        xDelta = 0;
+                    }
+
                     moving = true;
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_D) {
                     checkLeft = false;
                     xDelta += speed;  // ขวา
+                    //เพิ่มกรณีตอนชนขอบแมพ ไม่ให้ทะลุ, 384คือความกว้างรูป player
+                    if (xDelta > camera.getWorldWidth() - 384) {
+                        xDelta = camera.getWorldWidth() - 384;
+                    }
+
                     moving = true;
                 }
 
@@ -77,6 +91,11 @@ public class Player extends JPanel{
             }
         });
     }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         //g.fillRect(100+xDelta,100,200,50);
@@ -85,10 +104,10 @@ public class Player extends JPanel{
         //gravity ไม่น่าต้องใช้นะ-v
         Graphics2D g2 = (Graphics2D) g;
 
-        int drawX = 100 + xDelta;
-        int drawY = 100 + yDelta;
-        int width = 80;
-        int height = 80;
+        int drawX = xDelta - camera.getX();
+        int drawY = yDelta;
+        int width = 384; //ขอลองเปลี่ยนเป็นขนาดภาพจริงที่เพื่อนวาด
+        int height = 384;
 
         //อันนี้เอาไว้กลับรูปเวลาเดินไปอีกด้าน
         if (checkLeft) {
@@ -110,5 +129,9 @@ public class Player extends JPanel{
                     this
             );
         }
+    }
+
+    public int getxDelta() {
+        return xDelta;
     }
 }
