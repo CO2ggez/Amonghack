@@ -63,14 +63,7 @@ public class Player extends JPanel{
                     moving = true;
                 }
 
-                /*
-                //ถ้ายุเฟรมสุดท้ายแล้วจะไปเริ่มใหม่
-                if (moving) {
-                    currentFrame++;
-                    if (currentFrame >= totalFrames){
-                        currentFrame =0;
-                    }
-                }*/
+
 
                 //DIALOGUE นะจ๊ะ
                 if (e.getKeyCode() == KeyEvent.VK_E) {
@@ -85,14 +78,6 @@ public class Player extends JPanel{
 
                     }
                 }
-                            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                if (panel.dialogBox.isVisible()) {
-                    boolean isFinished = panel.dialogBox.nextText();
-                    if (isFinished) {
-                        panel.timeManager.setPaused(false); // คุยจบแล้วให้เวลาเดินต่อ
-                    }
-                }
-            }
 
                 repaint();
                 //end
