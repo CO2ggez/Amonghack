@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 public class Player extends JPanel{
     private int xDelta = 0;
-    private int yDelta = 800;
+    private int yDelta = 330;
 
     private core.GamePanel panel;
 
@@ -21,21 +21,20 @@ public class Player extends JPanel{
     ImageIcon player = new ImageIcon("src/entity/player.png");
     //เราเพิ่มความเร็วในการเดิน
     private int speed = 5;
-
+    private int speedframe = 5;
+    private int aniTick = 0;
+    private int aniSpeed = 10;
 
 
     public Player(){
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         frames = new Image[totalFrames];
-        
+
         // โหลด animation ตัวละคร
         for (int i = 0; i < totalFrames; i++) {
             try {
-                // เคล็ดลับ: ใส่ / นำหน้าคำว่า entity เพื่อบอกให้ Java เริ่มหาไฟล์จากโฟลเดอร์ src เสมอ
-                frames[i] = new ImageIcon(
-                        getClass().getResource("/entity/player/" + (i + 1) + ".png")
-                ).getImage();
+                frames[i] = new ImageIcon(getClass().getResource("/entity/player/" + (i + 1) + ".png")).getImage();
             } catch (Exception e) {
                 // ถ้าหาไฟล์ไม่เจอ จะได้รู้ว่าพังที่ไฟล์ไหน
                 System.out.println("Error โหลดรูปไม่สำเร็จ: /entity/player/" + (i + 1) + ".png");
@@ -64,13 +63,14 @@ public class Player extends JPanel{
                     moving = true;
                 }
 
+                /*
                 //ถ้ายุเฟรมสุดท้ายแล้วจะไปเริ่มใหม่
                 if (moving) {
                     currentFrame++;
                     if (currentFrame >= totalFrames){
                         currentFrame =0;
                     }
-                }
+                }*/
 
                 //DIALOGUE นะจ๊ะ
                 if (e.getKeyCode() == KeyEvent.VK_E) {
@@ -108,20 +108,33 @@ public class Player extends JPanel{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
+        if (moving) {
+            aniTick++;
+            if (aniTick >= aniSpeed) {
+                aniTick = 0;
+                currentFrame++;
+                if (currentFrame >= totalFrames){
+                    currentFrame = 0;
+                }
+            }
+        } else {
+            currentFrame = 0; 
+        }
+
         int drawX = 100 + xDelta;
         int drawY = 100 + yDelta;
 
         Image currentImg = frames[currentFrame];
+        if (currentImg == null) return; 
+
         int originalWidth = currentImg.getWidth(null);
         int originalHeight = currentImg.getHeight(null);
 
-        // กำหนดตัวคูณขนาด (Scale) เพื่อให้ใหญ่ขึ้น
-        double scale = 0.5; 
+        double scale = 0.7; 
 
         int width = (int) (originalWidth * scale);
         int height = (int) (originalHeight * scale);
 
-        // อันนี้เอาไว้กลับรูปเวลาเดินไปอีกด้าน
         if (checkRight) {
             g2.drawImage(
                     currentImg,
@@ -141,5 +154,8 @@ public class Player extends JPanel{
                     this
             );
         }
+    }
+    public void setPanel(core.GamePanel panel) {
+        this.panel = panel;
     }
 }

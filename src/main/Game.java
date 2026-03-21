@@ -13,6 +13,10 @@ public class Game {
     private GamePanel panel;
     private TextBook textbook;
 
+    public void setPanel(core.GamePanel panel) {
+        this.panel = panel;
+    }
+
     public Game() {
         panel = new GamePanel(player);
         panel.setLayout(null);

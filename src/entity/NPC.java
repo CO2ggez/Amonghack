@@ -1,24 +1,60 @@
-package entity;
+package ui;
 
-public class NPC {
-    protected int x;
-    protected int y;
-    protected String[] dialogues;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
-    public NPC(int x, int y) {
-        this.x = x;
-        this.y = y;
+public class DialogBox {
+    private BufferedImage img;
+    private boolean isVisible = false;
+    private String[] currentTexts; //เก็บชุดบท dialog
+    private int textIndex = 0;
+
+    public DialogBox() {
+        try {
+            img = ImageIO.read(getClass().getResourceAsStream("DialogBox.png"));
+        } catch (IOException e) {
+            System.out.println("หาไฟล์รูป DialogBox ไม่เจอ");
+            e.printStackTrace();
+        }
     }
 
-    public String[] getDialogues() {
-        return dialogues;
+    public void startDialog(String[] texts) {
+        this.currentTexts = texts;
+        this.textIndex = 0; //เริ่มต้นที่ประโยคแรก
+        this.isVisible = true; //สั่งโชว์กล่อง
     }
 
-    public int getX() {
-        return x;
+    public boolean nextText() {
+        textIndex++; //ขยับไปบรรทัดต่อไป
+        // เช็คว่าประโยคหมดรึยัง
+        if (currentTexts == null || textIndex >= currentTexts.length) {
+            isVisible = false; //ปิดกล่อง
+            return true; //คุยจบ
+        }
+        return false; //ยังคุยไม่จบ
     }
 
-    public int getY() {
-        return y;
+    public void draw(Graphics2D g) {
+        if (!isVisible || currentTexts == null) return;
+        //ตั้งค่าตำแหน่งและขนาดกล่อง ให้อยู่ด้านล่างของจอ
+        int x = 200;
+        int y = 550;
+        int width = 1320;
+        int height = 200;
+
+        g.drawImage(img, x, y, width, height, null);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Tahoma", Font.BOLD, 36));
+        if (textIndex < currentTexts.length) {
+            g.drawString(currentTexts[textIndex], x + 80, y + 100);
+        }
+    }
+
+    public boolean isVisible() {
+        return isVisible;
     }
 }
