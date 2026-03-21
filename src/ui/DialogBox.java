@@ -13,12 +13,6 @@ public class DialogBox {
     private int textIndex = 0;
 
     public DialogBox() {
-        /*try {
-            img = ImageIO.read(getClass().getResourceAsStream("DialogBox.png"));
-        } catch (IOException e) {
-            System.out.println("หาไฟล์รูป DialogBox ไม่เจอ");
-            e*/
-
         try {
         // เราเปลี่ยนมาใช้pathแบบเต็มกันError
         img = ImageIO.read(getClass().getResourceAsStream("/ui/DialogBox.png"));

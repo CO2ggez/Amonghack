@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 public class Player extends JPanel{
     private int xDelta = 0;
-    private int yDelta = 520;
+    private int yDelta = 800;
 
     private core.GamePanel panel;
 
@@ -25,14 +25,21 @@ public class Player extends JPanel{
 
 
     public Player(){
-        //โหลดanimationขิงตัวละคร
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         frames = new Image[totalFrames];
+        
+        // โหลด animation ตัวละคร
         for (int i = 0; i < totalFrames; i++) {
-            frames[i] = new ImageIcon(
-                    getClass().getResource("player/" + (i + 1) + ".png")
-            ).getImage();
+            try {
+                // เคล็ดลับ: ใส่ / นำหน้าคำว่า entity เพื่อบอกให้ Java เริ่มหาไฟล์จากโฟลเดอร์ src เสมอ
+                frames[i] = new ImageIcon(
+                        getClass().getResource("/entity/player/" + (i + 1) + ".png")
+                ).getImage();
+            } catch (Exception e) {
+                // ถ้าหาไฟล์ไม่เจอ จะได้รู้ว่าพังที่ไฟล์ไหน
+                System.out.println("Error โหลดรูปไม่สำเร็จ: /entity/player/" + (i + 1) + ".png");
+            }
         }
 
         addKeyListener(new KeyListener() {
@@ -44,11 +51,6 @@ public class Player extends JPanel{
             @Override
             public void keyPressed(KeyEvent e) {
                 //อันนี้เราลองใส่ดูก่อนนะลบได้ เราแค่จะลองทำดูว่าcodeเรามันerrorรึป่าว
-                if (e.getKeyCode() == KeyEvent.VK_W) {
-                    yDelta -= speed;  // ขึ้น ทำกระโดดไม่เป็น
-                    moving = true;
-                }
-
 
                 if (e.getKeyCode() == KeyEvent.VK_D) {
                     checkRight = true;
