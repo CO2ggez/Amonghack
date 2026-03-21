@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 public class TextBook extends JPanel {
-    private BufferedImage img;
+    public BufferedImage image;
     public TextBook() throws IOException {
         setSize(100,100);
         addKeyListener(new InputManager());
@@ -18,8 +18,8 @@ public class TextBook extends JPanel {
 
     }
     public void importImg() throws IOException {
-        InputStream is = getClass().getResourceAsStream("Textbook.webp");
-        img = ImageIO.read(is);
+        InputStream is = getClass().getResourceAsStream("/Textbook.webp");
+        image = ImageIO.read(is);
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
