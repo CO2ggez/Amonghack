@@ -1,15 +1,17 @@
 package core;
 
 import entity.Player;
-import ui.TimeUI;
 import java.awt.*;
 import javax.swing.*;
+import ui.DialogBox;
+import ui.TimeUI;
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     private final int FPS = 60;
-    private TimeManager timeManager;
+    public TimeManager timeManager;
     private TimeUI timeUI;
+    public DialogBox dialogBox;
 
     public void update() {
         // wait logic
@@ -22,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
         setOpaque(true);
         timeManager = new TimeManager();
         timeUI = new TimeUI(timeManager);
+        dialogBox = new DialogBox();
         startGameThread();
     }
 
@@ -46,6 +49,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (timeUI != null) {
             timeUI.draw(g2);
+        }
+        if (dialogBox != null) {
+            dialogBox.draw(g2);
         }
     }
 

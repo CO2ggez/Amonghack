@@ -2,10 +2,9 @@ package main;
 
 import core.GamePanel;
 import entity.Player;
-import ui.TextBook;
-
 import java.awt.*;
 import javax.swing.*;
+import ui.TextBook;
 
 public class Game {
     private Player player = new Player();
@@ -41,7 +40,7 @@ public class Game {
         btn_close.addActionListener(e -> System.exit(0));
 
         player.setBounds(0, 0, 1720, 800);
-        player.setOpaque(false);           //ลบ background ของ Player
+        player.setOpaque(false); //ลบ background ของ Player
         //textbook
 
         

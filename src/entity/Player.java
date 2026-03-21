@@ -8,12 +8,14 @@ public class Player extends JPanel{
     private int xDelta = 0;
     private int yDelta = 520;
 
+    private core.GamePanel panel;
+
 
     //Animation
     private Image[] frames;
     private int currentFrame = 0;
-    private int totalFrames = 4;
-    private boolean checkLeft = false;
+    private int totalFrames = 8;
+    private boolean checkRight = false;
     boolean moving = false;
     //character
     ImageIcon player = new ImageIcon("src/entity/player.png");
@@ -48,15 +50,15 @@ public class Player extends JPanel{
                 }
 
 
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    checkLeft = true;
-                    xDelta -= speed;  // ซ้าย
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                    checkRight = true;
+                    xDelta += speed;  // ขวา
                     moving = true;
                 }
 
-                if (e.getKeyCode() == KeyEvent.VK_D) {
-                    checkLeft = false;
-                    xDelta += speed;  // ขวา
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    checkRight = false;
+                    xDelta -= speed;  // ซ้าย
                     moving = true;
                 }
 
@@ -67,6 +69,29 @@ public class Player extends JPanel{
                         currentFrame =0;
                     }
                 }
+
+                //DIALOGUE นะจ๊ะ
+                if (e.getKeyCode() == KeyEvent.VK_E) {
+                    if (!panel.dialogBox.isVisible()) {
+                        String[] bossText = {
+                            "สวัสดีพนักงานใหม่...",
+                            "งานของนายวันนี้คือไปซ่อมเซิร์ฟเวอร์ซะ",
+                            "ลาออกไปซะ"
+                        };
+                        panel.dialogBox.startDialog(bossText);
+                        panel.timeManager.setPaused(true);
+
+                    }
+                }
+                            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (panel.dialogBox.isVisible()) {
+                    boolean isFinished = panel.dialogBox.nextText();
+                    if (isFinished) {
+                        panel.timeManager.setPaused(false); // คุยจบแล้วให้เวลาเดินต่อ
+                    }
+                }
+            }
+
                 repaint();
                 //end
             }
@@ -79,21 +104,25 @@ public class Player extends JPanel{
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        //g.fillRect(100+xDelta,100,200,50);
-
-        //อันนี้ใส่พื้นลองใครบางคนทำgravityให้นะจ๊ะ
-        //gravity ไม่น่าต้องใช้นะ-v
         Graphics2D g2 = (Graphics2D) g;
 
         int drawX = 100 + xDelta;
         int drawY = 100 + yDelta;
-        int width = 80;
-        int height = 80;
 
-        //อันนี้เอาไว้กลับรูปเวลาเดินไปอีกด้าน
-        if (checkLeft) {
+        Image currentImg = frames[currentFrame];
+        int originalWidth = currentImg.getWidth(null);
+        int originalHeight = currentImg.getHeight(null);
+
+        // กำหนดตัวคูณขนาด (Scale) เพื่อให้ใหญ่ขึ้น
+        double scale = 0.5; 
+
+        int width = (int) (originalWidth * scale);
+        int height = (int) (originalHeight * scale);
+
+        // อันนี้เอาไว้กลับรูปเวลาเดินไปอีกด้าน
+        if (checkRight) {
             g2.drawImage(
-                    frames[currentFrame],
+                    currentImg,
                     drawX + width,
                     drawY,
                     -width,
@@ -102,7 +131,7 @@ public class Player extends JPanel{
             );
         } else {
             g2.drawImage(
-                    frames[currentFrame],
+                    currentImg,
                     drawX,
                     drawY,
                     width,
