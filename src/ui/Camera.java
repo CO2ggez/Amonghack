@@ -4,11 +4,11 @@ import map.MapLoader;
 import entity.Player;
 
 public class Camera {
-    private int x;
-    private int y;
-    private int screenWidth,screenHeight;
+    private final int x;
+    private final int y;
+    private final int screenWidth,screenHeight;
     private int worldWidth;
-    private MapLoader mapLoader;
+    private final MapLoader mapLoader;
 
     public Camera(GamePanel panel,MapLoader mapLoader) {
         x = 0;
@@ -29,8 +29,6 @@ public class Camera {
     }
 
     public int getX() { return x; }
-    public int getY() { return y; }
-    public int getScreenWidth() { return screenWidth; }
     public int getScreenHeight() { return screenHeight; }
 
     public int getWorldWidth() {

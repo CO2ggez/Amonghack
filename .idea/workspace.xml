@@ -4,23 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/AbstractState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/AbstractState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/DialogBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/DialogBox.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TimeUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/TimeUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
+    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="รวม main">
+      <change beforePath="$PROJECT_DIR$/src/ui/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Camera.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +150,15 @@
       <updated>1773869418329</updated>
       <workItem from="1773237325276" duration="4740000" />
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="รวม main">
+      <option name="closed" value="true" />
+      <created>1774180391276</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1774180391276</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,6 +177,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
-    <option name="LAST_COMMIT_MESSAGE" value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
+    <MESSAGE value="รวม main" />
+    <option name="LAST_COMMIT_MESSAGE" value="รวม main" />
   </component>
 </project>
