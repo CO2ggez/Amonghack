@@ -33,7 +33,7 @@ public class TimeManager implements Runnable {
     public void run() {
         while (running) {
             try {
-                Thread.sleep(5); //ค่าปกติ 2000 เทสใช้ 5 ให้ time มันวิ่งไว
+                Thread.sleep(2000); //ค่าปกติ 2000 เทสใช้ 5 ให้ time มันวิ่งไว
                 if (!isPaused && !isDayEnded) {
                     inGameMinutes++;
                     if (inGameMinutes >= 360) {
