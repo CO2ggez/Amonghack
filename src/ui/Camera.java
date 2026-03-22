@@ -4,15 +4,15 @@ import map.MapLoader;
 import entity.Player;
 
 public class Camera {
-    private final int x;
-    private final int y;
+    private int x;
+
     private final int screenWidth,screenHeight;
     private int worldWidth;
     private final MapLoader mapLoader;
 
     public Camera(GamePanel panel,MapLoader mapLoader) {
         x = 0;
-        y = 0;
+
         screenWidth = panel.getScreenWidth();
         screenHeight = panel.getScreenHeight();
         this.mapLoader = mapLoader;
