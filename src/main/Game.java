@@ -2,9 +2,10 @@ package main;
 
 import core.GamePanel;
 import entity.Player;
+import ui.TextBook;
+
 import java.awt.*;
 import javax.swing.*;
-import ui.TextBook;
 
 public class Game {
     private Player player = new Player();
@@ -12,6 +13,8 @@ public class Game {
     private JButton btn_close;
     private GamePanel panel;
     private TextBook textbook;
+    private int screenWidth;
+    private int screenHeight;
 
     public void setPanel(core.GamePanel panel) {
         this.panel = panel;
@@ -21,9 +24,13 @@ public class Game {
         panel = new GamePanel(player);
         panel.setLayout(null);
 
+        screenWidth = panel.getScreenWidth(); //ถ้าเป็นไปได้อยากให้เปลี่ยนขนาดจอที่เดียวละเปลี่ยนหมดเลยอ่ะ
+        screenHeight = panel.getScreenHeight();
+
         frame_main = new JFrame("Amonghack");
+
         frame_main.setUndecorated(true);
-        frame_main.setSize(1720, 800);
+        frame_main.setSize(screenWidth, screenHeight);
         frame_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame_main.setLayout(new BorderLayout());
 
@@ -36,15 +43,15 @@ public class Game {
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
         btn_close = new JButton(scaledIcon);
-        btn_close.setBounds(1660, 10, new_width, new_h);
+        btn_close.setBounds(1860, 10, new_width, new_h);
         btn_close.setBorderPainted(false);
         btn_close.setContentAreaFilled(false);
         btn_close.setFocusPainted(false);
         btn_close.setOpaque(false);
         btn_close.addActionListener(e -> System.exit(0));
 
-        player.setBounds(0, 0, 1720, 800);
-        player.setOpaque(false); //ลบ background ของ Player
+        player.setBounds(0, 0, screenWidth, screenHeight);
+        player.setOpaque(false);           //ลบ background ของ Player
         //textbook
 
         

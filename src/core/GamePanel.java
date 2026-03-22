@@ -1,10 +1,13 @@
 package core;
 
 import entity.Player;
+import ui.TimeUI;
 import java.awt.*;
 import javax.swing.*;
 import ui.DialogBox;
-import ui.TimeUI;
+
+import map.MapLoader;
+import ui.Camera;
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
@@ -15,7 +18,17 @@ public class GamePanel extends JPanel implements Runnable {
     private GameStateManager gsm;
     private boolean isTransitioning = false;
 
+    private int screenWidth = 1920; //เพื่ออิงขนาดจอจากอันนี้ที่เดียว
+    private int screenHeight = 1080;
+
+    private Player player;
+
+    private MapLoader mapLoader;
+    private Camera camera;
+
     public void update() {
+        camera.update(player);
+        // wait logic
         if (timeManager != null && timeManager.isDayEnded() && !isTransitioning) {
             isTransitioning = true;
             // สั่งหยุดเวลาไว้ก่อน
@@ -47,11 +60,18 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public GamePanel(Player player) {
+        this.player = player;
+
         setPreferredSize(new Dimension(1720, 800));
         setLayout(null);
         setBackground(Color.BLACK);
         setOpaque(true);
         timeManager = new TimeManager();
+
+        mapLoader = new MapLoader("mapServerRoom");
+        camera = new Camera(this,mapLoader);
+        player.setCamera(camera);
+
         gsm = new GameStateManager();
         timeUI = new TimeUI(timeManager, gsm);
         dialogBox = new DialogBox();
@@ -81,14 +101,14 @@ public class GamePanel extends JPanel implements Runnable {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+        mapLoader.drawMap(g, camera);//วาดแมพ
+
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (gsm != null) {
             gsm.draw(g2);
         }
-
-        g2.setColor(new Color(64, 64, 64, 150/*ปรับความโปร่งใส*/)); //พื้น
-        g2.fillRect(0, 700, getWidth(), 100);
 
         if (timeUI != null) {
             timeUI.draw(g2);
@@ -115,5 +135,13 @@ public class GamePanel extends JPanel implements Runnable {
                 delta--;
             }
         }
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
     }
 }
