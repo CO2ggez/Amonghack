@@ -21,8 +21,16 @@ public class MapLoader {
     }
 
     public void drawMap(Graphics g,Camera camera) {
-        g.drawImage(mapImage,-camera.getX(), (camera.getScreenHeight()-height)/2, null);
-    }
+
+        int drawX;
+        if (width < camera.getScreenWidth()) {
+            drawX = (camera.getScreenWidth() - width) / 2;
+        } else {
+            drawX = -camera.getX();
+        }
+
+        g.drawImage(mapImage, drawX, (camera.getScreenHeight()-height) / 2, null);
+    }//ให้เมพเลื่อนตามกล้อง
 
     public int getWidth() {
         return width;

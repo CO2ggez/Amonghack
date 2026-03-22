@@ -13,7 +13,8 @@ public class TextBook extends JPanel {
     public BufferedImage image;
     public TextBook() throws IOException {
         setSize(100,100);
-        addKeyListener(new InputManager());
+        //addKeyListener(new InputManager()); ขออณุญาติย่ายไปสร้างใน gamePanel แทน เนื่องจากระบบเปลี่ยนห้องจะใช้ด้วย
+
         importImg();
 
     }

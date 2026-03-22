@@ -5,7 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="รวม main">
+      <change afterPath="$PROJECT_DIR$/src/map/RoomManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/event/EventManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/event/EventManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/event/TriggerZone.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/event/TriggerZone.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/map/OfficeMap.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/map/mapImage/mapServerRoom.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/map/MapLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/MapLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/map/OfficeMap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/map/mapImage/mapServerRoom.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/TextBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TextBook.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,11 +85,11 @@
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;Shell Script.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Camera&amp;&amp;Map&amp;&amp;Cg&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Windows10/Documents/NEW project/Amonghack/src/core&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/AIMVIEW/Desktop/Project/AmongHack&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -142,6 +155,9 @@
       <workItem from="1772891558173" duration="2849000" />
       <workItem from="1773661942308" duration="2088000" />
       <workItem from="1773855379215" duration="13720000" />
+      <workItem from="1774181249957" duration="235000" />
+      <workItem from="1774182514141" duration="598000" />
+      <workItem from="1774207483447" duration="12343000" />
     </task>
     <task id="LOCAL-00001" summary="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้">
       <option name="closed" value="true" />
@@ -160,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774180391276</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="รวม main">
+      <option name="closed" value="true" />
+      <created>1774181043104</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1774181043104</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

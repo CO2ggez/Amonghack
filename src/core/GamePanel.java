@@ -1,6 +1,7 @@
 package core;
 
 import entity.Player;
+import map.RoomManager;
 import ui.TimeUI;
 import java.awt.*;
 import javax.swing.*;
@@ -23,10 +24,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Player player;
 
-    private MapLoader mapLoader;
+    private RoomManager roomManager;
     private Camera camera;
 
+    private InputManager inputManager;
+
     public void update() {
+        player.update();
         camera.update(player);
         // wait logic
         if (timeManager != null && timeManager.isDayEnded() && !isTransitioning) {
@@ -68,8 +72,14 @@ public class GamePanel extends JPanel implements Runnable {
         setOpaque(true);
         timeManager = new TimeManager();
 
-        mapLoader = new MapLoader("mapServerRoom");
-        camera = new Camera(this,mapLoader);
+        //สร้างแมพและกล้อง และ เชื่อมกล้องกับ player
+
+        roomManager = new RoomManager(player);
+        camera = new Camera(this,roomManager);
+
+        inputManager = new InputManager(camera,roomManager,this,player);
+        addKeyListener(inputManager);
+
         player.setCamera(camera);
 
         gsm = new GameStateManager();
@@ -77,6 +87,9 @@ public class GamePanel extends JPanel implements Runnable {
         dialogBox = new DialogBox();
 
         setFocusable(true);
+
+        /*
+        ย้ายไปไว้ใน input manager เป็น keylistener เพียงหนึ่งเดียว
         addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent e) {
@@ -86,7 +99,11 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         });
+
+         */
+
         startGameThread();
+        SwingUtilities.invokeLater(() -> { requestFocusInWindow();});
     }
 
     private void startGameThread() {
@@ -102,7 +119,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        mapLoader.drawMap(g, camera);//วาดแมพ
+        roomManager.drawMap(g,camera);//วาดแมพ
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -144,4 +161,6 @@ public class GamePanel extends JPanel implements Runnable {
     public int getScreenWidth() {
         return screenWidth;
     }
+
+    public boolean getIsTransitioning() {return isTransitioning;}
 }

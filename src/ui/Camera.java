@@ -1,35 +1,40 @@
 package ui;
 import core.GamePanel;
-import map.MapLoader;
 import entity.Player;
+import map.RoomManager;
 
 public class Camera {
     private int x;
 
     private final int screenWidth,screenHeight;
     private int worldWidth;
-    private final MapLoader mapLoader;
+    private final RoomManager roomManager;
 
-    public Camera(GamePanel panel,MapLoader mapLoader) {
+    public Camera(GamePanel panel,RoomManager roomManager) {
         x = 0;
 
         screenWidth = panel.getScreenWidth();
         screenHeight = panel.getScreenHeight();
-        this.mapLoader = mapLoader;
+        this.roomManager = roomManager;
 
     }
 
     public void update(Player player) {
+
         int targetX = player.getxDelta()  - (screenWidth/2 - 132/2);
 
-        worldWidth = mapLoader.getWidth();
+        worldWidth = roomManager.getWidth();
 
-        x = Math.max(0, Math.min(targetX, worldWidth - screenWidth));
+        x = Math.max(0, Math.min(targetX, worldWidth - screenWidth));//ให้กล้องไม่เลยขอบแมพ
 
     }
 
-    public int getX() { return x; }
+    public int getX() { return x; }//ส่งให้แมพขยับตามกล้องอีกที
     public int getScreenHeight() { return screenHeight; }
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
 
     public int getWorldWidth() {
         return worldWidth;
