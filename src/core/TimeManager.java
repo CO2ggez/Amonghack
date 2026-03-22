@@ -13,7 +13,6 @@ public class TimeManager implements Runnable {
             running = true;
             timeThread = new Thread(this, "GameTimeThread");
             timeThread.start();
-            System.out.println("Start");
         }
     }
 
@@ -24,8 +23,6 @@ public class TimeManager implements Runnable {
     //คำสั่งเอาไว้หยุดเวลาชั่วคราว เอาไว้หยุดเวลาตอนคุย ทำรอ dialog
     public void setPaused(boolean p) {
         isPaused = p;
-        if(p) System.out.println("เวลาหยุดเดิน");
-        else System.out.println("เวลาเดินต่อ");
     }
 
     public boolean isDayEnded() {
@@ -36,13 +33,11 @@ public class TimeManager implements Runnable {
     public void run() {
         while (running) {
             try {
-                Thread.sleep(2000); //ค่าปกติ 2000 เทสใช้ 10 ให้มัน time มันวิ่งไว
+                Thread.sleep(2000); //ค่าปกติ 2000 เทสใช้ 5 ให้ time มันวิ่งไว
                 if (!isPaused && !isDayEnded) {
                     inGameMinutes++;
-                    System.out.println(getTimeString());
                     if (inGameMinutes >= 360) {
                         isDayEnded = true;
-                        System.out.println("End of the day");
                     }
                 }
             } catch (InterruptedException e) {
@@ -61,6 +56,5 @@ public class TimeManager implements Runnable {
     public void resetDay() {
         this.inGameMinutes = 0; // กลับไปเริ่มที่ 00:00 AM
         this.isDayEnded = false; // เอาป้ายจบวันออก
-        System.out.println("Time reset.");
     }
 }

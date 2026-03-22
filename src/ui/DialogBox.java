@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class DialogBox {
@@ -15,8 +14,9 @@ public class DialogBox {
 
     public DialogBox() {
         try {
-            img = ImageIO.read(getClass().getResourceAsStream("DialogBox.png"));
-        } catch (IOException e) {
+        // เราเปลี่ยนมาใช้pathแบบเต็มกันError
+        img = ImageIO.read(getClass().getResourceAsStream("/ui/DialogBox.png"));
+        } catch (Exception e) {
             System.out.println("หาไฟล์รูป DialogBox ไม่เจอ");
             e.printStackTrace();
         }
@@ -57,4 +57,6 @@ public class DialogBox {
     public boolean isVisible() {
         return isVisible;
     }
+    // ในไฟล์ DialogBox.java
+
 }

@@ -12,30 +12,38 @@ public class Player extends JPanel{
     private int xDelta = 0;
     private int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
 
+    private core.GamePanel panel;
+
     private Camera camera;
 
     //Animation
     private Image[] frames;
     private int currentFrame = 0;
-    private int totalFrames = 4;
-    private boolean checkLeft = false;
+    private int totalFrames = 8;
+    private boolean checkRight = false;
     boolean moving = false;
     //character
     ImageIcon player = new ImageIcon("src/entity/player.png");
     //เราเพิ่มความเร็วในการเดิน
     private int speed = 5;
-
+    private int speedframe = 5;
+    private int aniTick = 0;
+    private int aniSpeed = 10;
 
 
     public Player(){
-        //โหลดanimationขิงตัวละคร
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         frames = new Image[totalFrames];
+
+        // โหลด animation ตัวละคร
         for (int i = 0; i < totalFrames; i++) {
-            frames[i] = new ImageIcon(
-                    getClass().getResource("player/" + (i + 1) + ".png")
-            ).getImage();
+            try {
+                frames[i] = new ImageIcon(getClass().getResource("/entity/player/" + (i + 1) + ".png")).getImage();
+            } catch (Exception e) {
+                // ถ้าหาไฟล์ไม่เจอ จะได้รู้ว่าพังที่ไฟล์ไหน
+                System.out.println("Error โหลดรูปไม่สำเร็จ: /entity/player/" + (i + 1) + ".png");
+            }
         }
 
         addKeyListener(new KeyListener() {
@@ -47,13 +55,22 @@ public class Player extends JPanel{
             @Override
             public void keyPressed(KeyEvent e) {
                 //อันนี้เราลองใส่ดูก่อนนะลบได้ เราแค่จะลองทำดูว่าcodeเรามันerrorรึป่าว
-                if (e.getKeyCode() == KeyEvent.VK_W) {
-                    yDelta -= speed;  // ขึ้น ทำกระโดดไม่เป็น
+
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                    checkRight = true;
+                    xDelta += speed;  // ขวา
+
+                    //เพิ่มกรณีตอนชนขอบแมพ ไม่ให้ทะลุ, 384คือความกว้างรูป player
+                    if (xDelta > camera.getWorldWidth() - 384) {
+                        xDelta = camera.getWorldWidth() - 384;
+                    }
+
                     moving = true;
                 }
 
+
                 if (e.getKeyCode() == KeyEvent.VK_A) {
-                    checkLeft = true;
+                    checkRight = false;
                     xDelta -= speed;  // ซ้าย
 
                     if (xDelta < 0) {//เพิ่มกรณีตอนชนขอบแมพ ไม่ให้ทะลุ
@@ -64,7 +81,7 @@ public class Player extends JPanel{
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_D) {
-                    checkLeft = false;
+                    checkRight = false;
                     xDelta += speed;  // ขวา
                     //เพิ่มกรณีตอนชนขอบแมพ ไม่ให้ทะลุ, 384คือความกว้างรูป player
                     if (xDelta > camera.getWorldWidth() - 384) {
@@ -79,8 +96,22 @@ public class Player extends JPanel{
                     currentFrame++;
                     if (currentFrame >= totalFrames){
                         currentFrame =0;
+
+
+                //DIALOGUE นะจ๊ะ
+                if (e.getKeyCode() == KeyEvent.VK_E) {
+                    if (!panel.dialogBox.isVisible()) {
+                        String[] bossText = {
+                            "สวัสดีพนักงานใหม่...",
+                            "งานของนายวันนี้คือไปซ่อมเซิร์ฟเวอร์ซะ",
+                            "ลาออกไปซะ"
+                        };
+                        panel.dialogBox.startDialog(bossText);
+                        panel.timeManager.setPaused(true);
+
                     }
                 }
+
                 repaint();
                 //end
             }
@@ -108,11 +139,36 @@ public class Player extends JPanel{
         int drawY = yDelta;
         int width = 384; //ขอลองเปลี่ยนเป็นขนาดภาพจริงที่เพื่อนวาด
         int height = 384;
+        if (moving) {
+            aniTick++;
+            if (aniTick >= aniSpeed) {
+                aniTick = 0;
+                currentFrame++;
+                if (currentFrame >= totalFrames){
+                    currentFrame = 0;
+                }
+            }
+        } else {
+            currentFrame = 0;
+        }
 
-        //อันนี้เอาไว้กลับรูปเวลาเดินไปอีกด้าน
-        if (checkLeft) {
+        int drawX = xDelta - camera.getX();
+        int drawY = yDelta;
+
+        Image currentImg = frames[currentFrame];
+        if (currentImg == null) return;
+
+        int originalWidth = currentImg.getWidth(null);
+        int originalHeight = currentImg.getHeight(null);
+
+        double scale = 0.7;
+
+        int width = (int) (originalWidth * scale);
+        int height = (int) (originalHeight * scale);
+
+        if (checkRight) {
             g2.drawImage(
-                    frames[currentFrame],
+                    currentImg,
                     drawX + width,
                     drawY,
                     -width,
@@ -121,7 +177,7 @@ public class Player extends JPanel{
             );
         } else {
             g2.drawImage(
-                    frames[currentFrame],
+                    currentImg,
                     drawX,
                     drawY,
                     width,
@@ -133,5 +189,8 @@ public class Player extends JPanel{
 
     public int getxDelta() {
         return xDelta;
+    }
+    public void setPanel(core.GamePanel panel) {
+        this.panel = panel;
     }
 }

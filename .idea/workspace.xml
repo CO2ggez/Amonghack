@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/TextBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TextBook.java" afterDir="false" />
+    </list>
+    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/ui/Camera.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/ui/CgLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -148,6 +152,7 @@
       <workItem from="1772891558173" duration="2849000" />
       <workItem from="1773661942308" duration="2088000" />
       <workItem from="1773855379215" duration="13266000" />
+      <workItem from="1773237325276" duration="4740000" />
     </task>
     <servers />
   </component>

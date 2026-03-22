@@ -2,8 +2,6 @@ package main;
 
 import core.GamePanel;
 import entity.Player;
-import map.MapLoader;
-import ui.Camera;
 import ui.TextBook;
 
 import java.awt.*;
@@ -17,6 +15,10 @@ public class Game {
     private TextBook textbook;
     private int screenWidth;
     private int screenHeight;
+
+    public void setPanel(core.GamePanel panel) {
+        this.panel = panel;
+    }
 
     public Game() {
         panel = new GamePanel(player);
