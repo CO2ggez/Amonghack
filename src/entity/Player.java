@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import ui.Camera;
 
-public class Player extends JPanel{
+public class Player extends JPanel {
     private int xDelta = 0;
     private int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
 
@@ -20,18 +20,18 @@ public class Player extends JPanel{
     private Image[] frames;
     private int currentFrame = 0;
     private int totalFrames = 8;
-    private boolean checkRight = false;
+    private boolean checkRight = true;
     boolean moving = false;
     //character
     ImageIcon player = new ImageIcon("src/entity/player.png");
     //เราเพิ่มความเร็วในการเดิน
-    private int speed = 5;
+    private int speed = 7;
     private int speedframe = 5;
     private int aniTick = 0;
     private int aniSpeed = 10;
 
 
-    public Player(){
+    public Player() {
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         frames = new Image[totalFrames];
@@ -60,14 +60,12 @@ public class Player extends JPanel{
                     checkRight = true;
                     xDelta += speed;  // ขวา
 
-                    //เพิ่มกรณีตอนชนขอบแมพ ไม่ให้ทะลุ, 384คือความกว้างรูป player
-                    if (xDelta > camera.getWorldWidth() - 384) {
-                        xDelta = camera.getWorldWidth() - 384;
+                    if (xDelta > camera.getWorldWidth() - 132) { //กับขอบขวา ไม่ให้เดินออก
+                        xDelta = camera.getWorldWidth() - 132;
                     }
 
                     moving = true;
                 }
-
 
                 if (e.getKeyCode() == KeyEvent.VK_A) {
                     checkRight = false;
@@ -80,31 +78,14 @@ public class Player extends JPanel{
                     moving = true;
                 }
 
-                if (e.getKeyCode() == KeyEvent.VK_D) {
-                    checkRight = false;
-                    xDelta += speed;  // ขวา
-                    //เพิ่มกรณีตอนชนขอบแมพ ไม่ให้ทะลุ, 384คือความกว้างรูป player
-                    if (xDelta > camera.getWorldWidth() - 384) {
-                        xDelta = camera.getWorldWidth() - 384;
-                    }
-
-                    moving = true;
-                }
-
-                //ถ้ายุเฟรมสุดท้ายแล้วจะไปเริ่มใหม่
-                if (moving) {
-                    currentFrame++;
-                    if (currentFrame >= totalFrames){
-                        currentFrame =0;
-
 
                 //DIALOGUE นะจ๊ะ
                 if (e.getKeyCode() == KeyEvent.VK_E) {
                     if (!panel.dialogBox.isVisible()) {
                         String[] bossText = {
-                            "สวัสดีพนักงานใหม่...",
-                            "งานของนายวันนี้คือไปซ่อมเซิร์ฟเวอร์ซะ",
-                            "ลาออกไปซะ"
+                                "สวัสดีพนักงานใหม่...",
+                                "งานของนายวันนี้คือไปซ่อมเซิร์ฟเวอร์ซะ",
+                                "ลาออกไปซะ"
                         };
                         panel.dialogBox.startDialog(bossText);
                         panel.timeManager.setPaused(true);
@@ -127,7 +108,7 @@ public class Player extends JPanel{
         this.camera = camera;
     }
 
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         //g.fillRect(100+xDelta,100,200,50);
 
@@ -135,16 +116,12 @@ public class Player extends JPanel{
         //gravity ไม่น่าต้องใช้นะ-v
         Graphics2D g2 = (Graphics2D) g;
 
-        int drawX = xDelta - camera.getX();
-        int drawY = yDelta;
-        int width = 384; //ขอลองเปลี่ยนเป็นขนาดภาพจริงที่เพื่อนวาด
-        int height = 384;
         if (moving) {
             aniTick++;
             if (aniTick >= aniSpeed) {
                 aniTick = 0;
                 currentFrame++;
-                if (currentFrame >= totalFrames){
+                if (currentFrame >= totalFrames) {
                     currentFrame = 0;
                 }
             }
@@ -161,7 +138,7 @@ public class Player extends JPanel{
         int originalWidth = currentImg.getWidth(null);
         int originalHeight = currentImg.getHeight(null);
 
-        double scale = 0.7;
+        double scale = 1; //ขออณุญาติเปลี่ยนเปนขนาดที่ art ต้องการ
 
         int width = (int) (originalWidth * scale);
         int height = (int) (originalHeight * scale);
@@ -190,6 +167,7 @@ public class Player extends JPanel{
     public int getxDelta() {
         return xDelta;
     }
+
     public void setPanel(core.GamePanel panel) {
         this.panel = panel;
     }

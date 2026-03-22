@@ -67,7 +67,6 @@ public class GamePanel extends JPanel implements Runnable {
         setBackground(Color.BLACK);
         setOpaque(true);
         timeManager = new TimeManager();
-        timeUI = new TimeUI(timeManager);
 
         mapLoader = new MapLoader("mapServerRoom");
         camera = new Camera(this,mapLoader);
@@ -110,9 +109,6 @@ public class GamePanel extends JPanel implements Runnable {
         if (gsm != null) {
             gsm.draw(g2);
         }
-
-        g2.setColor(new Color(64, 64, 64, 150/*ปรับความโปร่งใส*/)); //พื้น
-        g2.fillRect(0, 700, getWidth(), 100);
 
         if (timeUI != null) {
             timeUI.draw(g2);

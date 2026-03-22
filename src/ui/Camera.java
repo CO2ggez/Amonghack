@@ -20,7 +20,7 @@ public class Camera {
     }
 
     public void update(Player player) {
-        int targetX = player.getxDelta()  - (screenWidth/2 - 384/2);
+        int targetX = player.getxDelta()  - (screenWidth/2 - 132/2);
 
         worldWidth = mapLoader.getWidth();
 

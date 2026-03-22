@@ -6,26 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/TextBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TextBook.java" afterDir="false" />
-    </list>
-    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ui/Camera.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/CgLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/NPC.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/NPC.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/map/MapLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/map/MapLoader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/map/OfficeMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/map/OfficeMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/AbstractState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/AbstractState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/DialogBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/DialogBox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TimeUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/TimeUI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/map/MapLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/MapLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/map/OfficeMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/OfficeMap.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +35,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -48,12 +48,15 @@
     &quot;assignee&quot;: &quot;Kmitl68070131&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/CO2ggez/Amonghack.git",
-    "accountId": "98ee0296-8efd-4151-a441-2b6501c9f7a4"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/CO2ggez/Amonghack.git&quot;,
+    &quot;accountId&quot;: &quot;98ee0296-8efd-4151-a441-2b6501c9f7a4&quot;
   }
-}]]></component>
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/entity/Player.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -84,7 +87,7 @@
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;Shell Script.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Camera&amp;&amp;Map&amp;&amp;Cg&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -151,9 +154,18 @@
       <workItem from="1772446350681" duration="8037000" />
       <workItem from="1772891558173" duration="2849000" />
       <workItem from="1773661942308" duration="2088000" />
-      <workItem from="1773855379215" duration="13266000" />
+      <workItem from="1773855379215" duration="13720000" />
+    </task>
+    <task id="LOCAL-00001" summary="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้">
+      <option name="closed" value="true" />
+      <created>1773869418329</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1773869418329</updated>
       <workItem from="1773237325276" duration="4740000" />
     </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,5 +181,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
+    <option name="LAST_COMMIT_MESSAGE" value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
   </component>
 </project>
