@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -40,17 +41,27 @@ public class DialogBox {
 
     public void draw(Graphics2D g) {
         if (!isVisible || currentTexts == null) return;
-        //ตั้งค่าตำแหน่งและขนาดกล่อง ให้อยู่ด้านล่างของจอ
-        int x = 200;
-        int y = 550;
-        int width = 1320;
-        int height = 200;
 
-        g.drawImage(img, x, y, width, height, null);
+        // 👉 ใช้ขนาดจริงของรูป
+        int x = (1920 - img.getWidth()) / 2;
+        int y = 1080 - img.getHeight() - 50;
+
+        // วาดกล่อง
+        g.drawImage(img, x, y, null);
+
+        // ตั้งค่าฟอนต์
         g.setColor(Color.WHITE);
         g.setFont(new Font("Tahoma", Font.BOLD, 36));
+
         if (textIndex < currentTexts.length) {
-            g.drawString(currentTexts[textIndex], x + 80, y + 100);
+
+            // 👉 คำนวณตำแหน่งข้อความให้ "อยู่ในกล่องจริง"
+            FontMetrics fm = g.getFontMetrics();
+            //ตำแหน่งของข้อความ dialog
+            int textX = x + 420;                  // ขยับซ้าย-ขวา
+            int textY = y + img.getHeight() - 190; // ขึ้น-ลง
+
+            g.drawString(currentTexts[textIndex], textX, textY);
         }
     }
 

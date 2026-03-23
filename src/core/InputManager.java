@@ -1,13 +1,12 @@
 package core;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
+import entity.Player;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import ui.Camera;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import map.RoomManager;
-import entity.Player;
+import ui.Camera;
 
 public class InputManager implements KeyListener {
     private Camera camera;
@@ -16,8 +15,10 @@ public class InputManager implements KeyListener {
     private Player player;
 
     public void interact() {
-        gamePanel.dialogBox.nextText();
+        if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {
+            gamePanel.dialogBox.nextText();
     }
+}
 
     public InputManager(Camera camera, RoomManager roomManager,GamePanel panel,Player player) {
 

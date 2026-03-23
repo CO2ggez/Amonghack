@@ -4,6 +4,7 @@ import core.GamePanel;
 import entity.Player;
 import java.awt.*;
 import javax.swing.*;
+import ui.DialogBox;
 import ui.TextBook;
 
 public class Game {
@@ -14,10 +15,13 @@ public class Game {
     private TextBook textbook;
     private int screenWidth;
     private int screenHeight;
+    private  DialogBox dialogBox = new DialogBox();
 
     public void setPanel(core.GamePanel panel) {
         this.panel = panel;
     }
+
+
 
     public Game() {
         panel = new GamePanel(player);
@@ -55,7 +59,8 @@ public class Game {
         //textbook
         panel.add(player);
         panel.add(btn_close);
-        panel.setComponentZOrder(player, 0); //ดึง player ขึ้นมาข้างหน้าสุด
+        //panel.setComponentZOrder(player, 0); //ดึง player ขึ้นมาข้างหน้าสุด
+        //panel.setDialogBox(dialogBox);
 
         frame_main.add(panel, BorderLayout.CENTER);
         frame_main.setLocationRelativeTo(null);
@@ -63,6 +68,8 @@ public class Game {
 
         player.requestFocusInWindow();
     }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Game::new);

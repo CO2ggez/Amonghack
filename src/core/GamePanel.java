@@ -1,14 +1,12 @@
 package core;
 
 import entity.Player;
-import map.RoomManager;
-import ui.TimeUI;
 import java.awt.*;
 import javax.swing.*;
-import ui.DialogBox;
-
-import map.MapLoader;
+import map.RoomManager;
 import ui.Camera;
+import ui.DialogBox;
+import ui.TimeUI;
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
@@ -88,19 +86,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         setFocusable(true);
 
-        /*
-        ย้ายไปไว้ใน input manager เป็น keylistener เพียงหนึ่งเดียว
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyPressed(java.awt.event.KeyEvent e) {
-                // แค่เช็คว่าติดสถานะจอดำอยู่มั้ย ถ้าใช่ กดปุ่มไหนก็ทำงานเลย
-                if (isTransitioning) {
-                    startNextDay();
-                }
-            }
-        });
-
-         */
 
         startGameThread();
         SwingUtilities.invokeLater(() -> { requestFocusInWindow();});
@@ -163,4 +148,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public boolean getIsTransitioning() {return isTransitioning;}
+
+    public void setDialogBox(DialogBox dialogBox) {
+        this.dialogBox = dialogBox;
+    }
 }
