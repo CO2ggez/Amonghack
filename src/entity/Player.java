@@ -4,11 +4,10 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import ui.Camera;
-import ui.StoryDialog;
 
 public class Player extends JPanel {
     public int xDelta = 0;
-    private int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
+    public int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
 
   public core.GamePanel panel;
 
@@ -146,5 +145,49 @@ public class Player extends JPanel {
 
     public void setPanel(core.GamePanel panel) {
         this.panel = panel;
+    }
+
+    public void draw(Graphics2D g2) {
+
+        //เพิ่มกรณีที่ map เล็กกว่าขนาดจอ ให้วาด player ให้อยุ่ใน map
+        int offsetX = 0;
+
+        if (camera.getWorldWidth() < camera.getScreenWidth()) {
+            offsetX = (camera.getScreenWidth() - camera.getWorldWidth()) / 2;
+        }
+
+        int drawX = xDelta - camera.getX() + offsetX;
+        int drawY = yDelta;
+
+        Image currentImg = frames[currentFrame];
+        if (currentImg == null) return;
+
+        int originalWidth = currentImg.getWidth(null);
+        int originalHeight = currentImg.getHeight(null);
+
+        double scale = 1;
+
+        int width = (int) (originalWidth * scale);
+        int height = (int) (originalHeight * scale);
+
+        if (checkRight) {
+            g2.drawImage(
+                    currentImg,
+                    drawX + width,
+                    drawY,
+                    -width,
+                    height,
+                    null
+            );
+        } else {
+            g2.drawImage(
+                    currentImg,
+                    drawX,
+                    drawY,
+                    width,
+                    height,
+                    null
+            );
+        }
     }
 }

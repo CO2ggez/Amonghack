@@ -30,7 +30,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.update();
         camera.update(player);
-        // wait logic
         if (timeManager != null && timeManager.isDayEnded() && !isTransitioning) {
             isTransitioning = true;
             // สั่งหยุดเวลาไว้ก่อน
@@ -115,6 +114,9 @@ public class GamePanel extends JPanel implements Runnable {
         if (timeUI != null) {
             timeUI.draw(g2);
         }
+
+        player.draw(g2);
+
         if (dialogBox != null) {
             dialogBox.draw(g2);
         }
