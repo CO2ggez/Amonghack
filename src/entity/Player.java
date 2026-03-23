@@ -1,18 +1,16 @@
 package entity;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
 import ui.Camera;
+import ui.StoryDialog;
 
 public class Player extends JPanel {
     public int xDelta = 0;
     private int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
 
-    public core.GamePanel panel;
+  public core.GamePanel panel;
 
     private Camera camera;
 
@@ -20,7 +18,7 @@ public class Player extends JPanel {
     private Image[] frames;
     private int currentFrame = 0;
     private int totalFrames = 8;
-    public boolean checkRight = true;
+    public boolean checkRight = false;
     public boolean moving = false;
     //character
     ImageIcon player = new ImageIcon("src/entity/player.png");
@@ -50,66 +48,7 @@ public class Player extends JPanel {
         }
 
         //  เอมย้ายไปไว้ใน input manager ที่เดียว เพราะว่าตอนเอมทำแล้วมันไม่โฟกัสตัว inputmanager มาโฟกัสตัวนี้แทน เลยรวมอันนี้เข้าไปใน input manager ด้วยเลยละกันนะ
-        /*
-        addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
 
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                //อันนี้เราลองใส่ดูก่อนนะลบได้ เราแค่จะลองทำดูว่าcodeเรามันerrorรึป่าว
-
-                if (e.getKeyCode() == KeyEvent.VK_D) {
-                    checkRight = true;
-                    rightPressed = true; //เปลี่ยนไปเพิ่ม xDelta ใน update ที่จะเรียกใช้ตลอดแทน
-
-                    moving = true;
-                }
-
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    checkRight = false;
-                    leftPressed = true;
-
-                    moving = true;
-                }
-
-
-                //DIALOGUE นะจ๊ะ
-                if (e.getKeyCode() == KeyEvent.VK_E) {
-                    if (!panel.dialogBox.isVisible()) {
-                        String[] bossText = {
-                                "สวัสดีพนักงานใหม่...",
-                                "งานของนายวันนี้คือไปซ่อมเซิร์ฟเวอร์ซะ",
-                                "ลาออกไปซะ"
-                        };
-                        panel.dialogBox.startDialog(bossText);
-                        panel.timeManager.setPaused(true);
-
-                    }
-                }
-
-                repaint();
-                //end
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-                if (e.getKeyCode() == KeyEvent.VK_D) {
-                    rightPressed = false;
-                }
-
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    leftPressed = false;
-                }
-
-                moving = leftPressed || rightPressed; //เปลี่ยนค่าทุกตัวแปลให้รุ้ว่าไม่ได้ขยับ
-
-            }
-        });
-        */
     }
 
     //อัพเดทตำแหน่งในนี้แทน เรียก player.update(); ใน gamePanel ที่ method update
@@ -142,10 +81,7 @@ public class Player extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //g.fillRect(100+xDelta,100,200,50);
 
-        //อันนี้ใส่พื้นลองใครบางคนทำgravityให้นะจ๊ะ
-        //gravity ไม่น่าต้องใช้นะ-v
         Graphics2D g2 = (Graphics2D) g;
 
         if (moving) {

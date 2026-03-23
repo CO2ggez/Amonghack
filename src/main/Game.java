@@ -2,10 +2,9 @@ package main;
 
 import core.GamePanel;
 import entity.Player;
-import ui.TextBook;
-
 import java.awt.*;
 import javax.swing.*;
+import ui.TextBook;
 
 public class Game {
     private Player player = new Player();
@@ -23,6 +22,7 @@ public class Game {
     public Game() {
         panel = new GamePanel(player);
         panel.setLayout(null);
+        player.setPanel(panel);
 
         screenWidth = panel.getScreenWidth(); //ถ้าเป็นไปได้อยากให้เปลี่ยนขนาดจอที่เดียวละเปลี่ยนหมดเลยอ่ะ
         screenHeight = panel.getScreenHeight();
@@ -51,10 +51,8 @@ public class Game {
         btn_close.addActionListener(e -> System.exit(0));
 
         player.setBounds(0, 0, screenWidth, screenHeight);
-        player.setOpaque(false);           //ลบ background ของ Player
+        player.setOpaque(false); //ลบ background ของ Player
         //textbook
-
-        
         panel.add(player);
         panel.add(btn_close);
         panel.setComponentZOrder(player, 0); //ดึง player ขึ้นมาข้างหน้าสุด

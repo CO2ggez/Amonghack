@@ -1,9 +1,10 @@
 package core;
 
-import ui.TextBook;
-
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import ui.Camera;
 import map.RoomManager;
 import entity.Player;
@@ -14,12 +15,24 @@ public class InputManager implements KeyListener {
     private GamePanel gamePanel;
     private Player player;
 
+    public void interact() {
+        gamePanel.dialogBox.nextText();
+    }
+
     public InputManager(Camera camera, RoomManager roomManager,GamePanel panel,Player player) {
 
         this.gamePanel = panel;
         this.camera = camera;
         this.roomManager = roomManager;
         this.player = player;
+
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("คลิกหน้าจอ!");
+                interact();
+            }
+        });
     }
 
     @Override
@@ -29,6 +42,7 @@ public class InputManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
         //ระบบการกด F เปลี่ยนห้องเมื่ออยู่ขอบแมพ ไม่ซ้ายก้ขวา
         if(e.getKeyCode() == KeyEvent.VK_F){
 
@@ -47,7 +61,6 @@ public class InputManager implements KeyListener {
         }
         //จบโค้ดที่ย้ายมาจาก GamePanel------------------------
 
-
         //ย้ายมาจาก class Player ----------------------------
         if (e.getKeyCode() == KeyEvent.VK_D) {
             player.checkRight = true;
@@ -63,20 +76,20 @@ public class InputManager implements KeyListener {
             player.moving = true;
         }
 
-
         //DIALOGUE นะจ๊ะ
+        // อันนี้แค่ลองใส่ไปก่อนนะเดะมาแก้้ ขอไปไล่ดูก่อนว่าอะไรยังไง
         if (e.getKeyCode() == KeyEvent.VK_E) {
-            if (!player.panel.dialogBox.isVisible()) {
-                String[] bossText = {
-                        "สวัสดีพนักงานใหม่...",
-                        "งานของนายวันนี้คือไปซ่อมเซิร์ฟเวอร์ซะ",
-                        "ลาออกไปซะ"
-                };
-                player.panel.dialogBox.startDialog(bossText);
-                player.panel.timeManager.setPaused(true);
-
+            if (gamePanel != null && gamePanel.dialogBox != null && !gamePanel.dialogBox.isVisible()) {
+                gamePanel.dialogBox.startDialog(ui.StoryDialog.INTERVIEW);
             }
         }
+
+        //กดSpacebarอ่านต่อ
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            interact();
+
+        }
+
         //จบโค้ดที่มาจาก Player----------------------------
     }
 
@@ -95,5 +108,15 @@ public class InputManager implements KeyListener {
         player.moving = player.leftPressed || player.rightPressed; //เปลี่ยนค่าทุกตัวแปลให้รุ้ว่าไม่ได้ขยับ
         //จบโค้ดจาก Player------------------------------
 
+    }
+
+    public MouseAdapter getMouseListener() {
+    return new MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            System.out.println("คลิกหน้าจอ!");//อันนี้เราใส่ไว้เช็คว่ามันกดได้จริงหรือป่าว ไว้มาลบทีหลัง
+            interact();
+        }
+    };
     }
 }
