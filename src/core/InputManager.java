@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import map.RoomManager;
 import ui.Camera;
+import event.EventManager;
 
 public class InputManager implements KeyListener {
     private Camera camera;
@@ -32,9 +33,59 @@ public class InputManager implements KeyListener {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("คลิกหน้าจอ!");
                 interact();
+
+                // --- เพิ่มระบบคลิก Event ---
+                // 1. รับค่าเมาส์บนจอภาพ
+                int mouseX = e.getX();
+                int mouseY = e.getY();
+
+                EventManager em = gamePanel.getEventManager();
+
+                System.out.println("เมาส์คลิกที่พิกัดจอ -> X: " + mouseX + " | Y: " + mouseY);
+
+                // 2. เช็คว่า "หน้าต่างลิฟต์เปิดอยู่ไหม?"
+                if (em != null && em.isShowImage() && em.getActiveZoneName().equals("Elevator_Panel")) {
+
+                    // --- สมมติพิกัดปุ่มบนหน้าจอ (คุณต้องปรับตัวเลขให้ตรงกับรูปปุ่มในเกมของคุณ) ---
+
+                    // เช็คปุ่ม "ไปชั้น 2" (สมมติปุ่มอยู่ช่วง X: 800-900, Y: 300-350)
+                    if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 139 && mouseY <= 359) {
+                        System.out.println("ลิฟต์: ไปชั้น 2");
+                        // เปลี่ยนไปแมพชั้น 2, โผล่ที่ห้อง lift2, วางตัวละครที่ X=500
+                        roomManager.changeFloor(roomManager.mapDataFloor2, "lift2", 500);
+                        em.closeEvent(); // ปิดหน้าต่างลิฟต์
+                        return; // จบการทำงานของคลิกนี้
+                    }
+                    // เช็คปุ่ม "ไปชั้น 1" (สมมติปุ่มอยู่ช่วง X: 800-900, Y: 400-450)
+                    else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 433 && mouseY <= 662) {
+                        System.out.println("ลิฟต์: ไปชั้น 1");
+                        roomManager.changeFloor(roomManager.mapDataFloor1, "lift1", 500);
+                        em.closeEvent();
+                        return;
+                    }
+                    // เช็คปุ่ม "ไปชั้น G" (สมมติปุ่มอยู่ช่วง X: 800-900, Y: 500-550)
+                    else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 748 && mouseY <= 954) {
+                        System.out.println("ลิฟต์: ไปชั้น G");
+                        roomManager.changeFloor(roomManager.mapDataFloorG, "liftG", 500);
+                        em.closeEvent();
+                        return;
+                    }
+
+                    // (ทางเลือกเสริม) ถ้าคลิกที่ว่างอื่นๆ นอกปุ่ม ให้ปิดหน้าต่างลิฟต์ทิ้ง
+                    em.closeEvent();
+                    return;
+                }
+
+                // 3. ถ้าไม่มี UI หน้าต่างใดๆ เปิดอยู่ ค่อยเช็คการคลิกในฉากเกม (World Coordinates)
+                int worldX = mouseX + camera.getX();
+                if (em != null) {
+                    em.checkClick(worldX, mouseY);
+                }
             }
         });
     }
+
+
 
     @Override
     public void keyTyped(KeyEvent e) {
