@@ -48,4 +48,10 @@ public class EventManager {
     public String getActiveZoneName() {
         return activeZoneName;
     }
+
+    // เพิ่มเมธอดนี้ไว้ด้านล่างสุดในคลาส EventManager
+    public void closeEvent() {
+        this.showImage = false;
+        this.activeZoneName = "";
+    }
 }

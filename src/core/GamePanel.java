@@ -7,6 +7,11 @@ import map.RoomManager;
 import ui.Camera;
 import ui.DialogBox;
 import ui.TimeUI;
+import java.awt.image.BufferedImage;
+import event.EventManager; // นำเข้า Event
+import event.EventSetup;   // นำเข้า Event
+import util.AssetLoader;   // นำเข้า AssetLoader
+
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
@@ -26,6 +31,11 @@ public class GamePanel extends JPanel implements Runnable {
     private Camera camera;
 
     private InputManager inputManager;
+
+    private EventManager eventManager;
+    private EventSetup eventSetup;
+    private BufferedImage elevatorUI; // ตัวแปรรูปหน้าต่างลิฟต์
+
 
     public void update() {
         player.update();
@@ -74,6 +84,14 @@ public class GamePanel extends JPanel implements Runnable {
         roomManager = new RoomManager(player);
         camera = new Camera(this,roomManager);
 
+        eventManager = new EventManager();
+        eventSetup = new EventSetup(eventManager);
+        eventSetup.loadZones(); // โหลดจุดคลิกต่างๆ
+
+        // --- โหลดรูปภาพ UI ---
+        // **สำคัญ: คุณต้องมีไฟล์รูปภาพลิฟต์ (เช่น elevator_ui.png) ไปใส่ไว้ในโฟลเดอร์ที่ระบุ**
+        elevatorUI = AssetLoader.loadImage("/util/asst/ElevatorButton21G.png");
+
         inputManager = new InputManager(camera,roomManager,this,player);
         addKeyListener(inputManager);
 
@@ -88,6 +106,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         startGameThread();
         SwingUtilities.invokeLater(() -> { requestFocusInWindow();});
+    }
+
+    public EventManager getEventManager() {
+        return eventManager;
     }
 
     private void startGameThread() {
@@ -116,6 +138,18 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         player.draw(g2);
+
+        if (eventManager != null && eventManager.isShowImage()) {
+            String activeEvent = eventManager.getActiveZoneName();
+
+            // เช็คว่ากดโดนลิฟต์ และ โหลดรูปมาสำเร็จ
+            if (activeEvent.equals("Elevator_Panel") && elevatorUI != null) {
+                // คำนวณให้รูปภาพวาดอยู่ตรงกลางหน้าจอพอดี
+                int uiX = (getWidth() - elevatorUI.getWidth()) / 2;
+                int uiY = (getHeight() - elevatorUI.getHeight()) / 2;
+                g2.drawImage(elevatorUI, uiX, uiY, null);
+            }
+        }
 
         if (dialogBox != null) {
             dialogBox.draw(g2);
