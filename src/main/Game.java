@@ -65,7 +65,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        //แก้จอยืด
+        //แก้จอยืดครับ
         System.setProperty("sun.java2d.uiScale", "1.0");
         SwingUtilities.invokeLater(Game::new);
     }
