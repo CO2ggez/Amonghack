@@ -23,9 +23,8 @@ public class Player extends JPanel {
     ImageIcon player = new ImageIcon("src/entity/player.png");
     //เราเพิ่มความเร็วในการเดิน
     private int speed = 7;
-    private int speedframe = 5;
     private int aniTick = 0;
-    private int aniSpeed = 10;
+    private int aniSpeed = 8;
 
     //แก้ไม่ให้ตัวละครเดินแล้วดูกระตุก ตอนอยู่กลางกล้อง
     public boolean leftPressed = false;
