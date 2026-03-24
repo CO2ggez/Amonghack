@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="รวม main">
-      <change afterPath="$PROJECT_DIR$/src/map/RoomManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/event/EventManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/event/EventManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/event/TriggerZone.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/event/TriggerZone.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/map/OfficeMap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/map/mapImage/mapServerRoom.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/map/MapLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/MapLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/map/OfficeMap.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/map/mapImage/mapServerRoom.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/TextBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TextBook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,8 +125,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
       </set>
     </attachedChunks>
   </component>
@@ -158,6 +146,8 @@
       <workItem from="1774181249957" duration="235000" />
       <workItem from="1774182514141" duration="598000" />
       <workItem from="1774207483447" duration="12343000" />
+      <workItem from="1774376190553" duration="140000" />
+      <workItem from="1774376822391" duration="302000" />
     </task>
     <task id="LOCAL-00001" summary="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้">
       <option name="closed" value="true" />
