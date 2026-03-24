@@ -9,18 +9,21 @@ public class Player extends JPanel {
     public int xDelta = 0;
     public int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
 
-  public core.GamePanel panel;
+    public core.GamePanel panel;
 
     private Camera camera;
 
     //Animation
     private Image[] frames;
+    private Image[] idleFrames; // เปลี่ยนมาใช้ Array เก็บรูปท่ายืนแทน
     private int currentFrame = 0;
-    private int totalFrames = 8;
+    
+    private int totalFrames = 8; // จำนวนรูปตอนเดิน
+    private int totalIdleFrames = 7;
+    
     public boolean checkRight = false;
     public boolean moving = false;
-    //character
-    ImageIcon player = new ImageIcon("src/entity/player.png");
+
     //เราเพิ่มความเร็วในการเดิน
     private int speed = 7;
     private int aniTick = 0;
@@ -34,11 +37,21 @@ public class Player extends JPanel {
         //setFocusable(true);
         //setFocusTraversalKeysEnabled(false); ให้ไป focus ตัว inputManager ตัวเดียว
         frames = new Image[totalFrames];
+        idleFrames = new Image[totalIdleFrames];
 
-        // โหลด animation ตัวละคร
+        // โหลด animation ท่ายืนนิ่ง จากโฟลเดอร์ player_idle
+        for (int i = 0; i < totalIdleFrames; i++) {
+            try {
+                idleFrames[i] = new ImageIcon("src/entity/player_idle/" + (i + 1) + ".png").getImage();
+            } catch (Exception e) {
+                System.out.println("Error โหลดรูปท่ายืนไม่สำเร็จ: /entity/player_idle/" + (i + 1) + ".png");
+            }
+        }
+
+        // โหลด animation ตัวละคร แบบใช้ path ตรง เพื่อให้เหมือนกัน
         for (int i = 0; i < totalFrames; i++) {
             try {
-                frames[i] = new ImageIcon(getClass().getResource("/entity/player/" + (i + 1) + ".png")).getImage();
+                frames[i] = new ImageIcon("src/entity/player/" + (i + 1) + ".png").getImage();
             } catch (Exception e) {
                 // ถ้าหาไฟล์ไม่เจอ จะได้รู้ว่าพังที่ไฟล์ไหน
                 System.out.println("Error โหลดรูปไม่สำเร็จ: /entity/player/" + (i + 1) + ".png");
@@ -77,22 +90,17 @@ public class Player extends JPanel {
         this.camera = camera;
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
 
-        if (moving) {
-            aniTick++;
-            if (aniTick >= aniSpeed) {
-                aniTick = 0;
-                currentFrame++;
-                if (currentFrame >= totalFrames) {
-                    currentFrame = 0;
-                }
-            }
-        } else {
-            currentFrame = 0;
+        // ให้ Animation ทำงานตลอดเวลา ไม่ว่าจะเดินหรือยืนนิ่ง
+        aniTick++;
+        if (aniTick >= aniSpeed) {
+            aniTick = 0;
+            currentFrame++;
         }
 
         //เพิ่มกรณีที่ map เล็กกว่าขนาดจอ ให้วาด player ให้อยุ่ใน map
@@ -106,7 +114,16 @@ public class Player extends JPanel {
         int drawX = xDelta - camera.getX() + offsetX;
         int drawY = yDelta;
 
-        Image currentImg = frames[currentFrame];
+        // เช็คว่าจะวาดรูปเดินหรือรูปยืนนิ่ง และจัดการเฟรมไม่ให้เกินจำนวนรูปที่มี
+        Image currentImg;
+        if (moving) {
+            if (currentFrame >= totalFrames) currentFrame = 0;
+            currentImg = frames[currentFrame];
+        } else {
+            if (currentFrame >= totalIdleFrames) currentFrame = 0;
+            currentImg = idleFrames[currentFrame];
+        }
+        
         if (currentImg == null) return;
 
         int originalWidth = currentImg.getWidth(null);
@@ -117,6 +134,8 @@ public class Player extends JPanel {
         int width = (int) (originalWidth * scale);
         int height = (int) (originalHeight * scale);
 
+        Component observer = (panel != null) ? panel : this;
+
         if (checkRight) {
             g2.drawImage(
                     currentImg,
@@ -124,7 +143,7 @@ public class Player extends JPanel {
                     drawY,
                     -width,
                     height,
-                    this
+                    observer
             );
         } else {
             g2.drawImage(
@@ -133,7 +152,7 @@ public class Player extends JPanel {
                     drawY,
                     width,
                     height,
-                    this
+                    observer
             );
         }
     }
@@ -148,6 +167,13 @@ public class Player extends JPanel {
 
     public void draw(Graphics2D g2) {
 
+        // ให้ Animation ทำงานตลอดเวลา ไม่ว่าจะเดินหรือยืนนิ่ง
+        aniTick++;
+        if (aniTick >= aniSpeed) {
+            aniTick = 0;
+            currentFrame++;
+        }
+
         //เพิ่มกรณีที่ map เล็กกว่าขนาดจอ ให้วาด player ให้อยุ่ใน map
         int offsetX = 0;
 
@@ -158,7 +184,16 @@ public class Player extends JPanel {
         int drawX = xDelta - camera.getX() + offsetX;
         int drawY = yDelta;
 
-        Image currentImg = frames[currentFrame];
+        // เช็คว่าจะวาดรูปเดินหรือรูปยืนนิ่ง และจัดการเฟรมไม่ให้เกินจำนวนรูปที่มี
+        Image currentImg;
+        if (moving) {
+            if (currentFrame >= totalFrames) currentFrame = 0;
+            currentImg = frames[currentFrame];
+        } else {
+            if (currentFrame >= totalIdleFrames) currentFrame = 0;
+            currentImg = idleFrames[currentFrame];
+        }
+        
         if (currentImg == null) return;
 
         int originalWidth = currentImg.getWidth(null);
@@ -169,6 +204,8 @@ public class Player extends JPanel {
         int width = (int) (originalWidth * scale);
         int height = (int) (originalHeight * scale);
 
+        Component observer = (panel != null) ? panel : this;
+
         if (checkRight) {
             g2.drawImage(
                     currentImg,
@@ -176,7 +213,7 @@ public class Player extends JPanel {
                     drawY,
                     -width,
                     height,
-                    null
+                    observer
             );
         } else {
             g2.drawImage(
@@ -185,7 +222,7 @@ public class Player extends JPanel {
                     drawY,
                     width,
                     height,
-                    null
+                    observer
             );
         }
     }
