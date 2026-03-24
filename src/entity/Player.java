@@ -27,7 +27,7 @@ public class Player extends JPanel {
     //เราเพิ่มความเร็วในการเดิน
     private int speed = 7;
     private int aniTick = 0;
-    private int aniSpeed = 8;
+    private int aniSpeed = 15;
 
     //แก้ไม่ให้ตัวละครเดินแล้วดูกระตุก ตอนอยู่กลางกล้อง
     public boolean leftPressed = false;
