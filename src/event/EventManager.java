@@ -18,11 +18,14 @@ public class EventManager {
         zones.add(zone);
     }
 
-    public void checkClick(int mouseX, int mouseY) {
+    public void checkClick(int mouseX, int mouseY, String currentRoom) {
         boolean clickedOnZone = false;
 
         for (TriggerZone zone : zones) {
             if (zone.isHit(mouseX, mouseY)) {
+                if (zone.getName().equals("Elevator_Panel") && !currentRoom.startsWith("lift")) {
+                    continue;
+                }
                 if (showImage && activeZoneName.equals(zone.getName())) {
                     showImage = false;
                     activeZoneName = "";

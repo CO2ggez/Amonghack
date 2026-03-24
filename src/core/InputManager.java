@@ -79,7 +79,8 @@ public class InputManager implements KeyListener {
                 // 3. ถ้าไม่มี UI หน้าต่างใดๆ เปิดอยู่ ค่อยเช็คการคลิกในฉากเกม (World Coordinates)
                 int worldX = mouseX + camera.getX();
                 if (em != null) {
-                    em.checkClick(worldX, mouseY);
+                    String currentRoom = roomManager.getCurrentRoomName();
+                    em.checkClick(worldX, mouseY, currentRoom);
                 }
             }
         });
