@@ -1,5 +1,6 @@
 package core;
 
+import audio.Sound;
 import entity.Player;
 import event.EventManager;
 import event.EventSetup;
@@ -36,12 +37,19 @@ public class GamePanel extends JPanel implements Runnable {
     private EventSetup eventSetup;
     private BufferedImage elevatorUI; // ตัวแปรรูปหน้าต่างลิฟต์
 
+    private Sound sound;
+
 
     public void update() {
         player.update();
         camera.update(player);
         if (timeManager != null && timeManager.isDayEnded() && !isTransitioning) {
             isTransitioning = true;
+
+            if (sound != null) {
+                sound.stopSound("bg1");
+            }
+
             // สั่งหยุดเวลาไว้ก่อน
             timeManager.setPaused(true);
             this.requestFocusInWindow();
@@ -60,6 +68,12 @@ public class GamePanel extends JPanel implements Runnable {
             timeManager.resetDay();
             timeManager.setPaused(false); // ให้เวลาเดินต่อ
             isTransitioning = false;
+
+            if (sound != null) {
+                sound.setVolume("bg1", 0.05f);
+                sound.loopSound("bg1");
+            }
+
             //ปิดสถานะจอดำ
             for (Component c : getComponents()) {
                 if (c instanceof Player) {
@@ -100,6 +114,10 @@ public class GamePanel extends JPanel implements Runnable {
         gsm = new GameStateManager();
         timeUI = new TimeUI(timeManager, gsm);
         dialogBox = new DialogBox();
+
+        sound = new Sound();
+        sound.setVolume("bg1", 0.05f);
+        sound.loopSound("bg1");
 
         setFocusable(true);
 
@@ -191,4 +209,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void setDialogBox(DialogBox dialogBox) {
         this.dialogBox = dialogBox;
     }
+
+    public Sound getSound() {return sound;}
 }

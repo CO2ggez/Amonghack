@@ -29,6 +29,7 @@ public class RoomManager {
             mapLoader = new MapLoader(currentFloor[currentRoomIndex]);
 
             player.xDelta = 0;
+            player.panel.getSound().playSound("door");
 
         }
     }
@@ -40,6 +41,7 @@ public class RoomManager {
 
             player.xDelta = mapLoader.getWidth()-160;
             player.checkRight = false;
+            player.panel.getSound().playSound("door");
         }
     }
 

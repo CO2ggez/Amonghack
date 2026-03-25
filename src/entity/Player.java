@@ -33,6 +33,9 @@ public class Player extends JPanel {
     public boolean leftPressed = false;
     public boolean rightPressed = false;
 
+    private long lastStepTime = 0;
+    private long stepInterval = 280; // ปรับตัวเลขนี้ตามความเร็วการเดิน (ยิ่งน้อยเสียงยิ่งรัว)
+
     public Player() {
         //setFocusable(true);
         //setFocusTraversalKeysEnabled(false); ให้ไป focus ตัว inputManager ตัวเดียว
@@ -84,7 +87,23 @@ public class Player extends JPanel {
                 xDelta = 0;
             }
         }
-    }
+        // เช็กว่าผู้เล่นกำลังกดปุ่มเดินหรือไม่
+        boolean isMoving = leftPressed || rightPressed;
+
+        if (isMoving) {
+            long currentTime = System.currentTimeMillis();
+
+            // เช็กจังหวะ: ถ้าเวลาปัจจุบันลบเวลาที่ก้าวล่าสุด มากกว่าช่วงที่ตั้งไว้
+            if (currentTime - lastStepTime >= stepInterval) {
+
+                if (panel.getSound() != null) {
+                    panel.getSound().playSound("walk2");
+                }
+                // อัปเดตเวลาล่าสุดที่ก้าวเท้า
+                lastStepTime = currentTime;
+                }
+            }
+        }
 
     public void setCamera(Camera camera) {
         this.camera = camera;

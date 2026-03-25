@@ -4,9 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="รวม main">
+    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="แก้จอยืดบังคับ scale  จอ">
+      <change afterPath="$PROJECT_DIR$/src/audio/Sound.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/player.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/player.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/map/RoomManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/map/RoomManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/DialogBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/DialogBox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/StoryDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/StoryDialog.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/dialog_characters/HR.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/dialog_characters/MC.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/dialog_characters/MC.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/dialog_characters/head.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/dialog_characters/player.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/map/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/RoomManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +53,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/CO2ggez/Amonghack.git&quot;,
-    &quot;accountId&quot;: &quot;98ee0296-8efd-4151-a441-2b6501c9f7a4&quot;
+    &quot;accountId&quot;: &quot;2860a25a-49ae-49a2-9008-9ccd28bb8f54&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -147,7 +163,13 @@
       <workItem from="1774182514141" duration="598000" />
       <workItem from="1774207483447" duration="12343000" />
       <workItem from="1774376190553" duration="140000" />
-      <workItem from="1774376822391" duration="302000" />
+      <workItem from="1774376822391" duration="729000" />
+      <workItem from="1774426198755" duration="146000" />
+      <workItem from="1774426363373" duration="83000" />
+      <workItem from="1774426459663" duration="28000" />
+      <workItem from="1774426506166" duration="53000" />
+      <workItem from="1774426560676" duration="169000" />
+      <workItem from="1774433198543" duration="12759000" />
     </task>
     <task id="LOCAL-00001" summary="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้">
       <option name="closed" value="true" />
@@ -174,7 +196,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774181043104</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="รวม main">
+      <option name="closed" value="true" />
+      <created>1774377141031</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1774377141031</updated>
+    </task>
+    <task id="LOCAL-00005" summary="แก้จอยืดบังคับ scale  จอ">
+      <option name="closed" value="true" />
+      <created>1774377229300</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1774377229300</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,6 +232,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
     <MESSAGE value="รวม main" />
-    <option name="LAST_COMMIT_MESSAGE" value="รวม main" />
+    <MESSAGE value="แก้จอยืดบังคับ scale  จอ" />
+    <option name="LAST_COMMIT_MESSAGE" value="แก้จอยืดบังคับ scale  จอ" />
   </component>
 </project>
