@@ -1,0 +1,43 @@
+<changelist name="Uncommitted_changes_before_Update_at_25_03_2026_16_41_[Changes]" date="1774431706164" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_03_2026_16_41_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 25/03/2026 16:41 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/dialog_characters/MC.png" />
+    <option name="AFTER_PATH" value="out/production/Project_op/ui/dialog_characters/MC.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_03_2026_16_41_[Changes]/MC.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/StoryDialog.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/ui/StoryDialog.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_03_2026_16_41_[Changes]/StoryDialog.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/main/Game.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/main/Game.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_03_2026_16_41_[Changes]/Game.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/dialog_characters/head.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/dialog_characters/player.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/entity/player.gif" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/GamePanel.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/GamePanel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_03_2026_16_41_[Changes]/GamePanel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/DialogBox.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/ui/DialogBox.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_03_2026_16_41_[Changes]/DialogBox.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="src/ui/dialog_characters/็HR.png" />
+    <option name="AFTER_PATH" value="src/ui/dialog_characters/HR.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_03_2026_16_41_[Changes]/HR.png" />
+  </binary>
+</changelist>
