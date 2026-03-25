@@ -13,6 +13,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public boolean taskLan = false;
     public String[] currentLanLocation = {"","",""};
 
+    public boolean taskTerminal = false;
     private boolean isPlaying = false;
     private int score = 0;
     public String taskText = "";
@@ -38,11 +39,15 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
 
                 break;
 
+            case "terminal" :
+                taskTerminal = true;
         }
 
     }
 
     public void startTask(){//ใน inputManager เมื่อplayer กด F ที่ตำแหน่งเล่นเกม จะเรียกใชเอันนี้ สร้างobj minigame
+        if (isPlaying) return; //กันเปิดมินิเกมซ้อน
+
         isPlaying = true;
 
         Minigame game = null;
@@ -50,9 +55,15 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         if (taskLan) {
             game = new LanCable(this);
             taskLan = false;
+        } else if (taskTerminal) {
+            game = new TerminalMinigame(this);
+            taskTerminal = false;
         }
 
-        if (game == null) return;
+        if (game == null) {
+            isPlaying = false; //ถ้าไม่มีมินิเกมให้เปิด ก็คืนสถานะ
+            return;
+        }
 
         currentGamePanel = game.getPanel();
 

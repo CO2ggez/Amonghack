@@ -1,6 +1,7 @@
 package core;
 
 import entity.Player;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -90,6 +91,10 @@ public class InputManager implements KeyListener {
                 }
 
                 // 3. ถ้าไม่มี UI หน้าต่างใดๆ เปิดอยู่ ค่อยเช็คการคลิกในฉากเกม (World Coordinates)
+                //ถ้ามินิเกมเปิดอยู่แล้ว ไม่ให้คลิกทะลุไปด้านหลัง
+                if (minigameManager != null && minigameManager.isPlaying()) {
+                    return;
+                }
                 int worldX = mouseX + camera.getX();
                 if (em != null) {
                     String currentRoom = roomManager.getCurrentRoomName();
@@ -105,7 +110,6 @@ public class InputManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
         //ระบบการกด F เปลี่ยนห้องเมื่ออยู่ขอบแมพ ไม่ซ้ายก้ขวา
         if (e.getKeyCode() == KeyEvent.VK_F) {
 
@@ -164,6 +168,14 @@ public class InputManager implements KeyListener {
                 return;
             }
 
+            // Terminal
+            if (roomManager.getCurrentRoomName().equals("server")
+                    && player.xDelta >= 720 && player.xDelta <= 1180) {
+                minigameManager.setTask("terminal");
+                minigameManager.startTask();
+                return;
+            }
+
             //check ตำแหน่งตู้ server เพื่อทำ task
             if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0]))&&(player.xDelta >= Integer.parseInt(minigameManager.currentLanLocation[1])
                     && player.xDelta <= Integer.parseInt(minigameManager.currentLanLocation[2])) && minigameManager.taskLan) {
@@ -172,7 +184,6 @@ public class InputManager implements KeyListener {
             }
 
         } // <--- ปิดปีกกาของ IF VK_F ตรงนี้ เพื่อให้ข้างล่างทำงานแยกกัน
-
 
         //ย้ายมาจาก GamePanel------------------------
         if (gamePanel.getIsTransitioning()) {// แค่เช็คว่าติดสถานะจอดำอยู่มั้ย ถ้าใช่ กดปุ่มไหนก็ทำงานเลย
@@ -217,7 +228,6 @@ public class InputManager implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
         //ย้ายมาจาก Player----------------------------
         if (e.getKeyCode() == KeyEvent.VK_D) {
             player.rightPressed = false;
@@ -270,6 +280,11 @@ public class InputManager implements KeyListener {
         if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0]))&&(player.xDelta >= Integer.parseInt(minigameManager.currentLanLocation[1])
                 && player.xDelta <= Integer.parseInt(minigameManager.currentLanLocation[2])) && minigameManager.taskLan) {
             return "[F] เชื่อมสายแลน";
+        }
+
+        // terminal ในห้อง server
+        if (room.equals("server") && player.xDelta >= 720 && player.xDelta <= 1180) {
+            return "[F] Use terminal";
         }
 
         return null;
