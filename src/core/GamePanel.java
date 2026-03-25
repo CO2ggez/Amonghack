@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import map.RoomManager;
+import network.Minigame;
+import network.MinigameManager;
 import ui.Camera;
 import ui.DialogBox; // นำเข้า Event
 import ui.TimeUI;   // นำเข้า Event
@@ -45,6 +47,8 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean isFading = false;
     private boolean isFadeOut = true;  // true = กำลังดำ, false = กำลังสว่าง
     private Runnable postFadeAction;   // เก็บคำสั่ง "เปลี่ยนชั้น" ไว้ทำตอนจอดำสนิท
+
+    private MinigameManager minigameManager;
 
     public void update() {
         player.update();
@@ -131,7 +135,12 @@ public class GamePanel extends JPanel implements Runnable {
         // **สำคัญ: คุณต้องมีไฟล์รูปภาพลิฟต์ (เช่น elevator_ui.png) ไปใส่ไว้ในโฟลเดอร์ที่ระบุ**
         elevatorUI = AssetLoader.loadImage("/util/asst/ElevatorButton21G.png");
 
-        inputManager = new InputManager(camera,roomManager,this,player);
+        minigameManager = new MinigameManager(this);
+
+        //ตั้งtaskตอนนี้เป็น lan ถ้าไปถึงจุดที่เครื่องอยู่ใน inputmanager กด f แล้วจึงเริ่ม
+        minigameManager.setTask("lan");
+
+        inputManager = new InputManager(camera,roomManager,this,player,minigameManager);
         addKeyListener(inputManager);
 
         player.setCamera(camera);
@@ -144,8 +153,9 @@ public class GamePanel extends JPanel implements Runnable {
         sound.setVolume("bg1", 0.05f);
         sound.loopSound("bg1");
 
-        setFocusable(true);
 
+
+        setFocusable(true);
 
         startGameThread();
         SwingUtilities.invokeLater(() -> { requestFocusInWindow();});
@@ -253,4 +263,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public Sound getSound() {return sound;}
+
+    public boolean isInMinigame() {
+        return minigameManager != null && minigameManager.isPlaying();
+    }
+
 }

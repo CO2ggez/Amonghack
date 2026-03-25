@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import map.RoomManager;
+import network.MinigameManager;
 import ui.Camera;
 import event.EventManager;
 
@@ -14,6 +15,7 @@ public class InputManager implements KeyListener {
     private RoomManager roomManager;
     private GamePanel gamePanel;
     private Player player;
+    private MinigameManager minigameManager;
 
     public void interact() {
         if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {
@@ -21,12 +23,13 @@ public class InputManager implements KeyListener {
     }
 }
 
-    public InputManager(Camera camera, RoomManager roomManager,GamePanel panel,Player player) {
+    public InputManager(Camera camera, RoomManager roomManager, GamePanel panel, Player player, MinigameManager minigameManager) {
 
         this.gamePanel = panel;
         this.camera = camera;
         this.roomManager = roomManager;
         this.player = player;
+        this.minigameManager = minigameManager;
 
         panel.addMouseListener(new MouseAdapter() {
             @Override
@@ -148,6 +151,13 @@ public class InputManager implements KeyListener {
                 return; // เปลี่ยนชั้นเสร็จให้จบการทำงานปุ่ม F ทันที
             }
         }
+                // เช็คว่าตัวละครยืนอยู่ใกล้บันไดไหม (สมมติพิกัดบันไดอยู่ช่วงกลางแมพ)
+                if(player.xDelta >= 400 && player.xDelta <= 700) {
+                    // สั่งเปลี่ยนไปใช้แมพ Floor 1 / ไปโผล่ที่ห้อง stair1 / วางตัวละครที่ X=1400 (ขวาหน้าบันได)
+                    roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
+                    return; // เปลี่ยนชั้นเสร็จให้จบการทำงานปุ่ม F ทันที
+                }
+            }
 
 
             if(player.xDelta <= 40){
@@ -161,6 +171,12 @@ public class InputManager implements KeyListener {
                     roomManager.changeRoomRight(camera);
                 });
             }
+
+            //check ตำแหน่งตู้ server เพื่อทำ task
+            if ((player.xDelta >= 800 && player.xDelta <= 1200) && minigameManager.taskLan) {
+                minigameManager.startTask();
+            }
+
         }
 
         //ย้ายมาจาก GamePanel------------------------
