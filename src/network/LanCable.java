@@ -22,7 +22,6 @@ public class LanCable implements Minigame{
 
     private int selected = -1;
 
-
     public LanCable(MinigameManager manager) {
         this.manager = manager;
 

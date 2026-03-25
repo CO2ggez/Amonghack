@@ -165,7 +165,8 @@ public class InputManager implements KeyListener {
             }
 
             //check ตำแหน่งตู้ server เพื่อทำ task
-            if ((player.xDelta >= 800 && player.xDelta <= 1200) && minigameManager.taskLan) {
+            if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0]))&&(player.xDelta >= Integer.parseInt(minigameManager.currentLanLocation[1])
+                    && player.xDelta <= Integer.parseInt(minigameManager.currentLanLocation[2])) && minigameManager.taskLan) {
                 minigameManager.startTask();
                 return;
             }
@@ -266,7 +267,8 @@ public class InputManager implements KeyListener {
         }
 
         // server
-        if ((player.xDelta >= 800 && player.xDelta <= 1200) && minigameManager.taskLan) {
+        if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0]))&&(player.xDelta >= Integer.parseInt(minigameManager.currentLanLocation[1])
+                && player.xDelta <= Integer.parseInt(minigameManager.currentLanLocation[2])) && minigameManager.taskLan) {
             return "[F] เชื่อมสายแลน";
         }
 
