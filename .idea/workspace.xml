@@ -6,7 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="รวม main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/LanCable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanCable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanBG.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanBG.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanBlue.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanBlue.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanPink.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanPink.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanRed.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanRed.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanYellow.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanYellow.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/MinigameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/MinigameManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,8 +141,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
       </set>
     </attachedChunks>
   </component>
@@ -148,6 +164,8 @@
       <workItem from="1774207483447" duration="12343000" />
       <workItem from="1774376190553" duration="140000" />
       <workItem from="1774376822391" duration="302000" />
+      <workItem from="1774428756600" duration="2733000" />
+      <workItem from="1774454989977" duration="7778000" />
     </task>
     <task id="LOCAL-00001" summary="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้">
       <option name="closed" value="true" />
@@ -193,6 +211,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
+    <MESSAGE value="lan" />
     <MESSAGE value="รวม main" />
     <option name="LAST_COMMIT_MESSAGE" value="รวม main" />
   </component>

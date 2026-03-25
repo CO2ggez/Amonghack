@@ -7,7 +7,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     private GamePanel panel;
     private JPanel currentGamePanel;
     public boolean taskLan = false;
-
+    private boolean isPlaying = false;
     private int score = 0;
 
     public MinigameManager(GamePanel panel) {
@@ -24,6 +24,8 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     }
 
     public void startTask(){//ใน inputManager เมื่อplayer กด F ที่ตำแหน่งเล่นเกม จะเรียกใชเอันนี้ สร้างobj minigame
+        isPlaying = true;
+
         Minigame game = null;
 
         if (taskLan) {
@@ -38,6 +40,9 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         panel.add(currentGamePanel);
         panel.repaint();
         currentGamePanel.requestFocusInWindow();
+        currentGamePanel.setBounds(0, 0, 1920, 1080);
+        currentGamePanel.setFocusable(true);
+        currentGamePanel.setOpaque(false);
     }
 
     public void closeGame() {
@@ -45,15 +50,23 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
             panel.remove(currentGamePanel);
             panel.repaint();
         }
+        isPlaying = false;
+        panel.requestFocusInWindow();
+
     }
 
     public void onWin() {
         score++;
         closeGame();
+
+        System.out.println("คะแนนมินิเกมตอนนี้ " + score);
     }
 
     public int getScore() {
         return score;
     }
 
+    public boolean isPlaying() {
+        return isPlaying;
+    }
 }

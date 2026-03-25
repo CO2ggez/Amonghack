@@ -68,6 +68,12 @@ public class Player extends JPanel {
     //อัพเดทตำแหน่งในนี้แทน เรียก player.update(); ใน gamePanel ที่ method update
     //มันจะได้ขยับตามเวลาใน gameloop แล้วจะ smooth ขึ้น
     public void update() {
+        if (panel.isInMinigame()){
+            rightPressed = false;
+            leftPressed = false;
+            moving = false;
+            return;
+        }
 
         //เพิ่มเช็ค แมพเล็กกว่าขนาดจอ ไม่งั้น player จะเดินออกจอได้ (ติดลบ)
         int maxX = Math.max(0, camera.getWorldWidth() - 140);
