@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     private EventManager eventManager;
     private EventSetup eventSetup;
     private BufferedImage elevatorUI; // ตัวแปรรูปหน้าต่างลิฟต์
-
+    private BufferedImage textBook;
 
     public void update() {
         player.update();
