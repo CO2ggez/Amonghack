@@ -1,15 +1,15 @@
 package core;
 
 import entity.Player;
+import event.EventManager;
+import event.EventSetup;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import javax.swing.*;
 import map.RoomManager;
 import ui.Camera;
-import ui.DialogBox;
-import ui.TimeUI;
-import java.awt.image.BufferedImage;
-import event.EventManager; // นำเข้า Event
-import event.EventSetup;   // นำเข้า Event
+import ui.DialogBox; // นำเข้า Event
+import ui.TimeUI;   // นำเข้า Event
 import util.AssetLoader;   // นำเข้า AssetLoader
 
 
@@ -137,7 +137,10 @@ public class GamePanel extends JPanel implements Runnable {
             timeUI.draw(g2);
         }
 
-        player.draw(g2);
+        // จะวาดตัวละคร Player ก็ต่อเมื่อกล่องข้อความไม่ได้เปิดอยู่
+        if (dialogBox == null || !dialogBox.isVisible()) {
+            player.draw(g2);
+        }
 
         if (eventManager != null && eventManager.isShowImage()) {
             String activeEvent = eventManager.getActiveZoneName();

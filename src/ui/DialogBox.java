@@ -13,13 +13,36 @@ public class DialogBox {
     private String[] currentTexts; //เก็บชุดบท dialog
     private int textIndex = 0;
 
+    // === ตัวแปรสำหรับเก็บรูปภาพตัวละคร ===
+    private BufferedImage imgHR, imgBoss, imgJanitor, imgMC, imgIT;
+
     public DialogBox() {
         try {
-        // เราเปลี่ยนมาใช้pathแบบเต็มกันError
-        img = ImageIO.read(getClass().getResourceAsStream("/ui/DialogBox.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/ui/DialogBox.png"));
         } catch (Exception e) {
             System.out.println("หาไฟล์รูป DialogBox ไม่เจอ");
             e.printStackTrace();
+        }
+
+        // ใช้ path ตามที่กำหนดมาเป๊ะๆ
+        imgHR = loadCharImage("/ui/dialog_characters/HR.png");
+        imgBoss = loadCharImage("/ui/dialog_characters/boss.png");
+        imgJanitor = loadCharImage("/ui/dialog_characters/janitor.png");
+        imgMC = loadCharImage("/ui/dialog_characters/MC.png");
+        imgIT = loadCharImage("/ui/dialog_characters/it.png");  
+    }
+
+    // === ฟังก์ชันช่วยโหลดรูปและแจ้งเตือน ===
+    private BufferedImage loadCharImage(String path) {
+        try {
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream(path));
+            if (image != null) {
+                System.out.println("✅ โหลดรูปสำเร็จ: " + path);
+            }
+            return image;
+        } catch (Exception e) {
+            System.err.println("❌ หาไฟล์รูปตัวละครไม่เจอ: " + path);
+            return null; 
         }
     }
 
@@ -31,7 +54,6 @@ public class DialogBox {
 
     public boolean nextText() {
         textIndex++; //ขยับไปบรรทัดต่อไป
-        // เช็คว่าประโยคหมดรึยัง
         if (currentTexts == null || textIndex >= currentTexts.length) {
             isVisible = false; //ปิดกล่อง
             return true; //คุยจบ
@@ -46,21 +68,38 @@ public class DialogBox {
         int x = (1920 - img.getWidth()) / 2;
         int y = 1080 - img.getHeight() - 50;
 
-        // วาดกล่อง
+        // 1. วาดกล่องข้อความก่อน (เป็นพื้นหลัง)
         g.drawImage(img, x, y, null);
 
-        // ตั้งค่าฟอนต์
+        // 2. วาดรูปตัวละครทับลงบนกล่องข้อความ
+        if (textIndex < currentTexts.length) {
+            String currentLine = currentTexts[textIndex];
+            BufferedImage portraitToDraw = null;
+
+            // เช็คคำขึ้นต้นเพื่อเลือกรูป
+            if (currentLine.startsWith("HR:")) portraitToDraw = imgHR;
+            else if (currentLine.startsWith("Boss:")) portraitToDraw = imgBoss;
+            else if (currentLine.startsWith("Janitor:")) portraitToDraw = imgJanitor;
+            else if (currentLine.startsWith("MC:")) portraitToDraw = imgMC;
+            else if (currentLine.startsWith("ITsup:")) portraitToDraw = imgIT;
+
+            if (portraitToDraw != null) {
+                int charX = x + 1500; 
+
+                int charY = y - portraitToDraw.getHeight() + 1100; 
+                
+                g.drawImage(portraitToDraw, charX, charY, null);
+            }
+        }
+
+        // 3. วาดตัวหนังสือเป็นลำดับสุดท้าย
         g.setColor(Color.WHITE);
         g.setFont(new Font("Tahoma", Font.BOLD, 36));
 
         if (textIndex < currentTexts.length) {
-
-            // 👉 คำนวณตำแหน่งข้อความให้ "อยู่ในกล่องจริง"
             FontMetrics fm = g.getFontMetrics();
-            //ตำแหน่งของข้อความ dialog
-            int textX = x + 420;                  // ขยับซ้าย-ขวา
-            int textY = y + img.getHeight() - 190; // ขึ้น-ลง
-
+            int textX = x + 420;                  
+            int textY = y + img.getHeight() - 190; 
             g.drawString(currentTexts[textIndex], textX, textY);
         }
     }
@@ -68,6 +107,4 @@ public class DialogBox {
     public boolean isVisible() {
         return isVisible;
     }
-    // ในไฟล์ DialogBox.java
-
 }
