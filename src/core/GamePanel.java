@@ -39,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Sound sound;
 
+    private BufferedImage textBook;
 
     public void update() {
         player.update();
@@ -75,14 +76,11 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             //ปิดสถานะจอดำ
-            for (Component c : getComponents()) {
-                if (c instanceof Player) {
-                    c.requestFocusInWindow();
-                    break;
-                }
+            this.requestFocusInWindow();
+
             }
         }
-    }
+
 
     public GamePanel(Player player) {
         this.player = player;
@@ -158,6 +156,7 @@ public class GamePanel extends JPanel implements Runnable {
         // จะวาดตัวละคร Player ก็ต่อเมื่อกล่องข้อความไม่ได้เปิดอยู่
         if (dialogBox == null || !dialogBox.isVisible()) {
             player.draw(g2);
+            player.setVisible(isTransitioning);
         }
 
         if (eventManager != null && eventManager.isShowImage()) {
