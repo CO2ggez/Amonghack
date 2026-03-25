@@ -61,14 +61,10 @@ public class GamePanel extends JPanel implements Runnable {
             timeManager.setPaused(false); // ให้เวลาเดินต่อ
             isTransitioning = false;
             //ปิดสถานะจอดำ
-            for (Component c : getComponents()) {
-                if (c instanceof Player) {
-                    c.requestFocusInWindow();
-                    break;
-                }
+            this.requestFocusInWindow();
+
             }
         }
-    }
 
     public GamePanel(Player player) {
         this.player = player;

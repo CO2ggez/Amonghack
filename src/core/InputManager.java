@@ -144,6 +144,10 @@ public class InputManager implements KeyListener {
         //ย้ายมาจาก GamePanel------------------------
         if (gamePanel.getIsTransitioning()) {// แค่เช็คว่าติดสถานะจอดำอยู่มั้ย ถ้าใช่ กดปุ่มไหนก็ทำงานเลย
             gamePanel.startNextDay();
+            player.leftPressed = false;
+            player.rightPressed = false;
+            player.moving = false;
+            return;
         }
         //จบโค้ดที่ย้ายมาจาก GamePanel------------------------
 
