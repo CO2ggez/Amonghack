@@ -74,4 +74,18 @@ public class RoomManager {
         return mapLoader.getWidth();
     }
 
+    public boolean haveRoomRight(){
+        if (currentRoomIndex<currentFloor.length -1){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean haveRoomLeft(){
+        if (currentRoomIndex - 1 >= 0){
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -239,4 +239,42 @@ public class InputManager implements KeyListener {
             }
         };
     }
+
+    public String getCurrentHint() {
+
+        String room = roomManager.getCurrentRoomName();
+
+        // ซ้าย
+        if (player.xDelta <= 40 && roomManager.haveRoomLeft()) {
+            return "[F] Go left";
+        }
+
+        // ขวา
+        if (player.xDelta >= roomManager.getWidth() - 150 && roomManager.haveRoomRight()) {
+            return "[F] Go right";
+        }
+
+        // บันได
+        if (room.startsWith("stair")) {
+
+            if (player.xDelta >= 400 && player.xDelta <= 600) {
+
+                if (room.equals("stairG")) return "[F] Go up";
+                if (room.equals("stair1")) return "[F] Go up";
+                if (room.equals("stair2")) return "[F] Go down";
+            }
+
+            if (room.equals("stair1") && player.xDelta >= 100 && player.xDelta <= 300) {
+                return "[F] Go down";
+            }
+        }
+
+        // server
+        if ((player.xDelta >= 800 && player.xDelta <= 1200) && minigameManager.taskLan) {
+            System.out.println("in");
+            return "[F] Fix server";
+        }
+
+        return null;
+    }
 }

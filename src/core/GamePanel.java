@@ -49,6 +49,9 @@ public class GamePanel extends JPanel implements Runnable {
     private Runnable postFadeAction;   // เก็บคำสั่ง "เปลี่ยนชั้น" ไว้ทำตอนจอดำสนิท
 
     private MinigameManager minigameManager;
+    //ข้อความบอกevent ที่กดได้ (check ใน inputmanager)
+    private String hintText = null;
+    private boolean showHint = false;
 
     public void update() {
         player.update();
@@ -66,6 +69,15 @@ public class GamePanel extends JPanel implements Runnable {
         }
         if (gsm != null && !isTransitioning) {
             gsm.update();
+        }
+
+        //เอาข้อความhint มาจากตำแหน่ง event ที่ player อยู่
+        String hint = inputManager.getCurrentHint();
+        if (hint != null) {
+            hintText = hint;
+            showHint = true;
+        } else {
+            showHint = false;
         }
 
         if (isFading) {
@@ -217,6 +229,22 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (dialogBox != null) {
             dialogBox.draw(g2);
+        }
+
+        //วาดข้อความว่า interact event ได้
+        if (showHint && hintText != null) {
+            int playerScreenX = player.xDelta - camera.getX();
+            int playerScreenY = player.yDelta;
+
+            g2.setFont(new Font("Arial", Font.BOLD, 16));
+
+            // shadow
+            g2.setColor(Color.BLACK);
+            g2.drawString(hintText, playerScreenX - 40 + 1, playerScreenY - 20 + 1);
+
+            // text
+            g2.setColor(Color.WHITE);
+            g2.drawString(hintText, playerScreenX - 40, playerScreenY - 20);
         }
 
         //ทรานซิชั่นถมดำ
