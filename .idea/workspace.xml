@@ -5,7 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="รวม main">
-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/network/Minigame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/network/MinigameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/player.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/DialogBox.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/DialogBox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/StoryDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/StoryDialog.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/dialog_characters/MC.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/dialog_characters/MC.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/dialog_characters/head.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/dialog_characters/player.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/LanCable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanCable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/dialog_characters/็HR.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/dialog_characters/HR.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
