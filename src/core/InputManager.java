@@ -20,8 +20,8 @@ public class InputManager implements KeyListener {
     public void interact() {
         if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {
             gamePanel.dialogBox.nextText();
+        }
     }
-}
 
     public InputManager(Camera camera, RoomManager roomManager, GamePanel panel, Player player, MinigameManager minigameManager) {
 
@@ -99,41 +99,38 @@ public class InputManager implements KeyListener {
         });
     }
 
-
-
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
 
         //ระบบการกด F เปลี่ยนห้องเมื่ออยู่ขอบแมพ ไม่ซ้ายก้ขวา
-        if(e.getKeyCode() == KeyEvent.VK_F){
+        if (e.getKeyCode() == KeyEvent.VK_F) {
 
             String roomName = roomManager.getCurrentRoomName();
 
             // --- เงื่อนไขเปลี่ยนชั้น (เพิ่มใหม่) ---
-            
+
             // กรณีอยู่ชั้น G จะขึ้นไปชั้น 1 (ต้องอยู่ที่ห้อง stairG และยืนใกล้บันได)
-            if(roomName.equals("stairG") && player.xDelta >= 400 && player.xDelta <= 600) {
+            if (roomName.equals("stairG") && player.xDelta >= 400 && player.xDelta <= 600) {
                 gamePanel.startTransition(() -> {
                     // เปลี่ยนไป Floor 1, ห้อง stair1, วางตัวละครที่ X=500
                     roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500);
                 });
                 return;
             }
-            
+
             // กรณีอยู่ชั้น 1 จะขึ้นไปชั้น 2 หรือลงไปชั้น G
-            if(roomName.equals("stair1")) {
-                if(player.xDelta >= 400 && player.xDelta <= 600) { // สมมติเป็นจุดขึ้นไปชั้น 2
+            if (roomName.equals("stair1")) {
+                if (player.xDelta >= 400 && player.xDelta <= 600) { // สมมติเป็นจุดขึ้นไปชั้น 2
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloor2, "stair2", 500);
                     });
                     return;
                 }
-                if(player.xDelta >= 100 && player.xDelta <= 300) { // สมมติเป็นจุดลงไปชั้น G
+                if (player.xDelta >= 100 && player.xDelta <= 300) { // สมมติเป็นจุดลงไปชั้น G
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloorG, "stairG", 500);
                     });
@@ -141,43 +138,40 @@ public class InputManager implements KeyListener {
                 }
             }
 
-            if(roomName.equals("stair2")) {
-            // เช็คว่าตัวละครยืนอยู่ใกล้บันไดไหม (สมมติพิกัดบันไดอยู่ช่วงกลางแมพ)
-            if(player.xDelta >= 400 && player.xDelta <= 700) {
-                gamePanel.startTransition(() -> {
-                    // สั่งเปลี่ยนไปใช้แมพ Floor 1 / ไปโผล่ที่ห้อง stair1 / วางตัวละครที่ X=1400 (ขวาหน้าบันได)
-                    roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
-                });
-                return; // เปลี่ยนชั้นเสร็จให้จบการทำงานปุ่ม F ทันที
-            }
-        }
+            if (roomName.equals("stair2")) {
                 // เช็คว่าตัวละครยืนอยู่ใกล้บันไดไหม (สมมติพิกัดบันไดอยู่ช่วงกลางแมพ)
-                if(player.xDelta >= 400 && player.xDelta <= 700) {
-                    // สั่งเปลี่ยนไปใช้แมพ Floor 1 / ไปโผล่ที่ห้อง stair1 / วางตัวละครที่ X=1400 (ขวาหน้าบันได)
-                    roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
+                if (player.xDelta >= 400 && player.xDelta <= 700) {
+                    gamePanel.startTransition(() -> {
+                        // สั่งเปลี่ยนไปใช้แมพ Floor 1 / ไปโผล่ที่ห้อง stair1 / วางตัวละครที่ X=1400 (ขวาหน้าบันได)
+                        roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
+                    });
                     return; // เปลี่ยนชั้นเสร็จให้จบการทำงานปุ่ม F ทันที
                 }
             }
 
-
-            if(player.xDelta <= 40){
+            // --- ระบบเปลี่ยนห้อง ซ้าย-ขวา (ย้ายเข้ามาใน IF ของปุ่ม F แล้ว) ---
+            if (player.xDelta <= 40) {
                 gamePanel.startTransition(() -> {
                     roomManager.changeRoomLeft(camera);
                 });
+                return;
             }
 
-            if(player.xDelta >= roomManager.getWidth()-150){
+            if (player.xDelta >= roomManager.getWidth() - 150) {
                 gamePanel.startTransition(() -> {
                     roomManager.changeRoomRight(camera);
                 });
+                return;
             }
 
             //check ตำแหน่งตู้ server เพื่อทำ task
             if ((player.xDelta >= 800 && player.xDelta <= 1200) && minigameManager.taskLan) {
                 minigameManager.startTask();
+                return;
             }
 
-        }
+        } // <--- ปิดปีกกาของ IF VK_F ตรงนี้ เพื่อให้ข้างล่างทำงานแยกกัน
+
 
         //ย้ายมาจาก GamePanel------------------------
         if (gamePanel.getIsTransitioning()) {// แค่เช็คว่าติดสถานะจอดำอยู่มั้ย ถ้าใช่ กดปุ่มไหนก็ทำงานเลย
@@ -215,7 +209,6 @@ public class InputManager implements KeyListener {
         //กดSpacebarอ่านต่อ
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             interact();
-
         }
 
         //จบโค้ดที่มาจาก Player----------------------------
@@ -235,16 +228,15 @@ public class InputManager implements KeyListener {
 
         player.moving = player.leftPressed || player.rightPressed; //เปลี่ยนค่าทุกตัวแปลให้รุ้ว่าไม่ได้ขยับ
         //จบโค้ดจาก Player------------------------------
-
     }
 
     public MouseAdapter getMouseListener() {
-    return new MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent e) {
-            System.out.println("คลิกหน้าจอ!");//อันนี้เราใส่ไว้เช็คว่ามันกดได้จริงหรือป่าว ไว้มาลบทีหลัง
-            interact();
-        }
-    };
+        return new MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                System.out.println("คลิกหน้าจอ!");//อันนี้เราใส่ไว้เช็คว่ามันกดได้จริงหรือป่าว ไว้มาลบทีหลัง
+                interact();
+            }
+        };
     }
 }

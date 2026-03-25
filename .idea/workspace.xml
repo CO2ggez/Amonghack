@@ -6,34 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="รวม main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/map/RoomManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/map/RoomManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audio/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/Sound.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/LanCable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanCable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanBG.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanBG.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanBlue.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanBlue.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanPink.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanPink.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanRed.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanRed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/LanImage/LanYellow.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanImage/LanYellow.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/MinigameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/MinigameManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,12 +39,12 @@
     &quot;assignee&quot;: &quot;Kmitl68070131&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/CO2ggez/Amonghack.git",
-    "accountId": "2860a25a-49ae-49a2-9008-9ccd28bb8f54"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/CO2ggez/Amonghack.git&quot;,
+    &quot;accountId&quot;: &quot;2860a25a-49ae-49a2-9008-9ccd28bb8f54&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/entity/Player.java" root0="FORCE_HIGHLIGHTING" />
   </component>
