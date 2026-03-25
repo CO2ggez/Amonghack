@@ -34,7 +34,7 @@ public class Player extends JPanel {
     public boolean rightPressed = false;
 
     private long lastStepTime = 0;
-    private long stepInterval = 280; // ปรับตัวเลขนี้ตามความเร็วการเดิน (ยิ่งน้อยเสียงยิ่งรัว)
+    private long stepInterval = 370; // ยิ่งน้อยเสียงยิ่งรัว
 
     public Player() {
         //setFocusable(true);

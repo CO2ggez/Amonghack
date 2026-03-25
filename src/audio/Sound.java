@@ -22,6 +22,7 @@ public class Sound {
         loadSound("door", "/audio/SoundWAV/door.wav");
         loadSound("bg1", "/audio/SoundWAV/bg1.wav");
         loadSound("ringLift", "/audio/SoundWAV/ringLift.wav");
+        loadSound("click1", "/audio/SoundWAV/click1.wav");
     }
 
     private void loadSound(String name, String path) {

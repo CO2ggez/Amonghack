@@ -43,6 +43,7 @@ public class InputManager implements KeyListener {
 
                 System.out.println("เมาส์คลิกที่พิกัดจอ -> X: " + mouseX + " | Y: " + mouseY);
 
+
                 // 2. เช็คว่า "หน้าต่างลิฟต์เปิดอยู่ไหม?"
                 if (em != null && em.isShowImage() && em.getActiveZoneName().equals("Elevator_Panel")) {
 
@@ -51,23 +52,32 @@ public class InputManager implements KeyListener {
                     // เช็คปุ่ม "ไปชั้น 2" (สมมติปุ่มอยู่ช่วง X: 800-900, Y: 300-350)
                     if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 139 && mouseY <= 359) {
                         System.out.println("ลิฟต์: ไปชั้น 2");
+
                         // เปลี่ยนไปแมพชั้น 2, โผล่ที่ห้อง lift2, วางตัวละครที่ X=500
-                        roomManager.changeFloor(roomManager.mapDataFloor2, "lift2", 500);
-                        em.closeEvent(); // ปิดหน้าต่างลิฟต์
+                        gamePanel.startTransition(() -> {
+                            roomManager.changeFloor(roomManager.mapDataFloor2, "lift2", 500);
+                            em.closeEvent(); // ปิดหน้าต่างลิฟต์
+                        });
                         return; // จบการทำงานของคลิกนี้
                     }
                     // เช็คปุ่ม "ไปชั้น 1" (สมมติปุ่มอยู่ช่วง X: 800-900, Y: 400-450)
                     else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 433 && mouseY <= 662) {
                         System.out.println("ลิฟต์: ไปชั้น 1");
-                        roomManager.changeFloor(roomManager.mapDataFloor1, "lift1", 500);
-                        em.closeEvent();
+
+                        gamePanel.startTransition(() -> {
+                            roomManager.changeFloor(roomManager.mapDataFloor1, "lift1", 500);
+                            em.closeEvent();
+                        });
                         return;
                     }
                     // เช็คปุ่ม "ไปชั้น G" (สมมติปุ่มอยู่ช่วง X: 800-900, Y: 500-550)
                     else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 748 && mouseY <= 954) {
                         System.out.println("ลิฟต์: ไปชั้น G");
-                        roomManager.changeFloor(roomManager.mapDataFloorG, "liftG", 500);
-                        em.closeEvent();
+
+                        gamePanel.startTransition(() -> {
+                            roomManager.changeFloor(roomManager.mapDataFloorG, "liftG", 500);
+                            em.closeEvent();
+                        });
                         return;
                     }
 
@@ -105,39 +115,51 @@ public class InputManager implements KeyListener {
             
             // กรณีอยู่ชั้น G จะขึ้นไปชั้น 1 (ต้องอยู่ที่ห้อง stairG และยืนใกล้บันได)
             if(roomName.equals("stairG") && player.xDelta >= 400 && player.xDelta <= 600) {
-                // เปลี่ยนไป Floor 1, ห้อง stair1, วางตัวละครที่ X=500
-                roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500); 
+                gamePanel.startTransition(() -> {
+                    // เปลี่ยนไป Floor 1, ห้อง stair1, วางตัวละครที่ X=500
+                    roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500);
+                });
                 return;
             }
             
             // กรณีอยู่ชั้น 1 จะขึ้นไปชั้น 2 หรือลงไปชั้น G
             if(roomName.equals("stair1")) {
                 if(player.xDelta >= 400 && player.xDelta <= 600) { // สมมติเป็นจุดขึ้นไปชั้น 2
-                    roomManager.changeFloor(roomManager.mapDataFloor2, "stair2", 500);
+                    gamePanel.startTransition(() -> {
+                        roomManager.changeFloor(roomManager.mapDataFloor2, "stair2", 500);
+                    });
                     return;
                 }
                 if(player.xDelta >= 100 && player.xDelta <= 300) { // สมมติเป็นจุดลงไปชั้น G
-                    roomManager.changeFloor(roomManager.mapDataFloorG, "stairG", 500);
+                    gamePanel.startTransition(() -> {
+                        roomManager.changeFloor(roomManager.mapDataFloorG, "stairG", 500);
+                    });
                     return;
                 }
             }
 
             if(roomName.equals("stair2")) {
             // เช็คว่าตัวละครยืนอยู่ใกล้บันไดไหม (สมมติพิกัดบันไดอยู่ช่วงกลางแมพ)
-            if(player.xDelta >= 400 && player.xDelta <= 700) { 
-                // สั่งเปลี่ยนไปใช้แมพ Floor 1 / ไปโผล่ที่ห้อง stair1 / วางตัวละครที่ X=1400 (ขวาหน้าบันได)
-                roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
+            if(player.xDelta >= 400 && player.xDelta <= 700) {
+                gamePanel.startTransition(() -> {
+                    // สั่งเปลี่ยนไปใช้แมพ Floor 1 / ไปโผล่ที่ห้อง stair1 / วางตัวละครที่ X=1400 (ขวาหน้าบันได)
+                    roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
+                });
                 return; // เปลี่ยนชั้นเสร็จให้จบการทำงานปุ่ม F ทันที
             }
         }
 
 
             if(player.xDelta <= 40){
-                roomManager.changeRoomLeft(camera);
+                gamePanel.startTransition(() -> {
+                    roomManager.changeRoomLeft(camera);
+                });
             }
 
             if(player.xDelta >= roomManager.getWidth()-150){
-                roomManager.changeRoomRight(camera);
+                gamePanel.startTransition(() -> {
+                    roomManager.changeRoomRight(camera);
+                });
             }
         }
 

@@ -41,6 +41,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     private BufferedImage textBook;
 
+    private float fadeAlpha = 0f;      // 0.0 (ใส) ถึง 1.0 (ดำ)
+    private boolean isFading = false;
+    private boolean isFadeOut = true;  // true = กำลังดำ, false = กำลังสว่าง
+    private Runnable postFadeAction;   // เก็บคำสั่ง "เปลี่ยนชั้น" ไว้ทำตอนจอดำสนิท
+
     public void update() {
         player.update();
         camera.update(player);
@@ -58,6 +63,28 @@ public class GamePanel extends JPanel implements Runnable {
         if (gsm != null && !isTransitioning) {
             gsm.update();
         }
+
+        if (isFading) {
+            if (isFadeOut) {
+                fadeAlpha += 0.05f;
+                if (fadeAlpha >= 1f) {
+                    fadeAlpha = 1f;
+
+                    if (postFadeAction != null) {
+                        postFadeAction.run();
+                        postFadeAction = null;
+                    }
+                    isFadeOut = false; // เริ่มทำให้จอสว่างคืน
+                }
+            } else {
+                fadeAlpha -= 0.05f;
+                if (fadeAlpha <= 0f) {
+                    fadeAlpha = 0f;
+                    isFading = false;
+                }
+            }
+        }
+
     }
 
     public void startNextDay() {
@@ -136,6 +163,13 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
     }
 
+    public void startTransition(Runnable action) {
+        this.postFadeAction = action;
+        this.isFading = true;
+        this.isFadeOut = true;
+        this.fadeAlpha = 0f;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -173,6 +207,15 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (dialogBox != null) {
             dialogBox.draw(g2);
+        }
+
+        //ทรานซิชั่นถมดำ
+        if (fadeAlpha > 0) {
+            Graphics2D transition = (Graphics2D) g;
+            transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
+            transition.setColor(Color.BLACK);
+            transition.fillRect(0, 0, getWidth(), getHeight());
+            transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // รีเซ็ตค่ากลับ
         }
     }
 
