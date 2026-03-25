@@ -41,6 +41,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
 
             case "terminal" :
                 taskTerminal = true;
+                taskText = "เปิดใช้ Terminal";
         }
 
     }
@@ -91,6 +92,14 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         closeGame();
 
         System.out.println("คะแนนมินิเกมตอนนี้ " + score);
+    }
+
+    //มีไว้ไมไม่รุ้ เผื่อไว้
+    public void resetTask(){
+        taskLan = false;
+        taskTerminal = false;
+        taskText = "";
+
     }
 
     public int getScore() {

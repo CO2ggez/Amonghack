@@ -171,7 +171,7 @@ public class InputManager implements KeyListener {
             // Terminal
             if (roomManager.getCurrentRoomName().equals("server")
                     && player.xDelta >= 720 && player.xDelta <= 1180) {
-                minigameManager.setTask("terminal");
+
                 minigameManager.startTask();
                 return;
             }
@@ -284,6 +284,8 @@ public class InputManager implements KeyListener {
 
         // terminal ในห้อง server
         if (room.equals("server") && player.xDelta >= 720 && player.xDelta <= 1180) {
+            minigameManager.resetTask();
+            minigameManager.setTask("terminal");
             return "[F] Use terminal";
         }
 
