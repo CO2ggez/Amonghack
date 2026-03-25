@@ -8,6 +8,7 @@ import ui.Camera;
 public class Player extends JPanel {
     public int xDelta = 0;
     public int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
+    public int offsetX = 0;
 
     public core.GamePanel panel;
 
@@ -200,7 +201,7 @@ public class Player extends JPanel {
         }
 
         //เพิ่มกรณีที่ map เล็กกว่าขนาดจอ ให้วาด player ให้อยุ่ใน map
-        int offsetX = 0;
+        offsetX = 0;
 
         if (camera.getWorldWidth() < camera.getScreenWidth()) {
             offsetX = (camera.getScreenWidth() - camera.getWorldWidth()) / 2;

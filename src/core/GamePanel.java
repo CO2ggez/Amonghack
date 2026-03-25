@@ -14,6 +14,7 @@ import ui.Camera;
 import ui.DialogBox; // นำเข้า Event
 import ui.TimeUI;   // นำเข้า Event
 import util.AssetLoader;   // นำเข้า AssetLoader
+import util.FontUtil;
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -233,18 +234,22 @@ public class GamePanel extends JPanel implements Runnable {
 
         //วาดข้อความว่า interact event ได้
         if (showHint && hintText != null) {
-            int playerScreenX = player.xDelta - camera.getX();
-            int playerScreenY = player.yDelta;
+            int playerScreenX = player.xDelta - camera.getX() + player.offsetX;
+            int playerScreenY = player.yDelta - 20;
 
-            g2.setFont(new Font("Arial", Font.BOLD, 16));
+            g2.setFont(FontUtil.THAI);
 
-            // shadow
-            g2.setColor(Color.BLACK);
-            g2.drawString(hintText, playerScreenX - 40 + 1, playerScreenY - 20 + 1);
+            FontMetrics fm = g2.getFontMetrics();
+            int w = fm.stringWidth(hintText);
+            int h = fm.getHeight();
+
+            // กล่องดำโปร่งใส
+            g2.setColor(new Color(0, 0, 0, 150));
+            g2.fillRect(playerScreenX-10, playerScreenY - h +10, w + 20, h);
 
             // text
             g2.setColor(Color.WHITE);
-            g2.drawString(hintText, playerScreenX - 40, playerScreenY - 20);
+            g2.drawString(hintText, playerScreenX , playerScreenY );
         }
 
         //ทรานซิชั่นถมดำ
