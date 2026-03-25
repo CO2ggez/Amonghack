@@ -136,6 +136,7 @@ public class GamePanel extends JPanel implements Runnable {
         // จะวาดตัวละคร Player ก็ต่อเมื่อกล่องข้อความไม่ได้เปิดอยู่
         if (dialogBox == null || !dialogBox.isVisible()) {
             player.draw(g2);
+            player.setVisible(isTransitioning);
         }
 
         if (eventManager != null && eventManager.isShowImage()) {
