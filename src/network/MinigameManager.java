@@ -7,6 +7,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     private GamePanel panel;
     private JPanel currentGamePanel;
     public boolean taskLan = false;
+    public boolean taskTerminal = false;
     private boolean isPlaying = false;
     private int score = 0;
 
@@ -19,11 +20,14 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
 
         switch (type) {
             case "lan" -> taskLan = true; //ให้ taskLan เป็น true เพื่อให้้ input manager เช็คให้กด f ที่จุดที่เล่นมินิเกมนั้นได้
+            case "terminal" -> taskTerminal = true;
         }
 
     }
 
     public void startTask(){//ใน inputManager เมื่อplayer กด F ที่ตำแหน่งเล่นเกม จะเรียกใชเอันนี้ สร้างobj minigame
+        if (isPlaying) return; //กันเปิดมินิเกมซ้อน
+
         isPlaying = true;
 
         Minigame game = null;
@@ -31,9 +35,15 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         if (taskLan) {
             game = new LanCable(this);
             taskLan = false;
+        } else if (taskTerminal) {
+            game = new TerminalMinigame(this);
+            taskTerminal = false;
         }
 
-        if (game == null) return;
+        if (game == null) {
+            isPlaying = false; //ถ้าไม่มีมินิเกมให้เปิด ก็คืนสถานะ
+            return;
+        }
 
         currentGamePanel = game.getPanel();
 

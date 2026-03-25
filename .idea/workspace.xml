@@ -4,15 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="ข้อความที่ขึ้นบนหัวตอนมี event ให้กด f แบบลิงๆ">
-      <change afterPath="$PROJECT_DIR$/src/util/FontUtil.java" afterDir="false" />
+    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/network/TerminalMinigame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/TerminalUI.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/MinigameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/MinigameManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,12 +41,12 @@
     &quot;assignee&quot;: &quot;Kmitl68070131&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/CO2ggez/Amonghack.git",
-    "accountId": "98ee0296-8efd-4151-a441-2b6501c9f7a4"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/CO2ggez/Amonghack.git&quot;,
+    &quot;accountId&quot;: &quot;98ee0296-8efd-4151-a441-2b6501c9f7a4&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/entity/Player.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -157,7 +158,7 @@
       <workItem from="1774453223807" duration="6033000" />
       <workItem from="1774428756600" duration="2733000" />
       <workItem from="1774454989977" duration="7778000" />
-      <workItem from="1774472697345" duration="4375000" />
+      <workItem from="1774472697345" duration="351000" />
     </task>
     <task id="LOCAL-00001" summary="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้">
       <option name="closed" value="true" />
@@ -184,15 +185,7 @@
       <option name="project" value="LOCAL" />
       <updated>1774181043104</updated>
     </task>
-    <task id="LOCAL-00004" summary="ข้อความที่ขึ้นบนหัวตอนมี event ให้กด f แบบลิงๆ">
-      <option name="closed" value="true" />
-      <created>1774473116057</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1774473116058</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,7 +206,7 @@
     <MESSAGE value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
     <MESSAGE value="lan" />
     <MESSAGE value="รวม main" />
-    <MESSAGE value="ข้อความที่ขึ้นบนหัวตอนมี event ให้กด f แบบลิงๆ" />
-    <option name="LAST_COMMIT_MESSAGE" value="ข้อความที่ขึ้นบนหัวตอนมี event ให้กด f แบบลิงๆ" />
+    <MESSAGE value="temp before unstash" />
+    <option name="LAST_COMMIT_MESSAGE" value="temp before unstash" />
   </component>
 </project>
