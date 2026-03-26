@@ -62,4 +62,8 @@ public class TimeManager implements Runnable {
         this.inGameMinutes = 0; // กลับไปเริ่มที่ 00:00 AM
         this.isDayEnded = false; // เอาป้ายจบวันออก
     }
+
+    public double getHours() {
+        return (double) inGameMinutes /60;
+    }
 }

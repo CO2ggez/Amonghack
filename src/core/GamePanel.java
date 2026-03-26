@@ -193,13 +193,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         minigameManager = new MinigameManager(this);
 
-        //ตั้งtaskตอนนี้เป็น lan ถ้าไปถึงจุดที่เครื่องอยู่ใน inputmanager กด f แล้วจึงเริ่ม
-        minigameManager.setTask("lan");
-
-
         player.setCamera(camera);
-
-
 
         // 1. --- เลื่อนการสร้าง npcmanager มาไว้ตรงนี้ก่อน (เพื่อให้มีข้อมูลก่อนส่งไปให้ InputManager) ---
         npcmanager = new NPCmanager(roomManager);
