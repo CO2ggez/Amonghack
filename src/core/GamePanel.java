@@ -6,10 +6,7 @@ import event.EventManager;
 import event.EventSetup;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
 import java.io.IOException;
-
-
 import javax.swing.*;
 import map.RoomManager;
 import network.MinigameManager;
