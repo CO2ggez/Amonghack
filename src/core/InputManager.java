@@ -511,19 +511,19 @@ public class InputManager implements KeyListener {
 
     // --- เช็คว่าเราอยู่ตำแหน่ง NPC นั้นไหม ---
     public boolean bossArea(){
-        return (roomManager.getCurrentRoomName().equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(npcManager.boss.getX(), npcManager.boss.getX()+300));
+        return (roomManager.getCurrentRoomName().equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(npcManager.boss.getX()-150, npcManager.boss.getX()+300));
     }
 
     public boolean janitorArea(){
-        return (roomManager.getCurrentRoomName().equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(npcManager.janitor.getX(), npcManager.janitor.getX()+300));
+        return (roomManager.getCurrentRoomName().equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(npcManager.janitor.getX()-150, npcManager.janitor.getX()+300));
     }
 
     public boolean hrArea(){
-        return (roomManager.getCurrentRoomName().equals(npcManager.hr.inRoom) && !talkedToHR && isNear(npcManager.hr.getX(), npcManager.hr.getX()+300));
+        return (roomManager.getCurrentRoomName().equals(npcManager.hr.inRoom) && !talkedToHR && isNear(npcManager.hr.getX()-150, npcManager.hr.getX()+300));
     }
 
     public boolean itsupportArea(){
-        return (roomManager.getCurrentRoomName().equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(npcManager.itsupport.getX(), npcManager.itsupport.getX()+300));
+        return (roomManager.getCurrentRoomName().equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(npcManager.itsupport.getX()-150, npcManager.itsupport.getX()+300));
     }
 
     public boolean helpBossArea(){

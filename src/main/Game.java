@@ -12,8 +12,8 @@ public class Game {
     private JButton btn_close;
     private GamePanel panel;
     private TextBook textbook;
-    private int screenWidth;
-    private int screenHeight;
+    private final int screenWidth = 1920;
+    private final int screenHeight = 1080;
     private JPanel cardcontain;
     private CardLayout cardLayout;
     private MainMenu mainMenu;
@@ -26,26 +26,32 @@ public class Game {
         frame_main = new JFrame("Amonghack");
         cardLayout = new CardLayout();
         cardcontain = new JPanel(cardLayout);
-        mainMenu = new MainMenu();
-
-        panel = new GamePanel(player);
-        panel.setLayout(null);
-        player.setPanel(panel);
+        mainMenu = new MainMenu(this);
 
         cardcontain.add(mainMenu, "mainmenu");
-        cardcontain.add(panel, "game");
 
         mainMenu.getBtn_start().addActionListener(e -> {
-                cardLayout.show(cardcontain, "game");
-                panel.requestFocusInWindow();});
-
-        screenWidth = panel.getScreenWidth(); //ถ้าเป็นไปได้อยากให้เปลี่ยนขนาดจอที่เดียวละเปลี่ยนหมดเลยอ่ะ
-        screenHeight = panel.getScreenHeight();
+            startgame();
+            panel.requestFocusInWindow();}
+        );
 
         frame_main.setUndecorated(true);
         frame_main.setSize(screenWidth, screenHeight);
         frame_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame_main.setLayout(new BorderLayout());
+
+        frame_main.add(cardcontain, BorderLayout.CENTER);
+        frame_main.setLocationRelativeTo(null);
+        frame_main.setVisible(true);
+
+    }
+
+    public void startgame(){
+        player = new Player();
+        panel = new GamePanel(player);
+        panel.setLayout(null);
+        player.setPanel(panel);
+        cardcontain.add(panel, "gamepanel");
 
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("close.png"));
         int width  = originalIcon.getIconWidth();
@@ -54,6 +60,8 @@ public class Game {
         int new_h = (h * new_width) / width;
         Image scaledImage = originalIcon.getImage().getScaledInstance(new_width, new_h, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+        System.out.println("Let's go");
 
         btn_close = new JButton(scaledIcon);
         btn_close.setBounds(1860, 10, new_width, new_h);
@@ -66,15 +74,18 @@ public class Game {
         player.setBounds(0, 0, screenWidth, screenHeight);
         player.setOpaque(false); //ลบ background ของ Player
         //textbook
-        panel.add(btn_close);
+        panel.add(player);
         panel.setComponentZOrder(player, 1); //ดึง player ขึ้นมาข้างหน้าสุด
+        panel.add(btn_close);
 
-        frame_main.add(cardcontain, BorderLayout.CENTER);
-        frame_main.setLocationRelativeTo(null);
-        frame_main.setVisible(true);
+        cardcontain.revalidate();
+        cardcontain.repaint();
+
+        cardLayout.show(cardcontain, "gamepanel");
 
         player.requestFocusInWindow();
     }
+
 
     public static void main(String[] args) {
         //แก้จอยืดครับ

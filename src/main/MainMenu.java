@@ -11,7 +11,7 @@ public class MainMenu extends JPanel{
 
     public JButton getBtn_start(){return btn_start;}
 
-    public MainMenu(){
+    public MainMenu(Game g){
         ImageIcon startIcon = new ImageIcon(getClass().getResource("start.png"));
         btn_start = new JButton(startIcon);
         CGMainmenu = new ImageIcon(getClass().getResource("CG_inprogress.png")).getImage();
