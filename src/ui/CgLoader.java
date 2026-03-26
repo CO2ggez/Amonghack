@@ -16,7 +16,7 @@ public class CgLoader{
     }
 
     private void loadAllCgs() {
-        String[] cgNames = {"CG1-JobApplication", "CG2-JobInterview", "CG-ending-Arrest", "CG-ending-chief","CG-ending-Janitor","Cg-startday"};
+        String[] cgNames = {"CG1-JobApplication", "CG2-JobInterview","CG3-BedRoom", "CG-ending-Arrest", "CG-ending-chief","CG-ending-Janitor"};
 
         for (String name : cgNames) {
             try {
