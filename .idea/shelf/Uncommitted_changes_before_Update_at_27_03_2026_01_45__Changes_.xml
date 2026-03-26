@@ -1,0 +1,39 @@
+<changelist name="Uncommitted_changes_before_Update_at_27_03_2026_01_45_[Changes]" date="1774550732479" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_03_2026_01_45_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 27/03/2026 01:45 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/network/IPManager.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/network/IPManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_03_2026_01_45_[Changes]/IPManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/network/TerminalMinigame$2.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/network/TerminalMinigame$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_03_2026_01_45_[Changes]/TerminalMinigame$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/network/TerminalMinigame.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/network/TerminalMinigame.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_03_2026_01_45_[Changes]/TerminalMinigame.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/network/TerminalMinigame$3.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/network/TerminalMinigame$3.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_03_2026_01_45_[Changes]/TerminalMinigame$3.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/DialogBox.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/ui/DialogBox.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_03_2026_01_45_[Changes]/DialogBox.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/network/TerminalMinigame$4.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/network/TerminalMinigame$4.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_03_2026_01_45_[Changes]/TerminalMinigame$4.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/network/TerminalMinigame$1.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/network/TerminalMinigame$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_03_2026_01_45_[Changes]/TerminalMinigame$1.class" />
+  </binary>
+</changelist>
