@@ -60,7 +60,7 @@ public class TerminalMinigame implements Minigame {
         terminalArea.setOpaque(false); // ด้านใน terminal เป็นสีดำอยู่แล้ว
         terminalArea.setForeground(new Color(0, 255, 70));
         terminalArea.setCaretColor(new Color(0, 255, 70));
-        terminalArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 22));
+        terminalArea.setFont(new Font("Tahoma", Font.PLAIN, 22));
         terminalArea.setLineWrap(false);
         terminalArea.setWrapStyleWord(false);
         terminalArea.setMargin(new Insets(0, 0, 0, 0));
@@ -224,12 +224,18 @@ public class TerminalMinigame implements Minigame {
         switch (command.toLowerCase()) {
             case "help" -> {
                 appendLine("Available Commands:");
-                appendLine("show network");
-                appendLine("set ip");
-                appendLine("set gateway");
-                appendLine("list users");
-                appendLine("read log");
-                appendLine("ban ip");
+                appendLine("status - แสดงสถานะระบบหลักของบริษัท");
+                appendLine("show network - แสดงค่าปัจจุบันของเครื่องผู้เล่น");
+                appendLine("set ip - เปลี่ยน ip");
+                appendLine("set gateway - เปลี่ยน gateway ของระบบ");
+                appendLine("list users - แสดงรายชื่อ user ทั้งหมดในองค์กร");
+                appendLine("read log - เปิด log");
+                appendLine("ban ip - จัดเก็บ ip ที่ไม่ทราบที่มาเข้าสู่ Blacklist");
+            }
+            case "status" -> {
+                appendLine("Server Status: ONLINE (ONLINE / OFFLINE)");
+                appendLine("Security Level: STABLE (STABLE / WARNING / BREACHED)");
+                appendLine("Active Alerts: 0");
             }
             case "show network" -> {
                 appendLine("IP: not set");
