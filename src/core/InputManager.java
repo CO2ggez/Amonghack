@@ -47,8 +47,6 @@ public class InputManager implements KeyListener {
 
     private TextBook textBook;
 
-
-
     public void interact() {
         if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {
             gamePanel.dialogBox.nextText();
@@ -156,7 +154,7 @@ public class InputManager implements KeyListener {
 
             if (roomName.equals("stair2") && isNear(288, 576)) {
                 gamePanel.startTransition(() -> {
-                    roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
+                    roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500);
                 });
                 return; 
             }
@@ -172,11 +170,6 @@ public class InputManager implements KeyListener {
                 gamePanel.startTransition(() -> {
                     roomManager.changeRoomRight(camera);
                 });
-                return;
-            }
-
-            if (roomManager.getCurrentRoomName().equals("server") && isNear(720, 1180)) {
-                minigameManager.startTask();
                 return;
             }
 
@@ -402,9 +395,9 @@ public class InputManager implements KeyListener {
 
         if (actualDay == 1) {
             if (bossArea()) return "[E] คุยกับบอส";
-            if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) return "[E] คุยกับ HR"; 
+            if (hrArea()) return "[E] คุยกับ HR";
             if (itsupportArea()) return "[E] คุยกับ IT Support";
-            if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) return "[E] คุยกับภารโรง"; 
+            if (janitorArea()) return "[E] คุยกับภารโรง";
             if (room.equals("server") && !talkedToServer && isNear(500, 800)) return "[E] สำรวจ"; 
         } 
         else if (actualDay == 2) {
@@ -433,6 +426,7 @@ public class InputManager implements KeyListener {
         return null;
     }
 
+    //เช็คว่า้ราอยู่ตำแหน่ง npc นั้นไหม
     public boolean bossArea(){
         return (roomManager.getCurrentRoomName().equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(npcManager.boss.getX(),npcManager.boss.getX()+300));
     }
@@ -446,6 +440,4 @@ public class InputManager implements KeyListener {
     public boolean itsupportArea(){
         return (roomManager.getCurrentRoomName().equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(npcManager.itsupport.getX(),npcManager.itsupport.getX()+300));
     }
-
-
 }

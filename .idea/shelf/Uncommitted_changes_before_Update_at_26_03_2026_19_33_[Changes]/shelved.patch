@@ -1,0 +1,163 @@
+Index: src/core/InputManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package core;\r\n\r\nimport entity.NPCmanager;\r\nimport entity.Player;\r\nimport event.EventManager;\r\nimport java.awt.event.KeyEvent;\r\nimport java.awt.event.KeyListener;\r\nimport java.awt.event.MouseAdapter;\r\nimport java.awt.event.MouseEvent;\r\nimport map.RoomManager;\r\nimport network.MinigameManager;\r\nimport org.w3c.dom.Text;\r\nimport ui.Camera;\r\n\r\n\r\nimport event.EventManager;\r\nimport ui.TextBook;\r\n\r\n\r\npublic class InputManager implements KeyListener {\r\n    private Camera camera;\r\n    private RoomManager roomManager;\r\n    private GamePanel gamePanel;\r\n    private Player player;\r\n    private MinigameManager minigameManager;\r\n\r\n    private NPCmanager npcManager; \r\n\r\n    // --- ตัวแปรสำหรับจัดการเนื้อเรื่อง ---\r\n    private int currentTrackedDay = 1;\r\n    \r\n    // สถานะว่าคุยกับใครไปแล้วบ้าง (จะถูกรีเซ็ตเมื่อเปลี่ยนวัน)\r\n    private boolean talkedToBoss = false;\r\n    private boolean talkedToHR = false;\r\n    private boolean talkedToIT = false;\r\n    private boolean talkedToJanitor = false;\r\n    private boolean talkedToServer = false;\r\n\r\n    // ตัวแปรเก็บความคืบหน้าของเหตุการณ์ที่ต้องทำต่อเนื่อง (Day 4 และ 5)\r\n    private int progressDay4 = 0;\r\n    private int progressDay5 = 0;\r\n\r\n    // --- Helper Method เช็คระยะห่างว่าอยู่ใกล้ไหม ---\r\n    private boolean isNear(int minX, int maxX) {\r\n        return player.xDelta >= minX && player.xDelta <= maxX;\r\n    }\r\n\r\n    private TextBook textBook;\r\n\r\n\r\n\r\n    public void interact() {\r\n        if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {\r\n            gamePanel.dialogBox.nextText();\r\n        }\r\n    }\r\n\r\n\r\n    public InputManager(Camera camera, RoomManager roomManager, GamePanel panel, Player player, MinigameManager minigameManager, NPCmanager npcManager,TextBook tb) {\r\n\r\n\r\n\r\n\r\n        this.gamePanel = panel;\r\n        this.camera = camera;\r\n        this.roomManager = roomManager;\r\n        this.player = player;\r\n        this.minigameManager = minigameManager;\r\n\r\n        this.npcManager = npcManager; \r\n\r\n        this.textBook=tb;\r\n\r\n\r\n\r\n        panel.addMouseListener(new MouseAdapter() {\r\n            @Override\r\n            public void mouseClicked(MouseEvent e) {\r\n                interact();\r\n                int mouseX = e.getX();\r\n                int mouseY = e.getY();\r\n                EventManager em = gamePanel.getEventManager();\r\n\r\n                if (em != null && em.isShowImage() && em.getActiveZoneName().equals(\"Elevator_Panel\")) {\r\n                    if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 139 && mouseY <= 359) {\r\n                        gamePanel.startTransition(() -> {\r\n                            roomManager.changeFloor(roomManager.mapDataFloor2, \"lift2\", 500);\r\n                            em.closeEvent(); \r\n                        });\r\n                        return; \r\n                    }\r\n                    else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 433 && mouseY <= 662) {\r\n                        gamePanel.startTransition(() -> {\r\n                            roomManager.changeFloor(roomManager.mapDataFloor1, \"lift1\", 500);\r\n                            em.closeEvent();\r\n                        });\r\n                        return;\r\n                    }\r\n                    else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 748 && mouseY <= 954) {\r\n                        gamePanel.startTransition(() -> {\r\n                            roomManager.changeFloor(roomManager.mapDataFloorG, \"liftG\", 500);\r\n                            em.closeEvent();\r\n                        });\r\n                        return;\r\n                    }\r\n                    em.closeEvent();\r\n                    return;\r\n                }\r\n\r\n                if (minigameManager != null && minigameManager.isPlaying()) {\r\n                    return;\r\n                }\r\n                int worldX = mouseX + camera.getX();\r\n                if (em != null) {\r\n                    String currentRoom = roomManager.getCurrentRoomName();\r\n                    em.checkClick(worldX, mouseY, currentRoom);\r\n                }\r\n            }\r\n        });\r\n    }\r\n\r\n\r\n    @Override\r\n\r\n    public void keyTyped(KeyEvent e) {}\r\n\r\n\r\n\r\n    @Override\r\n    public void keyPressed(KeyEvent e) {\r\n        // ---------------- ระบบเคลื่อนย้ายฉากและเกม ----------------\r\n        if (e.getKeyCode() == KeyEvent.VK_F) {\r\n            String roomName = roomManager.getCurrentRoomName();\r\n\r\n            if (roomName.equals(\"stairG\") && isNear(400, 600)) {\r\n                gamePanel.startTransition(() -> {\r\n                    roomManager.changeFloor(roomManager.mapDataFloor1, \"stair1\", 500);\r\n                });\r\n                return;\r\n            }\r\n\r\n            if (roomName.equals(\"stair1\")) {\r\n                if (isNear(400, 600)) { \r\n                    gamePanel.startTransition(() -> {\r\n                        roomManager.changeFloor(roomManager.mapDataFloor2, \"stair2\", 500);\r\n                    });\r\n                    return;\r\n                }\r\n                if (isNear(100, 300)) { \r\n                    gamePanel.startTransition(() -> {\r\n                        roomManager.changeFloor(roomManager.mapDataFloorG, \"stairG\", 500);\r\n                    });\r\n                    return;\r\n                }\r\n            }\r\n\r\n            if (roomName.equals(\"stair2\") && isNear(400, 700)) {\r\n                gamePanel.startTransition(() -> {\r\n                    roomManager.changeFloor(roomManager.mapDataFloor1, \"stair1\", 1400);\r\n                });\r\n                return; \r\n            }\r\n\r\n            if (player.xDelta <= 40) {\r\n                gamePanel.startTransition(() -> {\r\n                    roomManager.changeRoomLeft(camera);\r\n                });\r\n                return;\r\n            }\r\n\r\n            if (player.xDelta >= roomManager.getWidth() - 150) {\r\n                gamePanel.startTransition(() -> {\r\n                    roomManager.changeRoomRight(camera);\r\n                });\r\n                return;\r\n            }\r\n\r\n            if (roomManager.getCurrentRoomName().equals(\"server\") && isNear(720, 1180)) {\r\n                minigameManager.startTask();\r\n                return;\r\n            }\r\n\r\n            if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0])) &&\r\n                isNear(Integer.parseInt(minigameManager.currentLanLocation[1]), Integer.parseInt(minigameManager.currentLanLocation[2])) \r\n                && minigameManager.taskLan) {\r\n                minigameManager.startTask();\r\n                return;\r\n            }\r\n        } \r\n\r\n        if (gamePanel.getIsTransitioning()) {\r\n            gamePanel.startNextDay();\r\n            player.leftPressed = false;\r\n            player.rightPressed = false;\r\n            player.moving = false;\r\n            return;\r\n        }\r\n\r\n        if (e.getKeyCode() == KeyEvent.VK_D) {\r\n            player.checkRight = true;\r\n            player.rightPressed = true; \r\n            player.moving = true;\r\n        }\r\n\r\n        if (e.getKeyCode() == KeyEvent.VK_A) {\r\n            player.checkRight = false;\r\n            player.leftPressed = true;\r\n            player.moving = true;\r\n        }\r\n\r\n        //ระบบเนื้อเรื่อง (กด E)\r\n        if (e.getKeyCode() == KeyEvent.VK_E) {\r\n            if (gamePanel != null && gamePanel.dialogBox != null && !gamePanel.dialogBox.isVisible()) {\r\n                \r\n                //ดึงข้อมูลวันปัจจุบันมาเช็ค\r\n                int actualDay = 1;\r\n                if (gamePanel.getGSM() != null) {\r\n                    actualDay = gamePanel.getGSM().getCurrentDay();\r\n                }\r\n\r\n                //ถ้าเปลี่ยนวัน ให้รีเซ็ตสถานะการคุยเป็นยังไม่ได้คุยทั้งหมด\r\n                if (actualDay != currentTrackedDay) {\r\n                    currentTrackedDay = actualDay;\r\n                    talkedToBoss = false;\r\n                    talkedToHR = false;\r\n                    talkedToIT = false;\r\n                    talkedToJanitor = false;\r\n                    talkedToServer = false;\r\n                    progressDay4 = 0;\r\n                    progressDay5 = 0;\r\n                }\r\n\r\n                String room = roomManager.getCurrentRoomName();\r\n                \r\n                // --- เหตุการณ์ DAY 1 ---\r\n                if (actualDay == 1) {\r\n                    if (bossArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.INTERVIEW);\r\n                        talkedToBoss = true; \r\n                    } \r\n                    else if (hrArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_HR);\r\n                        talkedToHR = true;\r\n                    } \r\n                    else if (itsupportArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_ITSUP);\r\n                        talkedToIT = true;\r\n                    } \r\n                    else if (janitorArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_JANITOR);\r\n                        talkedToJanitor = true;\r\n                    } \r\n                    else if (room.equals(\"server\") && !talkedToServer && isNear(500, 800)) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_SERVER);\r\n                        talkedToServer = true;\r\n                    }\r\n                }\r\n                // --- เหตุการณ์ DAY 2 ---\r\n                else if (actualDay == 2) {\r\n                    if (bossArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_BOSS_CALL);\r\n                        talkedToBoss = true; \r\n                    } \r\n                    else if (hrArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_HR);\r\n                        talkedToHR = true;\r\n                    } \r\n                    else if (itsupportArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_ITSUP);\r\n                        talkedToIT = true;\r\n                    } \r\n                    else if (room.equals(\"server\") && !talkedToServer && isNear(500, 800)) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_SERVER);\r\n                        talkedToServer = true;\r\n                    }\r\n                }\r\n                // --- เหตุการณ์ DAY 3 ---\r\n                else if (actualDay == 3) {\r\n                    if (bossArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY3_BOSS);\r\n                        talkedToBoss = true; \r\n                    } \r\n                    else if (janitorArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY3_POWEROUT);\r\n                        talkedToJanitor = true;\r\n                    } \r\n                    else if (room.equals(\"server\") && !talkedToServer && isNear(500, 800)) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY3_SERVER);\r\n                        talkedToServer = true;\r\n                    }\r\n                }\r\n                // --- เหตุการณ์ DAY 4 ---\r\n                else if (actualDay == 4) {\r\n                    if (bossArea() && progressDay4 == 0) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_BOSS_1);\r\n                        progressDay4 = 1; // อัปเดตเพื่อให้ไป Step ถัดไปได้\r\n                    } \r\n                    else if (room.equals(\"server\") && progressDay4 == 1 && isNear(500, 800)) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_BRIDGE);\r\n                        progressDay4 = 2;\r\n                    } \r\n                    else if (itsupportArea()) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_ITSUP);\r\n                        progressDay4 = 3;\r\n                    } \r\n                    else if (bossArea() && progressDay4 == 3) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_BOSS_2);\r\n                        progressDay4 = 4;\r\n                    }\r\n                }\r\n                // --- เหตุการณ์ DAY 5 + ENDING (จับกุม และ Ending) ---\r\n                else if (actualDay == 5) {\r\n                    if (room.equals(npcManager.janitor.inRoom) && progressDay5 == 0 && isNear(200, 500)) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY5_CLIMAX);\r\n                        progressDay5 = 1; \r\n                    } \r\n                    else if (bossArea() && progressDay5 == 1) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.ENDING_BOSS);\r\n                        progressDay5 = 2;\r\n                    } \r\n                    else if (janitorArea() && progressDay5 == 2) {\r\n                        gamePanel.dialogBox.startDialog(ui.StoryDialog.ENDING_JANITOR);\r\n                        progressDay5 = 3;\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n        if (e.getKeyCode() == KeyEvent.VK_SPACE) {\r\n            interact();\r\n        }\r\n\r\n\r\n        //textbookdraw\r\n        if (e.getKeyCode()==KeyEvent.VK_M){\r\n            textBook.setVisible(!textBook.isVisible());\r\n        }\r\n        //จบโค้ดที่มาจาก Player----------------------------\r\n\r\n    }\r\n\r\n    @Override\r\n    public void keyReleased(KeyEvent e) {\r\n        if (e.getKeyCode() == KeyEvent.VK_D) player.rightPressed = false;\r\n        if (e.getKeyCode() == KeyEvent.VK_A) player.leftPressed = false;\r\n        player.moving = player.leftPressed || player.rightPressed; \r\n    }\r\n\r\n    public MouseAdapter getMouseListener() {\r\n        return new MouseAdapter() {\r\n            @Override\r\n            public void mouseClicked(java.awt.event.MouseEvent e) {\r\n                interact();\r\n            }\r\n        };\r\n    }\r\n\r\n    public String getCurrentHint() {\r\n        String room = roomManager.getCurrentRoomName();\r\n\r\n        if ((player.xDelta <= 40 && roomManager.haveRoomLeft()) || (player.xDelta >= roomManager.getWidth() - 150 && roomManager.haveRoomRight())){\r\n            return \"[F] ไปห้องถัดไป\";\r\n        }\r\n\r\n        if (room.startsWith(\"stair\")) {\r\n            if (isNear(400, 600)) {\r\n                if (room.equals(\"stairG\") || room.equals(\"stair1\")) return \"[F] ไปชั้นบน\";\r\n                if (room.equals(\"stair2\")) return \"[F] ไปชั้นล่าง\";\r\n            }\r\n            if (room.equals(\"stair1\") && isNear(100, 300)) return \"[F] ไปชั้นล่าง\";\r\n        }\r\n\r\n        if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0])) &&\r\n             isNear(Integer.parseInt(minigameManager.currentLanLocation[1]), Integer.parseInt(minigameManager.currentLanLocation[2])) \r\n             && minigameManager.taskLan) {\r\n            return \"[F] เชื่อมสายแลน\";\r\n        }\r\n\r\n        if (room.equals(\"server\") && isNear(720, 1180)) return \"[F] Use terminal\";\r\n\r\n        //เช็คHintของระบบเนื้อเรื่อง\r\n        int actualDay = 1;\r\n        if (gamePanel.getGSM() != null) {\r\n            actualDay = gamePanel.getGSM().getCurrentDay();\r\n        }\r\n\r\n        if (actualDay == 1) {\r\n            if (bossArea()) return \"[E] คุยกับบอส\";\r\n            if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) return \"[E] คุยกับ HR\"; \r\n            if (itsupportArea()) return \"[E] คุยกับ IT Support\";\r\n            if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) return \"[E] คุยกับภารโรง\"; \r\n            if (room.equals(\"server\") && !talkedToServer && isNear(500, 800)) return \"[E] สำรวจ\"; \r\n        } \r\n        else if (actualDay == 2) {\r\n            if (bossArea()) return \"[E] โทรศัพท์จากบอส\";\r\n            if (hrArea()) return \"[E] คุยกับ HR\";\r\n            if (itsupportArea()) return \"[E] คุยกับ IT Support\";\r\n            if (room.equals(\"server\") && !talkedToServer && isNear(500, 800)) return \"[E] สำรวจ\"; \r\n        }\r\n        else if (actualDay == 3) {\r\n            if (bossArea()) return \"[E] คุยกับบอส\";\r\n            if (janitorArea()) return \"[E] คุยกับภารโรง\";\r\n            if (room.equals(\"server\") && !talkedToServer && isNear(500, 800)) return \"[E] สำรวจ\"; \r\n        }\r\n        else if (actualDay == 4) {\r\n            if (bossArea() && progressDay4 == 0) return \"[E] คุยกับบอส\";\r\n            if (room.equals(\"server\") && progressDay4 == 1 && isNear(500, 800)) return \"[E] สำรวจ Network Bridge\"; \r\n            if (itsupportArea()) return \"[E] คุยกับ IT Support\";\r\n            if (bossArea() && progressDay4 == 3 ) return \"[E] รายงานบอส\";\r\n        }\r\n        else if (actualDay == 5) {\r\n            if (janitorArea() && progressDay5 == 0) return \"[E] เข้าจับกุม!\";\r\n            if (bossArea()&& progressDay5 == 1) return \"[E] ดื่มฉลอง\";\r\n            if (janitorArea() && progressDay5 == 2) return \"[E] เยี่ยมเยียน\";\r\n        }\r\n\r\n        return null;\r\n    }\r\n\r\n    public boolean bossArea(){\r\n        return (roomManager.getCurrentRoomName().equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(npcManager.boss.getX(),npcManager.boss.getX()+300));\r\n    }\r\n\r\n    public boolean janitorArea(){\r\n        return (roomManager.getCurrentRoomName().equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(npcManager.janitor.getX(),npcManager.janitor.getX()+300));\r\n    }\r\n    public boolean hrArea(){\r\n        return (roomManager.getCurrentRoomName().equals(npcManager.hr.inRoom) && !talkedToHR && isNear(npcManager.hr.getX(),npcManager.hr.getX()+300));\r\n    }\r\n    public boolean itsupportArea(){\r\n        return (roomManager.getCurrentRoomName().equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(npcManager.itsupport.getX(),npcManager.itsupport.getX()+300));\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/core/InputManager.java b/src/core/InputManager.java
+--- a/src/core/InputManager.java	(revision 3ca58b7abda8fdacc8476040810cd39cdb26482d)
++++ b/src/core/InputManager.java	(date 1774526829770)
+@@ -47,8 +47,6 @@
+ 
+     private TextBook textBook;
+ 
+-
+-
+     public void interact() {
+         if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {
+             gamePanel.dialogBox.nextText();
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51\" name=\"Changes\" comment=\"กำเนิด npc มายืนบนโลก\">\r\n      <change beforePath=\"$PROJECT_DIR$/src/event/EventSetup.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/event/EventSetup.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 6\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"3BTGk8pUcZc1p8AqHCBcoi2jhyz\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Game.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"RunOnceActivity.typescript.service.memoryLimit.init\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/Windows10/Documents/NEW project/Amonghack/src/util/asst\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Windows10\\Documents\\NEW project\\Amonghack\\src\\util\\asst\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\AIMVIEW\\Desktop\\Project\\AmongHackOOP\\src\\entity\\idle\" />\r\n      <recent name=\"C:\\Users\\AIMVIEW\\Desktop\\Project\\AmongHackOOP\\src\\entity\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Game\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"main.Game\" />\r\n      <module name=\"Project_op\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"main.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Game\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task id=\"LOCAL-00001\" summary=\"merge &amp; task text &amp; random lan location\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774483064578</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774483064578</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"merge &amp; task text &amp; random lan location\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774484047557</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774484047557</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"กำเนิด npc มายืนบนโลก\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774489309264</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774489309264</updated>\r\n    </task>\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51\" name=\"Changes\" comment=\"กำเนิด npc มายืนบนโลก\" />\r\n      <created>1774505788072</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1774505788072</updated>\r\n      <workItem from=\"1774505791572\" duration=\"3045000\" />\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"4\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"merge &amp; task text &amp; random lan location\" />\r\n    <MESSAGE value=\"กำเนิด npc มายืนบนโลก\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"กำเนิด npc มายืนบนโลก\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 3ca58b7abda8fdacc8476040810cd39cdb26482d)
++++ b/.idea/workspace.xml	(date 1774526242309)
+@@ -4,8 +4,9 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก">
+-      <change beforePath="$PROJECT_DIR$/src/event/EventSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/event/EventSetup.java" afterDir="false" />
++    <list default="true" id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="npcArea ใน inputManager">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -22,35 +23,46 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;AIMVIEW&quot;
++  }
++}</component>
++  <component name="GithubPullRequestsUISettings">{
++  &quot;selectedUrlAndAccountId&quot;: {
++    &quot;url&quot;: &quot;https://github.com/CO2ggez/Amonghack.git&quot;,
++    &quot;accountId&quot;: &quot;98ee0296-8efd-4151-a441-2b6501c9f7a4&quot;
++  }
++}</component>
++  <component name="ProblemsViewState">
++    <option name="selectedTabId" value="CurrentFile" />
++  </component>
+   <component name="ProjectColorInfo">{
+-  &quot;customColor&quot;: &quot;&quot;,
+-  &quot;associatedIndex&quot;: 6
++  &quot;associatedIndex&quot;: 2,
++  &quot;fromUser&quot;: false
+ }</component>
+-  <component name="ProjectId" id="3BTGk8pUcZc1p8AqHCBcoi2jhyz" />
++  <component name="ProjectId" id="3BTjGxnbq0MnLzyRa11KCGjx0lT" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.Game.executor": "Run",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+-    "git-widget-placeholder": "main",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/Windows10/Documents/NEW project/Amonghack/src/util/asst",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Application.Game.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+-    <key name="CopyFile.RECENT_KEYS">
+-      <recent name="C:\Users\Windows10\Documents\NEW project\Amonghack\src\util\asst" />
+-    </key>
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="C:\Users\AIMVIEW\Desktop\Project\AmongHackOOP\src\entity\idle" />
+       <recent name="C:\Users\AIMVIEW\Desktop\Project\AmongHackOOP\src\entity" />
+@@ -79,8 +91,8 @@
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
++        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
++        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
+       </set>
+     </attachedChunks>
+   </component>
+@@ -109,15 +121,23 @@
+       <option name="project" value="LOCAL" />
+       <updated>1774489309264</updated>
+     </task>
+-    <task active="true" id="Default" summary="Default task">
+-      <changelist id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก" />
+-      <created>1774505788072</created>
+-      <option name="number" value="Default" />
+-      <option name="presentableId" value="Default" />
+-      <updated>1774505788072</updated>
+-      <workItem from="1774505791572" duration="3045000" />
++    <task id="LOCAL-00004" summary="่just dialogue font">
++      <option name="closed" value="true" />
++      <created>1774521398301</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1774521398301</updated>
+     </task>
+-    <option name="localTasksCounter" value="4" />
++    <task id="LOCAL-00005" summary="npcArea ใน inputManager">
++      <option name="closed" value="true" />
++      <created>1774526068905</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1774526068905</updated>
++    </task>
++    <option name="localTasksCounter" value="6" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -126,6 +146,8 @@
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="merge &amp; task text &amp; random lan location" />
+     <MESSAGE value="กำเนิด npc มายืนบนโลก" />
+-    <option name="LAST_COMMIT_MESSAGE" value="กำเนิด npc มายืนบนโลก" />
++    <MESSAGE value="่just dialogue font" />
++    <MESSAGE value="npcArea ใน inputManager" />
++    <option name="LAST_COMMIT_MESSAGE" value="npcArea ใน inputManager" />
+   </component>
+ </project>
+\ No newline at end of file

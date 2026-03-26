@@ -19,6 +19,9 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     private int score = 0;
     public String taskText = "";
 
+    public int helpJanitorScore = 0;
+    public int helpBossScore = 0;
+
     //hashmap เก็บข้อมูลว่า lan มีที่ตำแหน่งไหนห้องไหน เพื่อเอาไปสุ่ม
     Map<String, int[]> zoneMap = new HashMap<>();
 

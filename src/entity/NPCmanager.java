@@ -55,4 +55,17 @@ public class NPCmanager {
 
         }
     }
+
+    public void showAllNPCs() {
+        for (NPC npc : npcs) {
+            npc.show();
+        }
+    }
+
+    public void hideAllNPCs() {
+        for (NPC npc : npcs) {
+            npc.hide();
+        }
+    }
+
 }

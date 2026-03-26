@@ -189,9 +189,7 @@ public class GamePanel extends JPanel implements Runnable {
         addKeyListener(inputManager);
         player.setCamera(camera);
 
-        npcmanager = new NPCmanager(roomManager);
-
-        gsm = new GameStateManager();
+        gsm = new GameStateManager(this);
         timeUI = new TimeUI(timeManager, gsm);
         dialogBox = new DialogBox();
 
@@ -252,6 +250,12 @@ public class GamePanel extends JPanel implements Runnable {
             player.setVisible(isTransitioning);
         }
 
+        g2.setFont(FontUtil.THAI);
+
+        //task text ขวาบน
+        g2.setColor(Color.WHITE);
+        g2.drawString(minigameManager.taskText, 1400 , 60);
+
         if (eventManager != null && eventManager.isShowImage()) {
             String activeEvent = eventManager.getActiveZoneName();
 
@@ -271,7 +275,6 @@ public class GamePanel extends JPanel implements Runnable {
             dialogBox.draw(g2);
         }
 
-        g2.setFont(FontUtil.THAI);
         //วาดข้อความว่า interact event ได้
         if (showHint && hintText != null) {
             int playerScreenX = player.xDelta - camera.getX() + player.offsetX;
@@ -289,10 +292,6 @@ public class GamePanel extends JPanel implements Runnable {
             g2.setColor(Color.WHITE);
             g2.drawString(hintText, playerScreenX , playerScreenY );
         }
-
-        //task text ขวาบน
-        g2.setColor(Color.WHITE);
-        g2.drawString(minigameManager.taskText, 1400 , 60);
 
         //ทรานซิชั่นถมดำ
         if (fadeAlpha > 0) {
@@ -347,4 +346,7 @@ public class GamePanel extends JPanel implements Runnable {
         return gsm;
     }
 
+    public NPCmanager getNpcmanager() {
+        return npcmanager;
+    }
 }

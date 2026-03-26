@@ -11,8 +11,8 @@ public class MinigameLocation {
     static {
         lanLocation.put("office", new int[]{74*6, 129*6});
         lanLocation.put("server", new int[]{190*6, 239*6});
-        lanLocation.put("art", new int[]{800, 1200});
-        lanLocation.put("meeting", new int[]{400, 700});
+        lanLocation.put("art", new int[]{20*6, 79*6});
+        lanLocation.put("meeting", new int[]{102*6, 152*6});
 
         terminalLocation.put("office", new int[]{173*6, 220*6}); // เปลี่ยนเลขพิกัดตามตำแหน่งคอมในรูปฉาก
         terminalLocation.put("server", new int[]{136*6, 172*6});

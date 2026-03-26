@@ -6,7 +6,12 @@ public class GameStateManager {
     private int currentDay;
     private AbstractState currentState;
 
-    public GameStateManager() {
+    //เอมใช้วิธีลิงนะ :)
+    public GamePanel gamePanel;
+
+    public GameStateManager(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+
         currentDay = 1;
         loadState(currentDay);
     }
@@ -25,11 +30,11 @@ public class GameStateManager {
     //method นี้จะสลับคลาสตามเลขวัน
     private void loadState(int day) {
         switch (day) {
-            case 1: currentState = new Day1State(); break;
-            case 2: currentState = new Day2State(); break;
-            case 3: currentState = new Day3State(); break;
-            case 4: currentState = new Day4State(); break;
-            case 5: currentState = new Day5State(); break;
+            case 1: currentState = new Day1State(gamePanel); break;
+            case 2: currentState = new Day2State(gamePanel); break;
+            case 3: currentState = new Day3State(gamePanel); break;
+            case 4: currentState = new Day4State(gamePanel); break;
+            case 5: currentState = new Day5State(gamePanel); break;
         }
     }
 
