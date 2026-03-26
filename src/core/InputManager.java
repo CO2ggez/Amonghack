@@ -82,21 +82,21 @@ public class InputManager implements KeyListener {
                 EventManager em = gamePanel.getEventManager();
 
                 if (em != null && em.isShowImage() && em.getActiveZoneName().equals("Elevator_Panel")) {
-                    if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 139 && mouseY <= 359) {
+                    if (mouseX >= 906 && mouseX <= 1026 && mouseY >= 318 && mouseY <= 438) {
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloor2, "lift2", 500);
                             em.closeEvent(); 
                         });
                         return; 
                     }
-                    else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 433 && mouseY <= 662) {
+                    else if (mouseX >= 906 && mouseX <= 1026 && mouseY >= 480 && mouseY <= 606) {
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloor1, "lift1", 500);
                             em.closeEvent();
                         });
                         return;
                     }
-                    else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 748 && mouseY <= 954) {
+                    else if (mouseX >= 906 && mouseX <= 1026 && mouseY >= 648 && mouseY <= 768) {
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloorG, "liftG", 500);
                             em.closeEvent();
@@ -132,7 +132,7 @@ public class InputManager implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_F) {
             String roomName = roomManager.getCurrentRoomName();
 
-            if (roomName.equals("stairG") && isNear(400, 600)) {
+            if (roomName.equals("stairG") && isNear(577, 864)) {
                 gamePanel.startTransition(() -> {
                     roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500);
                 });
@@ -140,13 +140,13 @@ public class InputManager implements KeyListener {
             }
 
             if (roomName.equals("stair1")) {
-                if (isNear(400, 600)) { 
+                if (isNear(577, 864)) {
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloor2, "stair2", 500);
                     });
                     return;
                 }
-                if (isNear(100, 300)) { 
+                if (isNear(288, 576)) {
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloorG, "stairG", 500);
                     });
@@ -154,7 +154,7 @@ public class InputManager implements KeyListener {
                 }
             }
 
-            if (roomName.equals("stair2") && isNear(400, 700)) {
+            if (roomName.equals("stair2") && isNear(288, 576)) {
                 gamePanel.startTransition(() -> {
                     roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
                 });
@@ -363,11 +363,14 @@ public class InputManager implements KeyListener {
         }
 
         if (room.startsWith("stair")) {
-            if (isNear(400, 600)) {
-                if (room.equals("stairG") || room.equals("stair1")) return "[F] ไปชั้นบน";
+            if (isNear(288, 576)) {
+                if (room.equals("stair1")) return "[F] ไปชั้นล่าง";
                 if (room.equals("stair2")) return "[F] ไปชั้นล่าง";
             }
-            if (room.equals("stair1") && isNear(100, 300)) return "[F] ไปชั้นล่าง";
+            if (isNear(577, 864)) {
+                if (room.equals("stairG") || room.equals("stair1")) return "[F] ไปชั้นบน";
+            }
+
         }
 
         if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0])) &&

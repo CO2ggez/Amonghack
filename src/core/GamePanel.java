@@ -173,7 +173,7 @@ public class GamePanel extends JPanel implements Runnable {
         minigameManager = new MinigameManager(this);
 
         //ตั้งtaskตอนนี้เป็น lan ถ้าไปถึงจุดที่เครื่องอยู่ใน inputmanager กด f แล้วจึงเริ่ม
-        minigameManager.setTask("terminal");
+        minigameManager.setTask("lan");
 
 
         player.setCamera(camera);
@@ -257,6 +257,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             // เช็คว่ากดโดนลิฟต์ และ โหลดรูปมาสำเร็จ
             if (activeEvent.equals("Elevator_Panel") && elevatorUI != null) {
+                // ทำฉากด้านหลังมืดลง
+                g2.setColor(new Color(0, 0, 0, 140));
+                g2.fillRect(0, 0, getWidth(), getHeight());
                 // คำนวณให้รูปภาพวาดอยู่ตรงกลางหน้าจอพอดี
                 int uiX = (getWidth() - elevatorUI.getWidth()) / 2;
                 int uiY = (getHeight() - elevatorUI.getHeight()) / 2;
