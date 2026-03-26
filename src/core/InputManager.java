@@ -109,6 +109,20 @@ public class InputManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        //ไว้กด N บังคับเปลี่ยนวัน
+        if (e.getKeyCode() == KeyEvent.VK_N) {
+            if (gamePanel.getIsTransitioning()) {
+                gamePanel.startNextDay();
+            } else {
+                gamePanel.timeManager.forceEndDay();
+            }
+
+            player.leftPressed = false;
+            player.rightPressed = false;
+            player.moving = false;
+            return;
+        }
+        
         // ---------------- ระบบเคลื่อนย้ายฉากและเกม ----------------
         if (e.getKeyCode() == KeyEvent.VK_F) {
             String roomName = roomManager.getCurrentRoomName();

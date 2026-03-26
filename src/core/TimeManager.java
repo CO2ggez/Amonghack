@@ -29,6 +29,11 @@ public class TimeManager implements Runnable {
         return isDayEnded;
     }
 
+    public void forceEndDay() {
+        isDayEnded = true;
+        isPaused = true;
+    }
+
     @Override
     public void run() {
         while (running) {

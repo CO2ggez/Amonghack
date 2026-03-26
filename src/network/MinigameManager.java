@@ -42,7 +42,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
                 taskLan = true;
                 currentLanLocation = randomLanRoom();
 
-                taskText = "เชื่อมสายแลนที่ห้อง" + currentLanLocation[0];
+                taskText = "เชื่อมสายแลนที่ห้อง " + currentLanLocation[0];
                 System.out.println(taskText);
 
                 break;
