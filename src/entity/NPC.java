@@ -8,7 +8,7 @@ public class NPC {
     protected int y = 882 - 384;
     protected int width = 64*6;
     protected int height = 64*6;
-    protected String inRoom;
+    public String inRoom;
 
     protected BufferedImage[] idleFrames;
     protected BufferedImage[] walkFrames;

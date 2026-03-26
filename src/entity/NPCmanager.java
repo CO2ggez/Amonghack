@@ -1,17 +1,17 @@
 package entity;
 
-import map.RoomManager;
-
 import java.awt.*;
+import map.RoomManager;
 
 public class NPCmanager {
     RoomManager roomManager;
     String currentRoom;
-    NPC hr = new HR();
-    NPC janitor = new Janitor();
-    NPC itsupport = new ITSupport();
-    NPC boss = new Boss();
-    NPC cat = new Cat();
+
+    public NPC hr = new HR();
+    public NPC janitor = new Janitor();
+    public NPC itsupport = new ITSupport();
+    public NPC boss = new Boss();
+    public NPC cat = new Cat();
 
     NPC[] npcs = new NPC[5];
 

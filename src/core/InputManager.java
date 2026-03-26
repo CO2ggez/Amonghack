@@ -1,7 +1,8 @@
 package core;
 
+import entity.NPCmanager;
 import entity.Player;
-import java.awt.*;
+import event.EventManager;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -9,7 +10,6 @@ import java.awt.event.MouseEvent;
 import map.RoomManager;
 import network.MinigameManager;
 import ui.Camera;
-import event.EventManager;
 
 public class InputManager implements KeyListener {
     private Camera camera;
@@ -17,6 +17,26 @@ public class InputManager implements KeyListener {
     private GamePanel gamePanel;
     private Player player;
     private MinigameManager minigameManager;
+    private NPCmanager npcManager; 
+
+    // --- ตัวแปรสำหรับจัดการเนื้อเรื่อง ---
+    private int currentTrackedDay = 1;
+    
+    // สถานะว่าคุยกับใครไปแล้วบ้าง (จะถูกรีเซ็ตเมื่อเปลี่ยนวัน)
+    private boolean talkedToBoss = false;
+    private boolean talkedToHR = false;
+    private boolean talkedToIT = false;
+    private boolean talkedToJanitor = false;
+    private boolean talkedToServer = false;
+
+    // ตัวแปรเก็บความคืบหน้าของเหตุการณ์ที่ต้องทำต่อเนื่อง (Day 4 และ 5)
+    private int progressDay4 = 0;
+    private int progressDay5 = 0;
+
+    // --- Helper Method เช็คระยะห่างว่าอยู่ใกล้ไหม ---
+    private boolean isNear(int minX, int maxX) {
+        return player.xDelta >= minX && player.xDelta <= maxX;
+    }
 
     public void interact() {
         if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {
@@ -24,74 +44,48 @@ public class InputManager implements KeyListener {
         }
     }
 
-    public InputManager(Camera camera, RoomManager roomManager, GamePanel panel, Player player, MinigameManager minigameManager) {
-
+    public InputManager(Camera camera, RoomManager roomManager, GamePanel panel, Player player, MinigameManager minigameManager, NPCmanager npcManager) {
         this.gamePanel = panel;
         this.camera = camera;
         this.roomManager = roomManager;
         this.player = player;
         this.minigameManager = minigameManager;
+        this.npcManager = npcManager; 
 
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("คลิกหน้าจอ!");
                 interact();
-
-                // --- เพิ่มระบบคลิก Event ---
-                // 1. รับค่าเมาส์บนจอภาพ
                 int mouseX = e.getX();
                 int mouseY = e.getY();
-
                 EventManager em = gamePanel.getEventManager();
 
-                System.out.println("เมาส์คลิกที่พิกัดจอ -> X: " + mouseX + " | Y: " + mouseY);
-
-
-                // 2. เช็คว่า "หน้าต่างลิฟต์เปิดอยู่ไหม?"
                 if (em != null && em.isShowImage() && em.getActiveZoneName().equals("Elevator_Panel")) {
-
-                    // --- สมมติพิกัดปุ่มบนหน้าจอ (คุณต้องปรับตัวเลขให้ตรงกับรูปปุ่มในเกมของคุณ) ---
-
-                    // เช็คปุ่ม "ไปชั้น 2" (สมมติปุ่มอยู่ช่วง X: 800-900, Y: 300-350)
                     if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 139 && mouseY <= 359) {
-                        System.out.println("ลิฟต์: ไปชั้น 2");
-
-                        // เปลี่ยนไปแมพชั้น 2, โผล่ที่ห้อง lift2, วางตัวละครที่ X=500
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloor2, "lift2", 500);
-                            em.closeEvent(); // ปิดหน้าต่างลิฟต์
+                            em.closeEvent(); 
                         });
-                        return; // จบการทำงานของคลิกนี้
+                        return; 
                     }
-                    // เช็คปุ่ม "ไปชั้น 1" (สมมติปุ่มอยู่ช่วง X: 800-900, Y: 400-450)
                     else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 433 && mouseY <= 662) {
-                        System.out.println("ลิฟต์: ไปชั้น 1");
-
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloor1, "lift1", 500);
                             em.closeEvent();
                         });
                         return;
                     }
-                    // เช็คปุ่ม "ไปชั้น G" (สมมติปุ่มอยู่ช่วง X: 800-900, Y: 500-550)
                     else if (mouseX >= 849 && mouseX <= 1070 && mouseY >= 748 && mouseY <= 954) {
-                        System.out.println("ลิฟต์: ไปชั้น G");
-
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloorG, "liftG", 500);
                             em.closeEvent();
                         });
                         return;
                     }
-
-                    // (ทางเลือกเสริม) ถ้าคลิกที่ว่างอื่นๆ นอกปุ่ม ให้ปิดหน้าต่างลิฟต์ทิ้ง
                     em.closeEvent();
                     return;
                 }
 
-                // 3. ถ้าไม่มี UI หน้าต่างใดๆ เปิดอยู่ ค่อยเช็คการคลิกในฉากเกม (World Coordinates)
-                //ถ้ามินิเกมเปิดอยู่แล้ว ไม่ให้คลิกทะลุไปด้านหลัง
                 if (minigameManager != null && minigameManager.isPlaying()) {
                     return;
                 }
@@ -105,36 +99,29 @@ public class InputManager implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //ระบบการกด F เปลี่ยนห้องเมื่ออยู่ขอบแมพ ไม่ซ้ายก้ขวา
+        // ---------------- ระบบเคลื่อนย้ายฉากและเกม ----------------
         if (e.getKeyCode() == KeyEvent.VK_F) {
-
             String roomName = roomManager.getCurrentRoomName();
 
-            // --- เงื่อนไขเปลี่ยนชั้น (เพิ่มใหม่) ---
-
-            // กรณีอยู่ชั้น G จะขึ้นไปชั้น 1 (ต้องอยู่ที่ห้อง stairG และยืนใกล้บันได)
-            if (roomName.equals("stairG") && player.xDelta >= 400 && player.xDelta <= 600) {
+            if (roomName.equals("stairG") && isNear(400, 600)) {
                 gamePanel.startTransition(() -> {
-                    // เปลี่ยนไป Floor 1, ห้อง stair1, วางตัวละครที่ X=500
                     roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500);
                 });
                 return;
             }
 
-            // กรณีอยู่ชั้น 1 จะขึ้นไปชั้น 2 หรือลงไปชั้น G
             if (roomName.equals("stair1")) {
-                if (player.xDelta >= 400 && player.xDelta <= 600) { // สมมติเป็นจุดขึ้นไปชั้น 2
+                if (isNear(400, 600)) { 
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloor2, "stair2", 500);
                     });
                     return;
                 }
-                if (player.xDelta >= 100 && player.xDelta <= 300) { // สมมติเป็นจุดลงไปชั้น G
+                if (isNear(100, 300)) { 
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloorG, "stairG", 500);
                     });
@@ -142,18 +129,13 @@ public class InputManager implements KeyListener {
                 }
             }
 
-            if (roomName.equals("stair2")) {
-                // เช็คว่าตัวละครยืนอยู่ใกล้บันไดไหม (สมมติพิกัดบันไดอยู่ช่วงกลางแมพ)
-                if (player.xDelta >= 400 && player.xDelta <= 700) {
-                    gamePanel.startTransition(() -> {
-                        // สั่งเปลี่ยนไปใช้แมพ Floor 1 / ไปโผล่ที่ห้อง stair1 / วางตัวละครที่ X=1400 (ขวาหน้าบันได)
-                        roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
-                    });
-                    return; // เปลี่ยนชั้นเสร็จให้จบการทำงานปุ่ม F ทันที
-                }
+            if (roomName.equals("stair2") && isNear(400, 700)) {
+                gamePanel.startTransition(() -> {
+                    roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 1400);
+                });
+                return; 
             }
 
-            // --- ระบบเปลี่ยนห้อง ซ้าย-ขวา (ย้ายเข้ามาใน IF ของปุ่ม F แล้ว) ---
             if (player.xDelta <= 40) {
                 gamePanel.startTransition(() -> {
                     roomManager.changeRoomLeft(camera);
@@ -168,125 +150,235 @@ public class InputManager implements KeyListener {
                 return;
             }
 
-            // Terminal
-            if (roomManager.getCurrentRoomName().equals("server")
-                    && player.xDelta >= 720 && player.xDelta <= 1180) {
-
+            if (roomManager.getCurrentRoomName().equals("server") && isNear(720, 1180)) {
                 minigameManager.startTask();
                 return;
             }
 
-            //check ตำแหน่งตู้ server เพื่อทำ task
-            if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0]))&&(player.xDelta >= Integer.parseInt(minigameManager.currentLanLocation[1])
-                    && player.xDelta <= Integer.parseInt(minigameManager.currentLanLocation[2])) && minigameManager.taskLan) {
+            if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0])) &&
+                isNear(Integer.parseInt(minigameManager.currentLanLocation[1]), Integer.parseInt(minigameManager.currentLanLocation[2])) 
+                && minigameManager.taskLan) {
                 minigameManager.startTask();
                 return;
             }
+        } 
 
-        } // <--- ปิดปีกกาของ IF VK_F ตรงนี้ เพื่อให้ข้างล่างทำงานแยกกัน
-
-        //ย้ายมาจาก GamePanel------------------------
-        if (gamePanel.getIsTransitioning()) {// แค่เช็คว่าติดสถานะจอดำอยู่มั้ย ถ้าใช่ กดปุ่มไหนก็ทำงานเลย
+        if (gamePanel.getIsTransitioning()) {
             gamePanel.startNextDay();
             player.leftPressed = false;
             player.rightPressed = false;
             player.moving = false;
             return;
         }
-        //จบโค้ดที่ย้ายมาจาก GamePanel------------------------
 
-        //ย้ายมาจาก class Player ----------------------------
         if (e.getKeyCode() == KeyEvent.VK_D) {
             player.checkRight = true;
-            player.rightPressed = true; //เปลี่ยนไปเพิ่ม xDelta ใน update ที่จะเรียกใช้ตลอดแทน
-
+            player.rightPressed = true; 
             player.moving = true;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_A) {
             player.checkRight = false;
             player.leftPressed = true;
-
             player.moving = true;
         }
 
-        //DIALOGUE นะจ๊ะ
-        // อันนี้แค่ลองใส่ไปก่อนนะเดะมาแก้้ ขอไปไล่ดูก่อนว่าอะไรยังไง
+        //ระบบเนื้อเรื่อง (กด E)
         if (e.getKeyCode() == KeyEvent.VK_E) {
             if (gamePanel != null && gamePanel.dialogBox != null && !gamePanel.dialogBox.isVisible()) {
-                gamePanel.dialogBox.startDialog(ui.StoryDialog.INTERVIEW);
+                
+                //ดึงข้อมูลวันปัจจุบันมาเช็ค
+                int actualDay = 1;
+                if (gamePanel.getGSM() != null) {
+                    actualDay = gamePanel.getGSM().getCurrentDay();
+                }
+
+                //ถ้าเปลี่ยนวัน ให้รีเซ็ตสถานะการคุยเป็นยังไม่ได้คุยทั้งหมด
+                if (actualDay != currentTrackedDay) {
+                    currentTrackedDay = actualDay;
+                    talkedToBoss = false;
+                    talkedToHR = false;
+                    talkedToIT = false;
+                    talkedToJanitor = false;
+                    talkedToServer = false;
+                    progressDay4 = 0;
+                    progressDay5 = 0;
+                }
+
+                String room = roomManager.getCurrentRoomName();
+                
+                // --- เหตุการณ์ DAY 1 ---
+                if (actualDay == 1) {
+                    if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.INTERVIEW);
+                        talkedToBoss = true; 
+                    } 
+                    else if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_HR);
+                        talkedToHR = true;
+                    } 
+                    else if (room.equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(400, 700)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_ITSUP);
+                        talkedToIT = true;
+                    } 
+                    else if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_JANITOR);
+                        talkedToJanitor = true;
+                    } 
+                    else if (room.equals("server") && !talkedToServer && isNear(500, 800)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_SERVER);
+                        talkedToServer = true;
+                    }
+                }
+                // --- เหตุการณ์ DAY 2 ---
+                else if (actualDay == 2) {
+                    if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_BOSS_CALL);
+                        talkedToBoss = true; 
+                    } 
+                    else if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_HR);
+                        talkedToHR = true;
+                    } 
+                    else if (room.equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(400, 700)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_ITSUP);
+                        talkedToIT = true;
+                    } 
+                    else if (room.equals("server") && !talkedToServer && isNear(500, 800)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_SERVER);
+                        talkedToServer = true;
+                    }
+                }
+                // --- เหตุการณ์ DAY 3 ---
+                else if (actualDay == 3) {
+                    if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY3_BOSS);
+                        talkedToBoss = true; 
+                    } 
+                    else if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY3_POWEROUT);
+                        talkedToJanitor = true;
+                    } 
+                    else if (room.equals("server") && !talkedToServer && isNear(500, 800)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY3_SERVER);
+                        talkedToServer = true;
+                    }
+                }
+                // --- เหตุการณ์ DAY 4 ---
+                else if (actualDay == 4) {
+                    if (room.equals(npcManager.boss.inRoom) && progressDay4 == 0 && isNear(400, 700)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_BOSS_1);
+                        progressDay4 = 1; // อัปเดตเพื่อให้ไป Step ถัดไปได้
+                    } 
+                    else if (room.equals("server") && progressDay4 == 1 && isNear(500, 800)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_BRIDGE);
+                        progressDay4 = 2;
+                    } 
+                    else if (room.equals(npcManager.itsupport.inRoom) && progressDay4 == 2 && isNear(400, 700)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_ITSUP);
+                        progressDay4 = 3;
+                    } 
+                    else if (room.equals(npcManager.boss.inRoom) && progressDay4 == 3 && isNear(400, 700)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_BOSS_2);
+                        progressDay4 = 4;
+                    }
+                }
+                // --- เหตุการณ์ DAY 5 + ENDING (จับกุม และ Ending) ---
+                else if (actualDay == 5) {
+                    if (room.equals(npcManager.janitor.inRoom) && progressDay5 == 0 && isNear(200, 500)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY5_CLIMAX);
+                        progressDay5 = 1; 
+                    } 
+                    else if (room.equals(npcManager.boss.inRoom) && progressDay5 == 1 && isNear(400, 700)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.ENDING_BOSS);
+                        progressDay5 = 2;
+                    } 
+                    else if (room.equals(npcManager.janitor.inRoom) && progressDay5 == 2 && isNear(200, 500)) {
+                        gamePanel.dialogBox.startDialog(ui.StoryDialog.ENDING_JANITOR);
+                        progressDay5 = 3;
+                    }
+                }
             }
         }
 
-        //กดSpacebarอ่านต่อ
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             interact();
         }
-
-        //จบโค้ดที่มาจาก Player----------------------------
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        //ย้ายมาจาก Player----------------------------
-        if (e.getKeyCode() == KeyEvent.VK_D) {
-            player.rightPressed = false;
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_A) {
-            player.leftPressed = false;
-        }
-
-        player.moving = player.leftPressed || player.rightPressed; //เปลี่ยนค่าทุกตัวแปลให้รุ้ว่าไม่ได้ขยับ
-        //จบโค้ดจาก Player------------------------------
+        if (e.getKeyCode() == KeyEvent.VK_D) player.rightPressed = false;
+        if (e.getKeyCode() == KeyEvent.VK_A) player.leftPressed = false;
+        player.moving = player.leftPressed || player.rightPressed; 
     }
 
     public MouseAdapter getMouseListener() {
         return new MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                System.out.println("คลิกหน้าจอ!");//อันนี้เราใส่ไว้เช็คว่ามันกดได้จริงหรือป่าว ไว้มาลบทีหลัง
                 interact();
             }
         };
     }
 
-    //condition เพื่อส่งข้อความที่แสดงว่าตรงนั้้นกด F ได้ แบบ ลิงๆ
     public String getCurrentHint() {
-
         String room = roomManager.getCurrentRoomName();
 
-        // ห้อง
         if ((player.xDelta <= 40 && roomManager.haveRoomLeft()) || (player.xDelta >= roomManager.getWidth() - 150 && roomManager.haveRoomRight())){
             return "[F] ไปห้องถัดไป";
         }
 
-        // บันได
         if (room.startsWith("stair")) {
-
-            if (player.xDelta >= 400 && player.xDelta <= 600) {
-
-                if (room.equals("stairG")) return "[F] ไปชั้นบน";
-                if (room.equals("stair1")) return "[F] ไปชั้นบน";
+            if (isNear(400, 600)) {
+                if (room.equals("stairG") || room.equals("stair1")) return "[F] ไปชั้นบน";
                 if (room.equals("stair2")) return "[F] ไปชั้นล่าง";
             }
-
-            if (room.equals("stair1") && player.xDelta >= 100 && player.xDelta <= 300) {
-                return "[F] ไปชั้นล่าง";
-            }
+            if (room.equals("stair1") && isNear(100, 300)) return "[F] ไปชั้นล่าง";
         }
 
-        // server
-        if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0]))&&(player.xDelta >= Integer.parseInt(minigameManager.currentLanLocation[1])
-                && player.xDelta <= Integer.parseInt(minigameManager.currentLanLocation[2])) && minigameManager.taskLan) {
+        if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLanLocation[0])) &&
+             isNear(Integer.parseInt(minigameManager.currentLanLocation[1]), Integer.parseInt(minigameManager.currentLanLocation[2])) 
+             && minigameManager.taskLan) {
             return "[F] เชื่อมสายแลน";
         }
 
-        // terminal ในห้อง server
-        if (room.equals("server") && player.xDelta >= 720 && player.xDelta <= 1180) {
-            minigameManager.resetTask();
-            minigameManager.setTask("terminal");
-            return "[F] Use terminal";
+        if (room.equals("server") && isNear(720, 1180)) return "[F] Use terminal";
+
+        //เช็คHintของระบบเนื้อเรื่อง
+        int actualDay = 1;
+        if (gamePanel.getGSM() != null) {
+            actualDay = gamePanel.getGSM().getCurrentDay();
+        }
+
+        if (actualDay == 1) {
+            if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) return "[E] คุยกับบอส"; 
+            if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) return "[E] คุยกับ HR"; 
+            if (room.equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(400, 700)) return "[E] คุยกับ IT Support"; 
+            if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) return "[E] คุยกับภารโรง"; 
+            if (room.equals("server") && !talkedToServer && isNear(500, 800)) return "[E] สำรวจ"; 
+        } 
+        else if (actualDay == 2) {
+            if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) return "[E] โทรศัพท์จากบอส"; 
+            if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) return "[E] คุยกับ HR"; 
+            if (room.equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(400, 700)) return "[E] คุยกับ IT Support"; 
+            if (room.equals("server") && !talkedToServer && isNear(500, 800)) return "[E] สำรวจ"; 
+        }
+        else if (actualDay == 3) {
+            if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) return "[E] คุยกับบอส"; 
+            if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) return "[E] คุยกับภารโรง"; 
+            if (room.equals("server") && !talkedToServer && isNear(500, 800)) return "[E] สำรวจ"; 
+        }
+        else if (actualDay == 4) {
+            if (room.equals(npcManager.boss.inRoom) && progressDay4 == 0 && isNear(400, 700)) return "[E] คุยกับบอส"; 
+            if (room.equals("server") && progressDay4 == 1 && isNear(500, 800)) return "[E] สำรวจ Network Bridge"; 
+            if (room.equals(npcManager.itsupport.inRoom) && progressDay4 == 2 && isNear(400, 700)) return "[E] คุยกับ IT Support"; 
+            if (room.equals(npcManager.boss.inRoom) && progressDay4 == 3 && isNear(400, 700)) return "[E] รายงานบอส"; 
+        }
+        else if (actualDay == 5) {
+            if (room.equals(npcManager.janitor.inRoom) && progressDay5 == 0 && isNear(200, 500)) return "[E] เข้าจับกุม!"; 
+            if (room.equals(npcManager.boss.inRoom) && progressDay5 == 1 && isNear(400, 700)) return "[E] ดื่มฉลอง"; 
+            if (room.equals(npcManager.janitor.inRoom) && progressDay5 == 2 && isNear(200, 500)) return "[E] เยี่ยมเยียน"; 
         }
 
         return null;

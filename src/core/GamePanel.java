@@ -6,10 +6,8 @@ import event.EventManager;
 import event.EventSetup;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
 import javax.swing.*;
 import map.RoomManager;
-
 import network.MinigameManager;
 import ui.Camera;
 import ui.DialogBox; // นำเข้า Event
@@ -158,9 +156,14 @@ public class GamePanel extends JPanel implements Runnable {
         //ตั้งtaskตอนนี้เป็น lan ถ้าไปถึงจุดที่เครื่องอยู่ใน inputmanager กด f แล้วจึงเริ่ม
         minigameManager.setTask("lan");
 
-        inputManager = new InputManager(camera,roomManager,this,player,minigameManager);
-        addKeyListener(inputManager);
+        player.setCamera(camera);
 
+        // 1. --- เลื่อนการสร้าง npcmanager มาไว้ตรงนี้ก่อน (เพื่อให้มีข้อมูลก่อนส่งไปให้ InputManager) ---
+        npcmanager = new NPCmanager(roomManager);
+
+        // 2. --- แก้ไข: เติม npcmanager เข้าไปเป็นตัวแปรที่ 6 (ตัวสุดท้าย) ในวงเล็บ ---
+        inputManager = new InputManager(camera, roomManager, this, player, minigameManager, npcmanager);
+        addKeyListener(inputManager);
         player.setCamera(camera);
 
         npcmanager = new NPCmanager(roomManager);
@@ -312,6 +315,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public boolean isInMinigame() {
         return minigameManager != null && minigameManager.isPlaying();
+    }
+
+    public GameStateManager getGSM() {
+        return gsm;
     }
 
 }
