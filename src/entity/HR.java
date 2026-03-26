@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class HR extends NPC {
 
     public HR() {
-        super(1200,"lift1");
+        super(300,"office");
 
         try {
             BufferedImage idleSheet = ImageIO.read(
@@ -23,6 +23,18 @@ public class HR extends NPC {
                 System.out.print("no idle sheet");
             }
 
+
+            BufferedImage walkSheet = ImageIO.read(
+                    getClass().getResource("walk/HR.png")
+            );
+
+            if (walkSheet != null) {
+                setWalkFrames(
+                        SpriteSheetLoader.loadRow(walkSheet, 8, 64*6, 64*6)
+                );
+            } else {
+                System.out.print("no walk sheet");
+            }
 
 
         } catch (Exception e) {

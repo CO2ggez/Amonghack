@@ -210,7 +210,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         //npc
-        npcmanager.drawNPC(g);
+        npcmanager.drawNPC(g, camera.getX());
 
         if (gsm != null) {
             gsm.draw(g2);
