@@ -4,24 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="ข้อความที่ขึ้นบนหัว แบบสวยขึ้น">
-      <change afterPath="$PROJECT_DIR$/src/network/MinigameLocation.java" afterDir="false" />
-    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/network/TerminalMinigame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/TerminalUI.png" afterDir="false" />
+    <list default="true" id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="merge &amp; task text &amp; random lan location">
+      <change afterPath="$PROJECT_DIR$/src/entity/NPCmanager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/HR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/HR.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/NPC.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/NPC.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/map/mapImage/itsupport.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/mapImage/itsupport.PNG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/LanCable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanCable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/MinigameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/MinigameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/MinigameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/MinigameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/HR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/HR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/NPC.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,84 +28,17 @@
       </list>
     </option>
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="main" />
-      </map>
-    </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;Kmitl68070131&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Game.executor": "Run",
+    "git-widget-placeholder": "main",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/CO2ggez/Amonghack.git&quot;,
-    &quot;accountId&quot;: &quot;98ee0296-8efd-4151-a441-2b6501c9f7a4&quot;
-  }
-}</component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/entity/Player.java" root0="FORCE_HIGHLIGHTING" />
-  </component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
-}</component>
-  <component name="ProjectId" id="3A7UW3QlodpfP33vmpZgd1g0OYo" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Game.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Java Scratch.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Shell Script.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/AIMVIEW/Desktop/Project/AmongHack&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
+}]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Windows10\Documents\NEW project\Amonghack\src\core" />
-      <recent name="C:\Y1\1-2\OP LAB\Project_op\src\main" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Windows10\Documents\NEW project\Amonghack\src\ui" />
-      <recent name="C:\Users\Windows10\Documents\NEW project\Amonghack\out\production\Project_op\core" />
+      <recent name="C:\Users\AIMVIEW\Desktop\Project\AmongHackOOP\src\entity\idle" />
+      <recent name="C:\Users\AIMVIEW\Desktop\Project\AmongHackOOP\src\entity" />
     </key>
   </component>
   <component name="RunManager">
@@ -132,110 +58,31 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Game" />
-        <item itemvalue="Application.Game" />
-        <item itemvalue="Application.Game" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="" />
-      <created>1771945757014</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1771945757014</updated>
-      <workItem from="1771945758935" duration="5874000" />
-      <workItem from="1772355419976" duration="1265000" />
-      <workItem from="1772446350681" duration="8037000" />
-      <workItem from="1772891558173" duration="2849000" />
-      <workItem from="1773661942308" duration="2088000" />
-      <workItem from="1773855379215" duration="13720000" />
-      <workItem from="1774181249957" duration="235000" />
-      <workItem from="1774182514141" duration="598000" />
-      <workItem from="1774207483447" duration="12343000" />
-      <workItem from="1774376190553" duration="140000" />
-      <workItem from="1774376822391" duration="302000" />
-      <workItem from="1774453223807" duration="6033000" />
-      <workItem from="1774428756600" duration="2733000" />
-      <workItem from="1774454989977" duration="7778000" />
-      <workItem from="1774472697345" duration="8317000" />
-      <workItem from="1774472697345" duration="351000" />
-    </task>
-    <task id="LOCAL-00001" summary="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้">
+    <task id="LOCAL-00001" summary="merge &amp; task text &amp; random lan location">
       <option name="closed" value="true" />
-      <created>1773869418329</created>
+      <created>1774483064578</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1773869418329</updated>
-      <workItem from="1773237325276" duration="4740000" />
+      <updated>1774483064578</updated>
     </task>
-    <task id="LOCAL-00002" summary="รวม main">
+    <task id="LOCAL-00002" summary="merge &amp; task text &amp; random lan location">
       <option name="closed" value="true" />
-      <created>1774180391276</created>
+      <created>1774484047557</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1774180391276</updated>
+      <updated>1774484047557</updated>
     </task>
-    <task id="LOCAL-00003" summary="รวม main">
-      <option name="closed" value="true" />
-      <created>1774181043104</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1774181043104</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
-    <task id="LOCAL-00004" summary="ข้อความที่ขึ้นบนหัวตอนมี event ให้กด f แบบลิงๆ">
-      <option name="closed" value="true" />
-      <created>1774473116057</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1774473116058</updated>
-    </task>
-    <task id="LOCAL-00005" summary="ข้อความที่ขึ้นบนหัว แบบสวยขึ้น">
-      <option name="closed" value="true" />
-      <created>1774477535802</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1774477535802</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
-    <MESSAGE value="lan" />
-    <MESSAGE value="รวม main" />
-    <MESSAGE value="temp before unstash" />
-    <option name="LAST_COMMIT_MESSAGE" value="temp before unstash" />
-    <MESSAGE value="ข้อความที่ขึ้นบนหัวตอนมี event ให้กด f แบบลิงๆ" />
-    <MESSAGE value="ข้อความที่ขึ้นบนหัว แบบสวยขึ้น" />
-    <option name="LAST_COMMIT_MESSAGE" value="ข้อความที่ขึ้นบนหัว แบบสวยขึ้น" />
+    <MESSAGE value="merge &amp; task text &amp; random lan location" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge &amp; task text &amp; random lan location" />
   </component>
 </project>

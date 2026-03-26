@@ -1,21 +1,21 @@
 package core;
 
 import audio.Sound;
-import entity.Player;
+import entity.*;
 import event.EventManager;
 import event.EventSetup;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
 import javax.swing.*;
 import map.RoomManager;
-import network.Minigame;
+
 import network.MinigameManager;
 import ui.Camera;
 import ui.DialogBox; // นำเข้า Event
 import ui.TimeUI;   // นำเข้า Event
 import util.AssetLoader;   // นำเข้า AssetLoader
 import util.FontUtil;
-
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
@@ -55,6 +55,8 @@ public class GamePanel extends JPanel implements Runnable {
     private String hintText = null;
     private boolean showHint = false;
 
+    NPCmanager npcmanager;
+
     public void update() {
         player.update();
         camera.update(player);
@@ -81,6 +83,8 @@ public class GamePanel extends JPanel implements Runnable {
         } else {
             showHint = false;
         }
+
+        npcmanager.updateNPC();
 
         if (isFading) {
             if (isFadeOut) {
@@ -159,6 +163,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.setCamera(camera);
 
+        npcmanager = new NPCmanager(roomManager);
+
         gsm = new GameStateManager();
         timeUI = new TimeUI(timeManager, gsm);
         dialogBox = new DialogBox();
@@ -202,6 +208,9 @@ public class GamePanel extends JPanel implements Runnable {
         roomManager.drawMap(g,camera);//วาดแมพ
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        //npc
+        npcmanager.drawNPC(g);
 
         if (gsm != null) {
             gsm.draw(g2);
