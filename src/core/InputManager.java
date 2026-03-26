@@ -186,6 +186,12 @@ public class InputManager implements KeyListener {
                 minigameManager.startTask();
                 return;
             }
+            if ((roomManager.getCurrentRoomName().equals(minigameManager.currentTerminalLocation[0])) &&
+                    isNear(Integer.parseInt(minigameManager.currentTerminalLocation[1]), Integer.parseInt(minigameManager.currentTerminalLocation[2]))
+                    && minigameManager.taskTerminal) {
+                minigameManager.startTask();
+                return;
+            }
         } 
 
         if (gamePanel.getIsTransitioning()) {
@@ -374,6 +380,13 @@ public class InputManager implements KeyListener {
              isNear(Integer.parseInt(minigameManager.currentLanLocation[1]), Integer.parseInt(minigameManager.currentLanLocation[2])) 
              && minigameManager.taskLan) {
             return "[F] เชื่อมสายแลน";
+        }
+
+        // ---------- เพิ่มโค้ดส่วนนี้เข้าไปสำหรับ Hint ของ Terminal ----------
+        if ((roomManager.getCurrentRoomName().equals(minigameManager.currentTerminalLocation[0])) &&
+                isNear(Integer.parseInt(minigameManager.currentTerminalLocation[1]), Integer.parseInt(minigameManager.currentTerminalLocation[2]))
+                && minigameManager.taskTerminal) {
+            return "[F] เปิด Terminal";
         }
 
         if (room.equals("server") && isNear(720, 1180)) return "[F] Use terminal";

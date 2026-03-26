@@ -14,6 +14,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public String[] currentLanLocation = {"","",""};
 
     public boolean taskTerminal = false;
+    public String[] currentTerminalLocation = {"","",""};
     private boolean isPlaying = false;
     private int score = 0;
     public String taskText = "";
@@ -46,7 +47,10 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
 
             case "terminal" :
                 taskTerminal = true;
-                taskText = "เปิดใช้ Terminal";
+                currentTerminalLocation = randomTerminalRoom();
+                taskText = "เปิดใช้ Terminal ที่ห้อง " + currentTerminalLocation[0];
+                System.out.println(taskText);
+                break;
         }
 
     }
@@ -118,6 +122,17 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public String[] randomLanRoom(){
         List<Map.Entry<String, int[]>> list = new ArrayList<>(MinigameLocation.lanLocation.entrySet());
 
+        Map.Entry<String, int[]> random = list.get(new Random().nextInt(list.size()));
+
+        return new String[]{
+                random.getKey(),
+                String.valueOf(random.getValue()[0]),
+                String.valueOf(random.getValue()[1])
+        };
+    }
+    // ฟังก์ชันสุ่มห้องสำหรับ Terminal
+    public String[] randomTerminalRoom(){
+        List<Map.Entry<String, int[]>> list = new ArrayList<>(MinigameLocation.terminalLocation.entrySet());
         Map.Entry<String, int[]> random = list.get(new Random().nextInt(list.size()));
 
         return new String[]{
