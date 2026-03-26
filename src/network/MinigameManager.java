@@ -14,6 +14,11 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         this.panel = panel;
     }
 
+    //เอาไว้ให้คลาสอื่นเรียก sound
+    public GamePanel getGamePanel(){
+        return panel;
+    }
+
     //ต้องไปสุ่ม task มาก่อนค่อยเรียกใช้อันนี้
     public void setTask(String type) {
 

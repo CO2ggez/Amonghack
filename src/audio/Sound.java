@@ -23,6 +23,8 @@ public class Sound {
         loadSound("bg1", "/audio/SoundWAV/bg1.wav");
         loadSound("ringLift", "/audio/SoundWAV/ringLift.wav");
         loadSound("click1", "/audio/SoundWAV/click1.wav");
+        loadSound("connect", "/audio/SoundWAV/connect.wav");
+        loadSound("connect2", "/audio/SoundWAV/connect2.wav");
     }
 
     private void loadSound(String name, String path) {

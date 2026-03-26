@@ -139,6 +139,7 @@ public class LanCable implements Minigame{
 
                     if (rightOrder[i] == selected) {
                         connected[selected] = true;
+                        manager.getGamePanel().getSound().playSound("connect2");
                     }
 
                     selected = -1;
