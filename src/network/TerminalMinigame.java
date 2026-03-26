@@ -7,6 +7,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 public class TerminalMinigame implements Minigame {
     // ขนาด terminal ตอนแสดงบนจอ
@@ -31,10 +35,14 @@ public class TerminalMinigame implements Minigame {
     // ใช้ text area ตัวเดียว เหมือน cmd
     private final JTextArea terminalArea;
 
+    private final JScrollPane terminalScroll;
+
     // ตำแหน่งเริ่มพิมพ์หลัง prompt
     private int inputStart = 0;
 
     private final IPManager ipManager;
+
+    private boolean systemUpdating = false;
 
 
     public TerminalMinigame(MinigameManager manager) {
@@ -70,7 +78,26 @@ public class TerminalMinigame implements Minigame {
         terminalArea.setMargin(new Insets(0, 0, 0, 0));
         terminalArea.setBorder(null);
 
-        panel.add(terminalArea);
+        ((AbstractDocument) terminalArea.getDocument()).setDocumentFilter(new TerminalDocumentFilter());
+
+        terminalScroll = new JScrollPane(
+                terminalArea,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+        );
+
+        terminalScroll.setBorder(null);
+        terminalScroll.setOpaque(false);
+        terminalScroll.getViewport().setOpaque(false);
+        terminalScroll.setWheelScrollingEnabled(true);
+
+// ทำให้พื้นหลัง scrollbar ไม่ขาว
+        terminalScroll.getVerticalScrollBar().setOpaque(false);
+        terminalScroll.getHorizontalScrollBar().setOpaque(false);
+
+        terminalScroll.getVerticalScrollBar().setUnitIncrement(16);
+
+        panel.add(terminalScroll);
 
         // บังคับให้พิมพ์ได้เฉพาะหลัง prompt
         terminalArea.addKeyListener(new KeyAdapter() {
@@ -130,24 +157,26 @@ public class TerminalMinigame implements Minigame {
             if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0 && panel.isShowing()) {
                 SwingUtilities.invokeLater(() -> {
                     terminalArea.requestFocusInWindow();
-                    moveCaretToEnd();
-                    terminalArea.repaint();
-                    panel.repaint();
+                    refreshTerminalView();
                 });
             }
         });
 
         // ข้อความเริ่มต้น
-        terminalArea.setText(
+        runSystemUpdate(() -> terminalArea.setText(
                 "=== GAME COMPANY INTERNAL SERVER TERMINAL ===\n" +
-                        "Server Status: ONLINE\n" +
-                        "Network: WAITING CONFIGURATION\n" +
+                        "Server Status: OFFLINE\n" +
+                        "Network: DISCONNECTED\n" +
                         "---------------------------------------------\n" +
-                        "Mission: use 'show network' then 'set ip <address>'\n" +
                         "Type 'help' for available commands.\n"
-        );
+        ));
 
         appendPrompt();
+
+        SwingUtilities.invokeLater(() -> {
+            terminalArea.requestFocusInWindow();
+            refreshTerminalView();
+        });
     }
 
     private void draw(Graphics g) {
@@ -199,7 +228,7 @@ public class TerminalMinigame implements Minigame {
         int contentH = (int) (drawHeight * 0.87);
         contentBounds.setBounds(contentX, contentY, contentW, contentH);
 
-        terminalArea.setBounds(
+        terminalScroll.setBounds(
                 contentBounds.x,
                 contentBounds.y,
                 contentBounds.width,
@@ -320,12 +349,12 @@ public class TerminalMinigame implements Minigame {
     }
 
     private void appendLine(String text) {
-        terminalArea.append(text + "\n");
+        runSystemUpdate(() -> terminalArea.append(text + "\n"));
         moveCaretToEnd();
     }
 
     private void appendPrompt() {
-        terminalArea.append(PROMPT);
+        runSystemUpdate(() -> terminalArea.append(PROMPT));
         inputStart = terminalArea.getDocument().getLength();
         moveCaretToEnd();
     }
@@ -334,6 +363,92 @@ public class TerminalMinigame implements Minigame {
         SwingUtilities.invokeLater(() ->
                 terminalArea.setCaretPosition(terminalArea.getDocument().getLength())
         );
+    }
+
+    private void refreshTerminalView() {
+        updateLayoutBounds();
+
+        terminalArea.revalidate();
+        terminalArea.repaint();
+
+        terminalScroll.revalidate();
+        terminalScroll.repaint();
+
+        panel.revalidate();
+        panel.repaint();
+
+        moveCaretToEnd();
+    }
+
+    private void runSystemUpdate(Runnable action) {
+        systemUpdating = true;
+        try {
+            action.run();
+        } finally {
+            systemUpdating = false;
+        }
+    }
+
+    private class TerminalDocumentFilter extends DocumentFilter {
+
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                throws BadLocationException {
+
+            if (systemUpdating) {
+                super.insertString(fb, offset, string, attr);
+                return;
+            }
+
+            int safeOffset = Math.max(offset, inputStart);
+            super.insertString(fb, safeOffset, string, attr);
+        }
+
+        @Override
+        public void remove(FilterBypass fb, int offset, int length)
+                throws BadLocationException {
+
+            if (systemUpdating) {
+                super.remove(fb, offset, length);
+                return;
+            }
+
+            int docLength = fb.getDocument().getLength();
+            int start = Math.max(offset, inputStart);
+            int end = Math.min(offset + length, docLength);
+
+            if (end <= start) {
+                return;
+            }
+
+            super.remove(fb, start, end - start);
+        }
+
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+                throws BadLocationException {
+
+            if (systemUpdating) {
+                super.replace(fb, offset, length, text, attrs);
+                return;
+            }
+
+            int docLength = fb.getDocument().getLength();
+            int start = Math.max(offset, inputStart);
+            int end = Math.min(offset + length, docLength);
+            int safeLength = Math.max(0, end - start);
+
+            if (length == 0) {
+                super.replace(fb, start, 0, text, attrs);
+                return;
+            }
+
+            if (safeLength == 0 && (text == null || text.isEmpty())) {
+                return;
+            }
+
+            super.replace(fb, start, safeLength, text, attrs);
+        }
     }
 
     @Override
