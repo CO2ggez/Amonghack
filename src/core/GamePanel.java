@@ -146,7 +146,11 @@ public class GamePanel extends JPanel implements Runnable {
         // Create TextBook FIRST
         try {
             textBook = new TextBook();
-            textBook.setBounds(50, 50, 200, 200);  // Set position and size (x, y, width, height)
+            int textbookWidth = 1100;   // Adjust as needed
+            int textbookHeight = 800;  // Adjust as needed
+            int x = (1920 - textbookWidth) / 2;   // Center horizontally
+            int y = (1080 - textbookHeight) / 2;  // Center vertically
+            textBook.setBounds(x, y, textbookWidth, textbookHeight);  // Set position and size (x, y, width, height)
             textBook.setVisible(false);  // Start hidden
             add(textBook);  // Add to panel
         } catch (IOException e) {

@@ -1,5 +1,4 @@
 package ui;
-import core.InputManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,19 +6,18 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 
 public class TextBook extends JPanel {
     public BufferedImage image;
     public TextBook() throws IOException {
-        setSize(100,100);
+        setSize(300,300);
         //addKeyListener(new InputManager()); ขออณุญาติย่ายไปสร้างใน gamePanel แทน เนื่องจากระบบเปลี่ยนห้องจะใช้ด้วย
 
         importImg();
 
     }
     public void importImg() throws IOException {
-        InputStream is = getClass().getResourceAsStream("/ui/Textbook.webp");
+        InputStream is = getClass().getResourceAsStream("/util/asst/Textbook.png");
         image = ImageIO.read(is);
     }
     @Override
