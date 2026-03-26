@@ -9,8 +9,8 @@ public class FontUtil {
         try {
             return Font.createFont(
                     Font.TRUETYPE_FONT,
-                    FontUtil.class.getResourceAsStream("ZF#2ndPixelus.ttf")
-            ).deriveFont(36f);
+                    FontUtil.class.getResourceAsStream("2005_iannnnnAMD.ttf")
+            ).deriveFont(Font.PLAIN,50f);
         } catch (Exception e) {
             //ถ้าหาfontไม่เจอใช้อันนี้
             return new Font("Tahoma", Font.BOLD, 16);
