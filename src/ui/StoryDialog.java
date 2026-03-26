@@ -63,7 +63,7 @@ public class StoryDialog {
     };
 
     // ==========================================
-    // OFFICE_DAY1
+    // OFFICE_DAY1 (******สอนเปิด update textbook + Objective ไปที่ห้องหัวหน้า******)
     // ==========================================
     // Dialogue พูดกับหัวหน้าหรือหัวหน้าไม่อยู่(ทำงานกะเช้า)
     // list objective ห้องหัวหน้า -> ห้อง it support -> ห้องserver -> ห้อง art  
@@ -168,6 +168,7 @@ public class StoryDialog {
     };
 
     // MAP_FLOOR02 @ server
+    /* =====================  จด textbook  ======================== */
     public static final String[] DAY1_SERVER = {
         "คุณเข้าไปตรวจ Log ในห้อง Server",
         "คุณพบการอัปโหลดไฟล์แปลก ๆ มาจากแผนก Office",
@@ -247,7 +248,7 @@ public class StoryDialog {
 
     // MAP_FLOOR02 @ office (เข้าเงื่อนไขคุยกับ Wei ใน MAP_FLOOR02 @ itsupport Day2)
     // เดินไป interact ตรวจเครื่อง HR
-    // update textbook IP/DNS
+    /* ==================== update textbook IP/DNS ==================== */
     public static final String[] DAY2_OFFICE_CHECK = {
         "Luca: ไหนดูหน่อย…",
         "**เสียงคลิกเม้า แป้นพิมพ์**",
@@ -262,7 +263,7 @@ public class StoryDialog {
 
     // MAP_FLOOR02 @ server
     // เวลาตี 5 มี minigame ตรวจ Log
-    // update textbook LAN
+    /* ==================== update textbook LAN ==================== */
     public static final String[] DAY2_SERVER = {
         "Luca: การเชื่อมต่อแปลกๆนี้..",
         "Luca: เมื่อวานยังไม่มีเลยหนิ?",
@@ -405,7 +406,7 @@ public class StoryDialog {
 
     // MAP_FLOOR02 @ server
     // ตี 5 minigame ตรวจ Log หลังไฟดับ
-    // update textbook ว่าไฟดับ
+    /*  =================== update textbook ว่าไฟดับ ==================== */
     public static final String[] DAY3_SERVER = {
         "Luca: มาอีกแล้ว…",
         "Luca: มาช่วงเดียวกับตอนไฟดับเลย",
@@ -441,7 +442,7 @@ public class StoryDialog {
     // MAP_FLOOR02 @ server
     // minigame ที่ตู้ Server เล็ก/ใหญ่ทุกตู้
     // ขึ้นข้อความดังนี้ ที่ตู้ Server เครื่องใหญ่ที่ห้อง Server  หลังเล่น minigame เสร็จ
-    // update textbook อุปกรณ์ bridge
+    /* ==================== update textbook อุปกรณ์ bridge ==================== */
     // Objective รายงานหัวหน้า
     public static final String[] DAY4_SERVER = {
         "Luca: เอ่อ สายนี้ไปตรงนี้…",
