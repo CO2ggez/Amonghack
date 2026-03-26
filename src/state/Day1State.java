@@ -12,6 +12,7 @@ public class Day1State extends AbstractState {
 
         //NPC Location set up -----------------
         setupNPC();
+        setSpecialTask();
 
 
     }
@@ -33,6 +34,11 @@ public class Day1State extends AbstractState {
         gamePanel.getNpcmanager().janitor.setLocation("art",1600);
         gamePanel.getNpcmanager().hr.setLocation("office",1100);
         gamePanel.getNpcmanager().boss.setLocation("chiefoffice",1600);
-        //gamePanel.getNpcmanager().itsupport.setLocation("itsupport",900); ไม่ใช้
+        gamePanel.getNpcmanager().itsupport.setLocation("itsupport",1400);
+    }
+
+    public void setSpecialTask(){
+        gamePanel.getMinigameManager().taskBoss = true;
+        gamePanel.getMinigameManager().taskJanitor = true;
     }
 }

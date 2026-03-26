@@ -39,11 +39,11 @@ public class DialogBox {
         try {
             BufferedImage image = ImageIO.read(getClass().getResourceAsStream(path));
             if (image != null) {
-                System.out.println("✅ โหลดรูปสำเร็จ: " + path);
+                System.out.println("โหลดรูปสำเร็จ: " + path);
             }
             return image;
         } catch (Exception e) {
-            System.err.println("❌ หาไฟล์รูปตัวละครไม่เจอ: " + path);
+            System.err.println("หาไฟล์รูปตัวละครไม่เจอ: " + path);
             return null; 
         }
     }
@@ -66,12 +66,8 @@ public class DialogBox {
     public void draw(Graphics2D g) {
         if (!isVisible || currentTexts == null) return;
 
-        // 👉 ใช้ขนาดจริงของรูป
-        int x = (1920 - img.getWidth()) / 2;
-        int y = 1080 - img.getHeight() - 50;
-
         // 1. วาดกล่องข้อความก่อน (เป็นพื้นหลัง)
-        g.drawImage(img, x, y, null);
+        g.drawImage(img, 0, 0, null);
 
         // 2. วาดรูปตัวละครทับลงบนกล่องข้อความ
         if (textIndex < currentTexts.length) {
@@ -86,11 +82,22 @@ public class DialogBox {
             else if (currentLine.startsWith("ITsup:")) portraitToDraw = imgIT;
 
             if (portraitToDraw != null) {
-                int charX = x + 1500; 
 
-                int charY = y - portraitToDraw.getHeight() + 1100; 
-                
-                g.drawImage(portraitToDraw, charX, charY, null);
+                int charX;
+                int charY = 1080-(80*6);
+                int width = portraitToDraw.getWidth(null);
+                int height = portraitToDraw.getHeight(null);
+
+                //if mc วาดแบบ flip
+                if (portraitToDraw == imgMC){
+                    charX = (6)*6;
+                    g.drawImage(portraitToDraw, charX + width, charY, charX, charY + height,
+                            0, 0, width, height, null);
+                }else{
+                    charX = (21+170+64)*6;
+                    g.drawImage(portraitToDraw, charX, charY, null);
+                }
+
             }
         }
 
@@ -98,14 +105,30 @@ public class DialogBox {
         g.setColor(Color.WHITE);
         g.setFont(FontUtil.THAI);
         if (textIndex < currentTexts.length) {
-            FontMetrics fm = g.getFontMetrics();
-            int textX = x + 420;                  
-            int textY = y + img.getHeight() - 190; 
-            g.drawString(currentTexts[textIndex], textX, textY);
+
+            int textX = 70*6;
+            int textY = 870;
+
+            //แบ่งชื่อกับประโยค
+            if (currentTexts[textIndex].contains(":")) {
+                String[] parts = currentTexts[textIndex].split(":", 2);
+
+                String name = parts[0].trim();
+                String text = parts[1].trim();
+
+                g.drawString(name, textX+30, textY-70);
+                g.drawString(text, textX, textY);
+
+            }else{
+                g.drawString(currentTexts[textIndex], textX, textY);
+            }
+
+
         }
     }
 
     public boolean isVisible() {
         return isVisible;
     }
+
 }

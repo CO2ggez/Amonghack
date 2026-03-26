@@ -11,6 +11,7 @@ public class Day3State extends AbstractState{
         this.gamePanel = gamePanel;
 
         setupNPC();
+        setSpecialTask();
     }
 
     @Override
@@ -30,5 +31,10 @@ public class Day3State extends AbstractState{
         gamePanel.getNpcmanager().hr.setLocation("office",1100);
         gamePanel.getNpcmanager().boss.setLocation("lift1",1000);
         gamePanel.getNpcmanager().itsupport.setLocation("itsupport",2500);
+    }
+
+    public void setSpecialTask(){
+        gamePanel.getMinigameManager().taskBoss = true;
+        gamePanel.getMinigameManager().taskJanitor = true;
     }
 }

@@ -57,6 +57,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     NPCmanager npcmanager;
 
+    //ข้อความแจ้งเตือนหลัง special event เสร็จ
+    private String notificationText = null;
+    private long notificationStartTime = 0;
+    private long notificationDuration = 4000; //วิ
+    private float notificationAlpha = 0f;
+    private boolean showNotification = false;
+
     public void update() {
         player.update();
         camera.update(player);
@@ -106,6 +113,23 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
+
+        //อัพเดทข้อความแจ้งเตือน special event
+        if (showNotification) {
+            long elapsed = System.currentTimeMillis() - notificationStartTime;
+
+            if (elapsed > notificationDuration) {
+                //ค่อยๆจาง
+                notificationAlpha -= 0.02f;
+
+                if (notificationAlpha <= 0f) {
+                    notificationAlpha = 0f;
+                    showNotification = false;
+                    notificationText = null;
+                }
+            }
+        }
+
 
     }
 
@@ -174,7 +198,6 @@ public class GamePanel extends JPanel implements Runnable {
 
 
         player.setCamera(camera);
-
 
 
 
@@ -298,6 +321,31 @@ public class GamePanel extends JPanel implements Runnable {
             transition.fillRect(0, 0, getWidth(), getHeight());
             transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // รีเซ็ตค่ากลับ
         }
+
+        //วาด special event
+        if (showNotification && notificationText != null) {
+            g2.setComposite(AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, notificationAlpha));
+
+            g2.setFont(FontUtil.THAI.deriveFont(32f));
+
+            FontMetrics fm = g2.getFontMetrics();
+            int textWidth = fm.stringWidth(notificationText);
+
+            int x = (getWidth() - textWidth) / 2;
+            int y = 250; // top center
+
+            // background
+            g2.setColor(new Color(0, 0, 0, 150));
+            g2.fillRect(x - 20, y - 40, textWidth + 40, 50);
+
+            g2.setColor(Color.YELLOW);
+            g2.drawString(notificationText, x, y);
+
+            // reset alpha
+            g2.setComposite(AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, 1f));
+        }
     }
 
     @Override
@@ -317,6 +365,14 @@ public class GamePanel extends JPanel implements Runnable {
                 delta--;
             }
         }
+    }
+
+    //function แสดงข้อความ specialevent
+    public void showNotification(String text) {
+        this.notificationText = text;
+        this.notificationStartTime = System.currentTimeMillis();
+        this.notificationAlpha = 1f;
+        this.showNotification = true;
     }
 
     public int getScreenHeight() {
@@ -345,5 +401,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     public NPCmanager getNpcmanager() {
         return npcmanager;
+    }
+
+    public MinigameManager getMinigameManager() {
+        return minigameManager;
     }
 }
