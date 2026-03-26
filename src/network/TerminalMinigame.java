@@ -34,8 +34,12 @@ public class TerminalMinigame implements Minigame {
     // ตำแหน่งเริ่มพิมพ์หลัง prompt
     private int inputStart = 0;
 
+    private final IPManager ipManager;
+
+
     public TerminalMinigame(MinigameManager manager) {
         this.manager = manager;
+        this.ipManager = new IPManager();
         this.terminalImage = new ImageIcon(getClass().getResource("/ui/TerminalUI.png")).getImage();
 
         panel = new JPanel(null) {
@@ -136,9 +140,10 @@ public class TerminalMinigame implements Minigame {
         // ข้อความเริ่มต้น
         terminalArea.setText(
                 "=== GAME COMPANY INTERNAL SERVER TERMINAL ===\n" +
-                        "Server Status: OFFLINE\n" +
-                        "Network: DISCONNECTED\n" +
+                        "Server Status: ONLINE\n" +
+                        "Network: WAITING CONFIGURATION\n" +
                         "---------------------------------------------\n" +
+                        "Mission: use 'show network' then 'set ip <address>'\n" +
                         "Type 'help' for available commands.\n"
         );
 
@@ -221,44 +226,97 @@ public class TerminalMinigame implements Minigame {
             return false;
         }
 
-        switch (command.toLowerCase()) {
-            case "help" -> {
-                appendLine("Available Commands:");
-                appendLine("status - แสดงสถานะระบบหลักของบริษัท");
-                appendLine("show network - แสดงค่าปัจจุบันของเครื่องผู้เล่น");
-                appendLine("set ip - เปลี่ยน ip");
-                appendLine("set gateway - เปลี่ยน gateway ของระบบ");
-                appendLine("list users - แสดงรายชื่อ user ทั้งหมดในองค์กร");
-                appendLine("read log - เปิด log");
-                appendLine("ban ip - จัดเก็บ ip ที่ไม่ทราบที่มาเข้าสู่ Blacklist");
-            }
-            case "status" -> {
-                appendLine("Server Status: ONLINE (ONLINE / OFFLINE)");
-                appendLine("Security Level: STABLE (STABLE / WARNING / BREACHED)");
-                appendLine("Active Alerts: 0");
-            }
-            case "show network" -> {
-                appendLine("IP: not set");
-                appendLine("Subnet: 255.255.255.0");
-                appendLine("Gateway: not set");
-                appendLine("Status: DISCONNECTED");
-            }
-            case "set ip" -> appendLine("Usage: set ip [address]");
-            case "set gateway" -> appendLine("Usage: set gateway [address]");
-            case "list users" -> appendLine("User list unavailable.");
-            case "read log" -> appendLine("No log loaded.");
-            case "ban ip" -> appendLine("Usage: ban ip [address]");
-            case "clear" -> {
-                terminalArea.setText("");
-            }
-            case "exit" -> {
-                manager.closeGame();
-                return true;
-            }
-            default -> appendLine("Unknown command: " + command);
+        String lower = command.toLowerCase();
+
+        if (lower.equals("help")) {
+            appendLine("Available Commands:");
+            appendLine("show network - แสดง IP เครื่องที่ต้องตั้ง");
+            appendLine("set ip <address> - ตั้งค่า IP ให้ตรง");
+            appendLine("clear - ล้างหน้าจอ");
+            appendLine("exit - ปิด terminal");
+            return false;
         }
 
+        if (lower.equals("show network")) {
+            ipManager.revealNetwork();
+            appendLine("=== ACTIVE MACHINE ===");
+            appendLine("Target IP: " + ipManager.getTargetIp());
+            appendLine("Subnet: " + ipManager.getSubnet());
+            appendLine("Gateway: " + ipManager.getGateway());
+            appendLine("Current IP: " + ipManager.getCurrentIp());
+            return false;
+        }
+
+        if (lower.startsWith("set ip")) {
+            return handleSetIp(command);
+        }
+
+        if (lower.equals("clear")) {
+            terminalArea.setText("");
+            return false;
+        }
+
+        if (lower.equals("exit")) {
+            manager.closeGame();
+            return true;
+        }
+
+        appendLine("Unknown command: " + command);
         return false;
+    }
+
+    private boolean handleSetIp(String command) {
+        String[] parts = command.trim().split("\\s+");
+
+        if (parts.length != 3) {
+            appendLine("Usage: set ip <address>");
+            return false;
+        }
+
+        if (!ipManager.isNetworkRevealed()) {
+            appendLine("Error: use 'show network' before setting IP.");
+            return false;
+        }
+
+        String newIp = parts[2];
+
+        if (!isValidIp(newIp)) {
+            appendLine("Error: invalid IP address format.");
+            return false;
+        }
+
+        ipManager.setCurrentIp(newIp);
+
+        if (ipManager.isCorrectIp()) {
+            appendLine("IP updated: " + newIp);
+            appendLine("Connection established.");
+            appendLine("Mission complete.");
+            manager.onWin();
+            return true;
+        }
+
+        appendLine("IP updated: " + newIp);
+        appendLine("Connection failed. Incorrect IP.");
+        return false;
+    }
+
+    private boolean isValidIp(String ip) {
+        String[] nums = ip.split("\\.");
+        if (nums.length != 4) {
+            return false;
+        }
+
+        for (String num : nums) {
+            try {
+                int value = Integer.parseInt(num);
+                if (value < 0 || value > 255) {
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void appendLine(String text) {
