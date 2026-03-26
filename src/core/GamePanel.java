@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
     //ข้อความแจ้งเตือนหลัง special event เสร็จ
     private String notificationText = null;
     private long notificationStartTime = 0;
-    private long notificationDuration = 4000; //วิ
+    private long notificationDuration = 2000; //วิ
     private float notificationAlpha = 0f;
     private boolean showNotification = false;
 
@@ -274,7 +274,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         //task text ขวาบน
         g2.setColor(Color.WHITE);
-        g2.drawString(minigameManager.taskText, 1400 , 60);
+        g2.drawString(minigameManager.taskText, 1450 , 75);
 
         if (eventManager != null && eventManager.isShowImage()) {
             String activeEvent = eventManager.getActiveZoneName();
@@ -326,8 +326,6 @@ public class GamePanel extends JPanel implements Runnable {
         if (showNotification && notificationText != null) {
             g2.setComposite(AlphaComposite.getInstance(
                     AlphaComposite.SRC_OVER, notificationAlpha));
-
-            g2.setFont(FontUtil.THAI.deriveFont(32f));
 
             FontMetrics fm = g2.getFontMetrics();
             int textWidth = fm.stringWidth(notificationText);
