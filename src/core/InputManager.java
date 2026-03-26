@@ -191,6 +191,7 @@ public class InputManager implements KeyListener {
                 minigameManager.taskBoss = false;
                 minigameManager.helpBossScore++;
 
+                gamePanel.showNotification("จัดเอกสารเรียบร้อยแล้ว");
                 //เงือนไขอื่นๆหลังช่วยงานหัวหน้าเสร็จเพิ่มตรงนี้
 
             }
@@ -198,6 +199,8 @@ public class InputManager implements KeyListener {
             if(helpJanitorArea()){
                 minigameManager.taskJanitor = false;
                 minigameManager.helpJanitorScore++;
+
+                gamePanel.showNotification("ไม้กวาดถูกเก็บเข้าตู้แล้ว");
 
             }
         } 
