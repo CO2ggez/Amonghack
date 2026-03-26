@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก" />
+=======
+    <list default="true" id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+    </list>
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,7 +120,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1774505788072</updated>
-      <workItem from="1774505791572" duration="301000" />
+      <workItem from="1774505791572" duration="3045000" />
     </task>
     <option name="localTasksCounter" value="4" />
     <servers />

@@ -6,11 +6,16 @@ import event.EventManager;
 import event.EventSetup;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+import java.io.IOException;
+
+
 import javax.swing.*;
 import map.RoomManager;
 import network.MinigameManager;
 import ui.Camera;
 import ui.DialogBox; // นำเข้า Event
+import ui.TextBook;
 import ui.TimeUI;   // นำเข้า Event
 import util.AssetLoader;   // นำเข้า AssetLoader
 import util.FontUtil;
@@ -21,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     public TimeManager timeManager;
     private TimeUI timeUI;
     public DialogBox dialogBox;
+    public TextBook textBook;
     private GameStateManager gsm;
     private boolean isTransitioning = false;
 
@@ -40,7 +46,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Sound sound;
 
-    private BufferedImage textBook;
 
     private float fadeAlpha = 0f;      // 0.0 (ใส) ถึง 1.0 (ดำ)
     private boolean isFading = false;
@@ -138,6 +143,16 @@ public class GamePanel extends JPanel implements Runnable {
         setOpaque(true);
         timeManager = new TimeManager();
 
+        // Create TextBook FIRST
+        try {
+            textBook = new TextBook();
+            textBook.setBounds(50, 50, 200, 200);  // Set position and size (x, y, width, height)
+            textBook.setVisible(false);  // Start hidden
+            add(textBook);  // Add to panel
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load TextBook image");
+        }
         //สร้างแมพและกล้อง และ เชื่อมกล้องกับ player
 
         roomManager = new RoomManager(player);
@@ -156,13 +171,17 @@ public class GamePanel extends JPanel implements Runnable {
         //ตั้งtaskตอนนี้เป็น lan ถ้าไปถึงจุดที่เครื่องอยู่ใน inputmanager กด f แล้วจึงเริ่ม
         minigameManager.setTask("lan");
 
+
         player.setCamera(camera);
+
+
+
 
         // 1. --- เลื่อนการสร้าง npcmanager มาไว้ตรงนี้ก่อน (เพื่อให้มีข้อมูลก่อนส่งไปให้ InputManager) ---
         npcmanager = new NPCmanager(roomManager);
 
         // 2. --- แก้ไข: เติม npcmanager เข้าไปเป็นตัวแปรที่ 6 (ตัวสุดท้าย) ในวงเล็บ ---
-        inputManager = new InputManager(camera, roomManager, this, player, minigameManager, npcmanager);
+        inputManager = new InputManager(camera, roomManager, this, player, minigameManager, npcmanager,textBook);
         addKeyListener(inputManager);
         player.setCamera(camera);
 

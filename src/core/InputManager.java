@@ -9,7 +9,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import map.RoomManager;
 import network.MinigameManager;
+import org.w3c.dom.Text;
 import ui.Camera;
+
+
+import event.EventManager;
+import ui.TextBook;
+
 
 public class InputManager implements KeyListener {
     private Camera camera;
@@ -17,6 +23,7 @@ public class InputManager implements KeyListener {
     private GamePanel gamePanel;
     private Player player;
     private MinigameManager minigameManager;
+
     private NPCmanager npcManager; 
 
     // --- ตัวแปรสำหรับจัดการเนื้อเรื่อง ---
@@ -38,19 +45,33 @@ public class InputManager implements KeyListener {
         return player.xDelta >= minX && player.xDelta <= maxX;
     }
 
+    private TextBook textBook;
+
+
+
     public void interact() {
         if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {
             gamePanel.dialogBox.nextText();
         }
     }
 
-    public InputManager(Camera camera, RoomManager roomManager, GamePanel panel, Player player, MinigameManager minigameManager, NPCmanager npcManager) {
+
+    public InputManager(Camera camera, RoomManager roomManager, GamePanel panel, Player player, MinigameManager minigameManager, NPCmanager npcManager,TextBook tb) {
+
+
+
+
         this.gamePanel = panel;
         this.camera = camera;
         this.roomManager = roomManager;
         this.player = player;
         this.minigameManager = minigameManager;
+
         this.npcManager = npcManager; 
+
+        this.textBook=tb;
+
+
 
         panel.addMouseListener(new MouseAdapter() {
             @Override
@@ -98,8 +119,12 @@ public class InputManager implements KeyListener {
         });
     }
 
+
     @Override
+
     public void keyTyped(KeyEvent e) {}
+
+
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -304,6 +329,14 @@ public class InputManager implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             interact();
         }
+
+
+        //textbookdraw
+        if (e.getKeyCode()==KeyEvent.VK_M){
+            textBook.setVisible(!textBook.isVisible());
+        }
+        //จบโค้ดที่มาจาก Player----------------------------
+
     }
 
     @Override
