@@ -72,10 +72,10 @@ public class DialogBox {
             BufferedImage portraitToDraw = null;
 
             // เช็คคำขึ้นต้นเพื่อเลือกรูป
-            if (currentLine.startsWith("Lauren")) portraitToDraw = imgHR;
+            if (currentLine.startsWith("Lauren:")) portraitToDraw = imgHR;
             else if (currentLine.startsWith("Momoka:")) portraitToDraw = imgBoss;
             else if (currentLine.startsWith("Shu:")) portraitToDraw = imgJanitor;
-            else if (currentLine.startsWith("“Luca:")) portraitToDraw = imgMC;
+            else if (currentLine.startsWith("Luca:")) portraitToDraw = imgMC;
             else if (currentLine.startsWith("Wei:")) portraitToDraw = imgIT;
 
             if (portraitToDraw != null) {
