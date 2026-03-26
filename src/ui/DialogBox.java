@@ -1,13 +1,10 @@
 package ui;
 
-import util.FontUtil;
-
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import util.FontUtil;
 
 public class DialogBox {
     private BufferedImage img;
@@ -75,11 +72,11 @@ public class DialogBox {
             BufferedImage portraitToDraw = null;
 
             // เช็คคำขึ้นต้นเพื่อเลือกรูป
-            if (currentLine.startsWith("HR:")) portraitToDraw = imgHR;
-            else if (currentLine.startsWith("Boss:")) portraitToDraw = imgBoss;
-            else if (currentLine.startsWith("Janitor:")) portraitToDraw = imgJanitor;
-            else if (currentLine.startsWith("MC:")) portraitToDraw = imgMC;
-            else if (currentLine.startsWith("ITsup:")) portraitToDraw = imgIT;
+            if (currentLine.startsWith("Lauren")) portraitToDraw = imgHR;
+            else if (currentLine.startsWith("Momoka:")) portraitToDraw = imgBoss;
+            else if (currentLine.startsWith("Shu:")) portraitToDraw = imgJanitor;
+            else if (currentLine.startsWith("“Luca:")) portraitToDraw = imgMC;
+            else if (currentLine.startsWith("Wei:")) portraitToDraw = imgIT;
 
             if (portraitToDraw != null) {
 
