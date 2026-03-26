@@ -63,6 +63,9 @@ public class LanCable implements Minigame{
     }
 
     public void draw(Graphics g){
+        g.setColor(new Color(0, 0, 0, 140));
+        g.fillRect(0, 0, panel.getWidth(), panel.getHeight());
+
         g.drawImage(background, 0, 0, panel.getWidth(), panel.getHeight(), null);
 
         //วาดสายซ้าย
