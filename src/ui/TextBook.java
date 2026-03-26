@@ -19,10 +19,24 @@ public class TextBook extends JPanel {
 
     }
     public void importImg() throws IOException {
-        InputStream is = getClass().getResourceAsStream("/Textbook.webp");
+        InputStream is = getClass().getResourceAsStream("/ui/Textbook.webp");
         image = ImageIO.read(is);
     }
-    public void paintComponent(Graphics g){
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        // Draw the image if it exists
+        if (image != null) {
+            // Draw the image scaled to fit the panel
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+        } else {
+            // Optional: Draw placeholder if image failed to load
+            g.setColor(Color.GRAY);
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.setColor(Color.WHITE);
+            g.drawString("TextBook Image", 10, getHeight() / 2);
+        }
     }
+
 }

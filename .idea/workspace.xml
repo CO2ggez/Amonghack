@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก">
-      <change afterPath="$PROJECT_DIR$/src/entity/Cat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Boss.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Boss.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/HR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/HR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/ITSupport.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/ITSupport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Janitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Janitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/NPC.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/NPC.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/NPCmanager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/NPCmanager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/Boss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Boss.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/HR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/HR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/ITSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/ITSupport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/Janitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Janitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/NPC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/NPCmanager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/NPCmanager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/TextBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TextBook.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,11 +19,31 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="3BTGk8pUcZc1p8AqHCBcoi2jhyz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Game.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "git-widget-placeholder": "main",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -67,6 +72,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="merge &amp; task text &amp; random lan location">
       <option name="closed" value="true" />
@@ -92,8 +105,19 @@
       <option name="project" value="LOCAL" />
       <updated>1774489309264</updated>
     </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก" />
+      <created>1774505788072</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1774505788072</updated>
+      <workItem from="1774505791572" duration="301000" />
+    </task>
     <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="merge &amp; task text &amp; random lan location" />
