@@ -349,4 +349,8 @@ public class GamePanel extends JPanel implements Runnable {
     public NPCmanager getNpcmanager() {
         return npcmanager;
     }
+
+    public MinigameManager getMinigameManager() {
+        return minigameManager;
+    }
 }

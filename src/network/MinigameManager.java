@@ -21,9 +21,8 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
 
     public int helpJanitorScore = 0;
     public int helpBossScore = 0;
-
-    //hashmap เก็บข้อมูลว่า lan มีที่ตำแหน่งไหนห้องไหน เพื่อเอาไปสุ่ม
-    Map<String, int[]> zoneMap = new HashMap<>();
+    public boolean taskBoss = false;
+    public boolean taskJanitor = false;
 
     public MinigameManager(GamePanel panel) {
         this.panel = panel;
@@ -54,6 +53,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
                 taskText = "เปิดใช้ Terminal ที่ห้อง " + currentTerminalLocation[0];
                 System.out.println(taskText);
                 break;
+
         }
 
     }

@@ -185,6 +185,21 @@ public class InputManager implements KeyListener {
                 minigameManager.startTask();
                 return;
             }
+
+            //task boss,janitor
+            if(helpBossArea()){
+                minigameManager.taskBoss = false;
+                minigameManager.helpBossScore++;
+
+                //เงือนไขอื่นๆหลังช่วยงานหัวหน้าเสร็จเพิ่มตรงนี้
+
+            }
+
+            if(helpJanitorArea()){
+                minigameManager.taskJanitor = false;
+                minigameManager.helpJanitorScore++;
+
+            }
         } 
 
         if (gamePanel.getIsTransitioning()) {
@@ -385,7 +400,13 @@ public class InputManager implements KeyListener {
             return "[F] เปิด Terminal";
         }
 
-        if (room.equals("server") && isNear(720, 1180)) return "[F] Use terminal";
+        //ตำแหน่งช่วยงานหัวหน้า
+        if(helpBossArea()){
+            return "[F] ช่วยจัดเอกสาร";
+        }
+        if(helpJanitorArea()){
+            return "[F] ช่วยเก็บไม้กวาด";
+        }
 
         //เช็คHintของระบบเนื้อเรื่อง
         int actualDay = 1;
@@ -439,5 +460,13 @@ public class InputManager implements KeyListener {
     }
     public boolean itsupportArea(){
         return (roomManager.getCurrentRoomName().equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(npcManager.itsupport.getX(),npcManager.itsupport.getX()+300));
+    }
+
+    public boolean helpBossArea(){
+        return  roomManager.getCurrentRoomName().equals("chiefoffice")&& isNear(190*6,275*6) && minigameManager.taskBoss;
+    }
+
+    public boolean helpJanitorArea(){
+        return roomManager.getCurrentRoomName().equals("restroom")&&isNear(89*6,143*6) && minigameManager.taskJanitor;
     }
 }
