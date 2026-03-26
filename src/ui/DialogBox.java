@@ -28,7 +28,7 @@ public class DialogBox {
         imgBoss = loadCharImage("/ui/dialog_characters/boss.png");
         imgJanitor = loadCharImage("/ui/dialog_characters/janitor.png");
         imgMC = loadCharImage("/ui/dialog_characters/MC.png");
-        imgIT = loadCharImage("/ui/dialog_characters/it.png");  
+        imgIT = loadCharImage("/ui/dialog_characters/it.png");
     }
 
     // === ฟังก์ชันช่วยโหลดรูปและแจ้งเตือน ===
