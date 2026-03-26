@@ -14,20 +14,33 @@ public class Game {
     private TextBook textbook;
     private int screenWidth;
     private int screenHeight;
+    private JPanel cardcontain;
+    private CardLayout cardLayout;
+    private MainMenu mainMenu;
 
     public void setPanel(core.GamePanel panel) {
         this.panel = panel;
     }
 
     public Game() {
+        frame_main = new JFrame("Amonghack");
+        cardLayout = new CardLayout();
+        cardcontain = new JPanel(cardLayout);
+        mainMenu = new MainMenu();
+
         panel = new GamePanel(player);
         panel.setLayout(null);
         player.setPanel(panel);
 
+        cardcontain.add(mainMenu, "mainmenu");
+        cardcontain.add(panel, "game");
+
+        mainMenu.getBtn_start().addActionListener(e -> {
+                cardLayout.show(cardcontain, "game");
+                panel.requestFocusInWindow();});
+
         screenWidth = panel.getScreenWidth(); //ถ้าเป็นไปได้อยากให้เปลี่ยนขนาดจอที่เดียวละเปลี่ยนหมดเลยอ่ะ
         screenHeight = panel.getScreenHeight();
-
-        frame_main = new JFrame("Amonghack");
 
         frame_main.setUndecorated(true);
         frame_main.setSize(screenWidth, screenHeight);
@@ -56,7 +69,7 @@ public class Game {
         panel.add(btn_close);
         panel.setComponentZOrder(player, 1); //ดึง player ขึ้นมาข้างหน้าสุด
 
-        frame_main.add(panel, BorderLayout.CENTER);
+        frame_main.add(cardcontain, BorderLayout.CENTER);
         frame_main.setLocationRelativeTo(null);
         frame_main.setVisible(true);
 
