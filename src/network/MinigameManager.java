@@ -3,12 +3,23 @@ package network;
 import javax.swing.*;
 import core.GamePanel;
 
+import java.util.*;
+
+
 public class MinigameManager { //เอาไว้นับว่ามีกี่เกมที่ทำสำเร็จ และ ศูนย์รวมเริ่มมินิเกม
     private GamePanel panel;
     private JPanel currentGamePanel;
+
     public boolean taskLan = false;
+    public String[] currentLanLocation = {"","",""};
+
+    public boolean taskTerminal = false;
     private boolean isPlaying = false;
     private int score = 0;
+    public String taskText = "";
+
+    //hashmap เก็บข้อมูลว่า lan มีที่ตำแหน่งไหนห้องไหน เพื่อเอาไปสุ่ม
+    Map<String, int[]> zoneMap = new HashMap<>();
 
     public MinigameManager(GamePanel panel) {
         this.panel = panel;
@@ -23,12 +34,26 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public void setTask(String type) {
 
         switch (type) {
-            case "lan" -> taskLan = true; //ให้ taskLan เป็น true เพื่อให้้ input manager เช็คให้กด f ที่จุดที่เล่นมินิเกมนั้นได้
+            case "lan":
+                //ให้ taskLan เป็น true เพื่อให้้ input manager เช็คให้กด f ที่จุดที่เล่นมินิเกมนั้นได้
+                taskLan = true;
+                currentLanLocation = randomLanRoom();
+
+                taskText = "เชื่อมสายแลนที่ห้อง" + currentLanLocation[0];
+                System.out.println(taskText);
+
+                break;
+
+            case "terminal" :
+                taskTerminal = true;
+                taskText = "เปิดใช้ Terminal";
         }
 
     }
 
     public void startTask(){//ใน inputManager เมื่อplayer กด F ที่ตำแหน่งเล่นเกม จะเรียกใชเอันนี้ สร้างobj minigame
+        if (isPlaying) return; //กันเปิดมินิเกมซ้อน
+
         isPlaying = true;
 
         Minigame game = null;
@@ -36,9 +61,15 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         if (taskLan) {
             game = new LanCable(this);
             taskLan = false;
+        } else if (taskTerminal) {
+            game = new TerminalMinigame(this);
+            taskTerminal = false;
         }
 
-        if (game == null) return;
+        if (game == null) {
+            isPlaying = false; //ถ้าไม่มีมินิเกมให้เปิด ก็คืนสถานะ
+            return;
+        }
 
         currentGamePanel = game.getPanel();
 
@@ -57,6 +88,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         }
         isPlaying = false;
         panel.requestFocusInWindow();
+        taskText = "";
 
     }
 
@@ -67,11 +99,31 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         System.out.println("คะแนนมินิเกมตอนนี้ " + score);
     }
 
+    //มีไว้ไมไม่รุ้ เผื่อไว้
+    public void resetTask(){
+        taskLan = false;
+        taskTerminal = false;
+        taskText = "";
+
+    }
+
     public int getScore() {
         return score;
     }
 
     public boolean isPlaying() {
         return isPlaying;
+    }
+
+    public String[] randomLanRoom(){
+        List<Map.Entry<String, int[]>> list = new ArrayList<>(MinigameLocation.lanLocation.entrySet());
+
+        Map.Entry<String, int[]> random = list.get(new Random().nextInt(list.size()));
+
+        return new String[]{
+                random.getKey(),
+                String.valueOf(random.getValue()[0]),
+                String.valueOf(random.getValue()[1])
+        };
     }
 }

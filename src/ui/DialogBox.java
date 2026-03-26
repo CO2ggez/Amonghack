@@ -1,5 +1,7 @@
 package ui;
 
+import util.FontUtil;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -94,8 +96,7 @@ public class DialogBox {
 
         // 3. วาดตัวหนังสือเป็นลำดับสุดท้าย
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Tahoma", Font.BOLD, 36));
-
+        g.setFont(FontUtil.THAI);
         if (textIndex < currentTexts.length) {
             FontMetrics fm = g.getFontMetrics();
             int textX = x + 420;                  

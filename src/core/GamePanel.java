@@ -1,20 +1,24 @@
 package core;
 
 import audio.Sound;
-import entity.Player;
+import entity.*;
 import event.EventManager;
 import event.EventSetup;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+import java.io.IOException;
+
+
 import javax.swing.*;
 import map.RoomManager;
-import network.Minigame;
 import network.MinigameManager;
 import ui.Camera;
 import ui.DialogBox; // นำเข้า Event
+import ui.TextBook;
 import ui.TimeUI;   // นำเข้า Event
 import util.AssetLoader;   // นำเข้า AssetLoader
-
+import util.FontUtil;
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
@@ -22,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     public TimeManager timeManager;
     private TimeUI timeUI;
     public DialogBox dialogBox;
+    public TextBook textBook;
     private GameStateManager gsm;
     private boolean isTransitioning = false;
 
@@ -41,7 +46,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Sound sound;
 
-    private BufferedImage textBook;
 
     private float fadeAlpha = 0f;      // 0.0 (ใส) ถึง 1.0 (ดำ)
     private boolean isFading = false;
@@ -49,6 +53,12 @@ public class GamePanel extends JPanel implements Runnable {
     private Runnable postFadeAction;   // เก็บคำสั่ง "เปลี่ยนชั้น" ไว้ทำตอนจอดำสนิท
 
     private MinigameManager minigameManager;
+
+    //ข้อความบอกevent ที่กดได้ (check ใน inputmanager)
+    private String hintText = null;
+    private boolean showHint = false;
+
+    NPCmanager npcmanager;
 
     public void update() {
         player.update();
@@ -67,6 +77,17 @@ public class GamePanel extends JPanel implements Runnable {
         if (gsm != null && !isTransitioning) {
             gsm.update();
         }
+
+        //เอาข้อความhint มาจากตำแหน่ง event ที่ player อยู่
+        String hint = inputManager.getCurrentHint();
+        if (hint != null) {
+            hintText = hint;
+            showHint = true;
+        } else {
+            showHint = false;
+        }
+
+        npcmanager.updateNPC();
 
         if (isFading) {
             if (isFadeOut) {
@@ -122,6 +143,20 @@ public class GamePanel extends JPanel implements Runnable {
         setOpaque(true);
         timeManager = new TimeManager();
 
+        // Create TextBook FIRST
+        try {
+            textBook = new TextBook();
+            int textbookWidth = 1100;   // Adjust as needed
+            int textbookHeight = 800;  // Adjust as needed
+            int x = (1920 - textbookWidth) / 2;   // Center horizontally
+            int y = (1080 - textbookHeight) / 2;  // Center vertically
+            textBook.setBounds(x, y, textbookWidth, textbookHeight);  // Set position and size (x, y, width, height)
+            textBook.setVisible(false);  // Start hidden
+            add(textBook);  // Add to panel
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load TextBook image");
+        }
         //สร้างแมพและกล้อง และ เชื่อมกล้องกับ player
 
         roomManager = new RoomManager(player);
@@ -140,10 +175,21 @@ public class GamePanel extends JPanel implements Runnable {
         //ตั้งtaskตอนนี้เป็น lan ถ้าไปถึงจุดที่เครื่องอยู่ใน inputmanager กด f แล้วจึงเริ่ม
         minigameManager.setTask("lan");
 
-        inputManager = new InputManager(camera,roomManager,this,player,minigameManager);
-        addKeyListener(inputManager);
 
         player.setCamera(camera);
+
+
+
+
+        // 1. --- เลื่อนการสร้าง npcmanager มาไว้ตรงนี้ก่อน (เพื่อให้มีข้อมูลก่อนส่งไปให้ InputManager) ---
+        npcmanager = new NPCmanager(roomManager);
+
+        // 2. --- แก้ไข: เติม npcmanager เข้าไปเป็นตัวแปรที่ 6 (ตัวสุดท้าย) ในวงเล็บ ---
+        inputManager = new InputManager(camera, roomManager, this, player, minigameManager, npcmanager,textBook);
+        addKeyListener(inputManager);
+        player.setCamera(camera);
+
+        npcmanager = new NPCmanager(roomManager);
 
         gsm = new GameStateManager();
         timeUI = new TimeUI(timeManager, gsm);
@@ -189,6 +235,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        //npc
+        npcmanager.drawNPC(g, camera.getX());
+
         if (gsm != null) {
             gsm.draw(g2);
         }
@@ -218,6 +267,29 @@ public class GamePanel extends JPanel implements Runnable {
         if (dialogBox != null) {
             dialogBox.draw(g2);
         }
+
+        g2.setFont(FontUtil.THAI);
+        //วาดข้อความว่า interact event ได้
+        if (showHint && hintText != null) {
+            int playerScreenX = player.xDelta - camera.getX() + player.offsetX;
+            int playerScreenY = player.yDelta - 20;
+
+            FontMetrics fm = g2.getFontMetrics();
+            int w = fm.stringWidth(hintText);
+            int h = fm.getHeight();
+
+            // กล่องดำโปร่งใส
+            g2.setColor(new Color(0, 0, 0, 150));
+            g2.fillRect(playerScreenX-10, playerScreenY - h +10, w + 20, h);
+
+            // text
+            g2.setColor(Color.WHITE);
+            g2.drawString(hintText, playerScreenX , playerScreenY );
+        }
+
+        //task text ขวาบน
+        g2.setColor(Color.WHITE);
+        g2.drawString(minigameManager.taskText, 1400 , 60);
 
         //ทรานซิชั่นถมดำ
         if (fadeAlpha > 0) {
@@ -266,6 +338,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public boolean isInMinigame() {
         return minigameManager != null && minigameManager.isPlaying();
+    }
+
+    public GameStateManager getGSM() {
+        return gsm;
     }
 
 }
