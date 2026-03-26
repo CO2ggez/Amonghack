@@ -127,4 +127,8 @@ public class NPC {
     public void show() {
         visible = true;
     }
+
+    public int getX() {
+        return x;
+    }
 }

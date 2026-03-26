@@ -234,19 +234,19 @@ public class InputManager implements KeyListener {
                 
                 // --- เหตุการณ์ DAY 1 ---
                 if (actualDay == 1) {
-                    if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) {
+                    if (bossArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.INTERVIEW);
                         talkedToBoss = true; 
                     } 
-                    else if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) {
+                    else if (hrArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_HR);
                         talkedToHR = true;
                     } 
-                    else if (room.equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(400, 700)) {
+                    else if (itsupportArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_ITSUP);
                         talkedToIT = true;
                     } 
-                    else if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) {
+                    else if (janitorArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY1_JANITOR);
                         talkedToJanitor = true;
                     } 
@@ -257,15 +257,15 @@ public class InputManager implements KeyListener {
                 }
                 // --- เหตุการณ์ DAY 2 ---
                 else if (actualDay == 2) {
-                    if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) {
+                    if (bossArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_BOSS_CALL);
                         talkedToBoss = true; 
                     } 
-                    else if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) {
+                    else if (hrArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_HR);
                         talkedToHR = true;
                     } 
-                    else if (room.equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(400, 700)) {
+                    else if (itsupportArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY2_ITSUP);
                         talkedToIT = true;
                     } 
@@ -276,11 +276,11 @@ public class InputManager implements KeyListener {
                 }
                 // --- เหตุการณ์ DAY 3 ---
                 else if (actualDay == 3) {
-                    if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) {
+                    if (bossArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY3_BOSS);
                         talkedToBoss = true; 
                     } 
-                    else if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) {
+                    else if (janitorArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY3_POWEROUT);
                         talkedToJanitor = true;
                     } 
@@ -291,7 +291,7 @@ public class InputManager implements KeyListener {
                 }
                 // --- เหตุการณ์ DAY 4 ---
                 else if (actualDay == 4) {
-                    if (room.equals(npcManager.boss.inRoom) && progressDay4 == 0 && isNear(400, 700)) {
+                    if (bossArea() && progressDay4 == 0) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_BOSS_1);
                         progressDay4 = 1; // อัปเดตเพื่อให้ไป Step ถัดไปได้
                     } 
@@ -299,11 +299,11 @@ public class InputManager implements KeyListener {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_BRIDGE);
                         progressDay4 = 2;
                     } 
-                    else if (room.equals(npcManager.itsupport.inRoom) && progressDay4 == 2 && isNear(400, 700)) {
+                    else if (itsupportArea()) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_ITSUP);
                         progressDay4 = 3;
                     } 
-                    else if (room.equals(npcManager.boss.inRoom) && progressDay4 == 3 && isNear(400, 700)) {
+                    else if (bossArea() && progressDay4 == 3) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY4_BOSS_2);
                         progressDay4 = 4;
                     }
@@ -314,11 +314,11 @@ public class InputManager implements KeyListener {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.OFFICE_DAY5_CLIMAX);
                         progressDay5 = 1; 
                     } 
-                    else if (room.equals(npcManager.boss.inRoom) && progressDay5 == 1 && isNear(400, 700)) {
+                    else if (bossArea() && progressDay5 == 1) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.ENDING_BOSS);
                         progressDay5 = 2;
                     } 
-                    else if (room.equals(npcManager.janitor.inRoom) && progressDay5 == 2 && isNear(200, 500)) {
+                    else if (janitorArea() && progressDay5 == 2) {
                         gamePanel.dialogBox.startDialog(ui.StoryDialog.ENDING_JANITOR);
                         progressDay5 = 3;
                     }
@@ -385,35 +385,51 @@ public class InputManager implements KeyListener {
         }
 
         if (actualDay == 1) {
-            if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) return "[E] คุยกับบอส"; 
+            if (bossArea()) return "[E] คุยกับบอส";
             if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) return "[E] คุยกับ HR"; 
-            if (room.equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(400, 700)) return "[E] คุยกับ IT Support"; 
+            if (itsupportArea()) return "[E] คุยกับ IT Support";
             if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) return "[E] คุยกับภารโรง"; 
             if (room.equals("server") && !talkedToServer && isNear(500, 800)) return "[E] สำรวจ"; 
         } 
         else if (actualDay == 2) {
-            if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) return "[E] โทรศัพท์จากบอส"; 
-            if (room.equals(npcManager.hr.inRoom) && !talkedToHR && isNear(300, 600)) return "[E] คุยกับ HR"; 
-            if (room.equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(400, 700)) return "[E] คุยกับ IT Support"; 
+            if (bossArea()) return "[E] โทรศัพท์จากบอส";
+            if (hrArea()) return "[E] คุยกับ HR";
+            if (itsupportArea()) return "[E] คุยกับ IT Support";
             if (room.equals("server") && !talkedToServer && isNear(500, 800)) return "[E] สำรวจ"; 
         }
         else if (actualDay == 3) {
-            if (room.equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(400, 700)) return "[E] คุยกับบอส"; 
-            if (room.equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(200, 500)) return "[E] คุยกับภารโรง"; 
+            if (bossArea()) return "[E] คุยกับบอส";
+            if (janitorArea()) return "[E] คุยกับภารโรง";
             if (room.equals("server") && !talkedToServer && isNear(500, 800)) return "[E] สำรวจ"; 
         }
         else if (actualDay == 4) {
-            if (room.equals(npcManager.boss.inRoom) && progressDay4 == 0 && isNear(400, 700)) return "[E] คุยกับบอส"; 
+            if (bossArea() && progressDay4 == 0) return "[E] คุยกับบอส";
             if (room.equals("server") && progressDay4 == 1 && isNear(500, 800)) return "[E] สำรวจ Network Bridge"; 
-            if (room.equals(npcManager.itsupport.inRoom) && progressDay4 == 2 && isNear(400, 700)) return "[E] คุยกับ IT Support"; 
-            if (room.equals(npcManager.boss.inRoom) && progressDay4 == 3 && isNear(400, 700)) return "[E] รายงานบอส"; 
+            if (itsupportArea()) return "[E] คุยกับ IT Support";
+            if (bossArea() && progressDay4 == 3 ) return "[E] รายงานบอส";
         }
         else if (actualDay == 5) {
-            if (room.equals(npcManager.janitor.inRoom) && progressDay5 == 0 && isNear(200, 500)) return "[E] เข้าจับกุม!"; 
-            if (room.equals(npcManager.boss.inRoom) && progressDay5 == 1 && isNear(400, 700)) return "[E] ดื่มฉลอง"; 
-            if (room.equals(npcManager.janitor.inRoom) && progressDay5 == 2 && isNear(200, 500)) return "[E] เยี่ยมเยียน"; 
+            if (janitorArea() && progressDay5 == 0) return "[E] เข้าจับกุม!";
+            if (bossArea()&& progressDay5 == 1) return "[E] ดื่มฉลอง";
+            if (janitorArea() && progressDay5 == 2) return "[E] เยี่ยมเยียน";
         }
 
         return null;
     }
+
+    public boolean bossArea(){
+        return (roomManager.getCurrentRoomName().equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(npcManager.boss.getX(),npcManager.boss.getX()+300));
+    }
+
+    public boolean janitorArea(){
+        return (roomManager.getCurrentRoomName().equals(npcManager.janitor.inRoom) && !talkedToJanitor && isNear(npcManager.janitor.getX(),npcManager.janitor.getX()+300));
+    }
+    public boolean hrArea(){
+        return (roomManager.getCurrentRoomName().equals(npcManager.hr.inRoom) && !talkedToHR && isNear(npcManager.hr.getX(),npcManager.hr.getX()+300));
+    }
+    public boolean itsupportArea(){
+        return (roomManager.getCurrentRoomName().equals(npcManager.itsupport.inRoom) && !talkedToIT && isNear(npcManager.itsupport.getX(),npcManager.itsupport.getX()+300));
+    }
+
+
 }
