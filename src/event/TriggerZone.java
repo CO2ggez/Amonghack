@@ -14,10 +14,34 @@ public class TriggerZone {
 
     public boolean isHit(int mouseX, int mouseY) {
         return (mouseX >= x && mouseX <= x + width) &&
-               (mouseY >= y && mouseY <= y + height);
+                (mouseY >= y && mouseY <= y + height);
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getCenterX() {
+        return x + width / 2;
+    }
+
+    public int getCenterY() {
+        return y + height / 2;
     }
 }
