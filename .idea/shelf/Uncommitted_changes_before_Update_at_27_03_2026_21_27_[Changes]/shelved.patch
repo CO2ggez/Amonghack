@@ -1,0 +1,199 @@
+Index: src/network/MinigameManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package network;\r\n\r\nimport javax.swing.*;\r\nimport core.GamePanel;\r\n\r\nimport java.util.*;\r\n\r\n\r\npublic class MinigameManager { //เอาไว้นับว่ามีกี่เกมที่ทำสำเร็จ และ ศูนย์รวมเริ่มมินิเกม\r\n    private GamePanel panel;\r\n    private JPanel currentGamePanel;\r\n\r\n    public boolean taskLan = false;\r\n    public String[] currentLanLocation = {\"\",\"\",\"\"};\r\n\r\n    public boolean taskTerminal = false;\r\n    public String[] currentTerminalLocation = {\"\",\"\",\"\"};\r\n    private boolean isPlaying = false;\r\n    private int score = 0;\r\n    public String taskText = \"\";\r\n\r\n    public int helpJanitorScore = 0; //คะแนน สำหรับฉากจบภารโรง (check 4 point)\r\n    public int helpBossScore = 0;    //คะแนน สำหรับฉากจบหัวหน้า (check 4 point)\r\n    public boolean taskBoss = false;\r\n    public boolean taskJanitor = false;\r\n    private boolean currentTaskCompleted = false;\r\n\r\n    public HashMap<String, Boolean> allMinigame = new HashMap<String, Boolean>();\r\n\r\n    public MinigameManager(GamePanel panel) {\r\n\r\n        this.panel = panel;\r\n\r\n        allMinigame.put(\"lan\", false);\r\n        allMinigame.put(\"terminal\", false);\r\n        allMinigame.put(\"baniplog\", false);\r\n    }\r\n\r\n\r\n\r\n    //เอาไว้ให้คลาสอื่นเรียก sound\r\n    public GamePanel getGamePanel(){\r\n        return panel;\r\n    }\r\n\r\n    //ต้องไปสุ่ม task มาก่อนค่อยเรียกใช้อันนี้\r\n    public void setTask(String type) {\r\n\r\n        //ปิดทุกtask\r\n        allMinigame.keySet().forEach(key -> updateTaskStatus(key, false));\r\n        //เปิดtaskนี้\r\n        updateTaskStatus(type, true);\r\n\r\n        if (type.equals(\"lan\")) {\r\n            currentLanLocation = randomLanRoom();\r\n            taskText = \"เชื่อมสายแลนที่ห้อง \" + currentLanLocation[0];\r\n        } else if (type.equals(\"terminal\")) {\r\n            currentTerminalLocation = randomTerminalRoom();\r\n            taskText = \"เปิดใช้ Terminal ที่ห้อง \" + currentTerminalLocation[0];\r\n        } else if (type.equals(\"baniplog\")) {\r\n            currentBanIpLogLocation = fixedBanIpLogLocation();\r\n            taskText = \"ตรวจสอบ Server Log ที่ห้อง \" + currentBanIpLogLocation[0];\r\n        }\r\n\r\n\r\n    }\r\n\r\n    public void startTask(){//ใน inputManager เมื่อplayer กด F ที่ตำแหน่งเล่นเกม จะเรียกใชเอันนี้ สร้างobj minigame\r\n        if (isPlaying) return; //กันเปิดมินิเกมซ้อน\r\n\r\n        isPlaying = true;\r\n\r\n        currentTaskCompleted = false;\r\n\r\n        Minigame game = null;\r\n\r\n        if (taskLan) {\r\n            game = new LanCable(this);\r\n            updateTaskStatus(\"lan\", false);\r\n            taskLan = false;\r\n        } else if (taskTerminal) {\r\n            game = new TerminalMinigame(this);\r\n            updateTaskStatus(\"terminal\", false);\r\n            taskTerminal = false;\r\n        } else if (taskBanIpLog) {\r\n            int currentDay = 1;\r\n            if (panel.getGSM() != null) {\r\n                currentDay = panel.getGSM().getCurrentDay();\r\n            }\r\n\r\n            game = new BanIpLogMinigame(this, currentDay);\r\n            updateTaskStatus(\"baniplog\", false);\r\n            taskBanIpLog = false;\r\n        }\r\n\r\n        if (game == null) {\r\n            isPlaying = false; //ถ้าไม่มีมินิเกมให้เปิด ก็คืนสถานะ\r\n            return;\r\n        }\r\n\r\n        currentGamePanel = game.getPanel();\r\n\r\n        panel.add(currentGamePanel);\r\n        panel.repaint();\r\n        currentGamePanel.requestFocusInWindow();\r\n        currentGamePanel.setBounds(0, 0, 1920, 1080);\r\n        currentGamePanel.setFocusable(true);\r\n        currentGamePanel.setOpaque(false);\r\n    }\r\n\r\n    public void closeGame() {\r\n        if (currentGamePanel != null) {\r\n            panel.remove(currentGamePanel);\r\n            panel.repaint();\r\n        }\r\n        isPlaying = false;\r\n        currentTaskCompleted = false;\r\n        panel.requestFocusInWindow();\r\n\r\n        if(!allMinigame.containsValue(true)){\r\n\r\n            taskText = \"\";\r\n        }\r\n    }\r\n\r\n    public void onWinStayOpen() {\r\n        if (currentTaskCompleted) return;\r\n\r\n        currentTaskCompleted = true;\r\n        score++;\r\n\r\n        System.out.println(\"คะแนนมินิเกมตอนนี้ \" + score);\r\n    }\r\n\r\n    public boolean isCurrentTaskCompleted() {\r\n        return currentTaskCompleted;\r\n    }\r\n\r\n    public void onWin() {\r\n        score++;\r\n        closeGame();\r\n\r\n        System.out.println(\"คะแนนมินิเกมตอนนี้ \" + score);\r\n    }\r\n\r\n    //มีไว้ไมไม่รุ้ เผื่อไว้\r\n    public void resetTask(){\r\n        allMinigame.keySet().forEach(key -> updateTaskStatus(key, false));\r\n        taskText = \"\";\r\n        isPlaying = false;\r\n\r\n    }\r\n\r\n    public int getScore() {\r\n        return score;\r\n    }\r\n\r\n    public boolean isPlaying() {\r\n        return isPlaying;\r\n    }\r\n\r\n    //update สถานะทุกtask เพื่อกันtask ทับกัน หรือเล่นtask อยุ่แล้วอีกtask มา\r\n    private void updateTaskStatus(String type, boolean isActive) {\r\n        if (type.equals(\"lan\")) {\r\n            taskLan = isActive;\r\n            allMinigame.put(\"lan\", isActive);\r\n        } else if (type.equals(\"terminal\")) {\r\n            taskTerminal = isActive;\r\n            allMinigame.put(\"terminal\", isActive);\r\n        } else if (type.equals(\"baniplog\")) {\r\n            taskBanIpLog = isActive;\r\n            allMinigame.put(\"baniplog\", isActive);\r\n        }\r\n\r\n        //เพิ่มมินิเกมอื่น\r\n    }\r\n\r\n    public String[] randomLanRoom(){\r\n        List<Map.Entry<String, int[]>> list = new ArrayList<>(MinigameLocation.lanLocation.entrySet());\r\n\r\n        Map.Entry<String, int[]> random = list.get(new Random().nextInt(list.size()));\r\n\r\n        return new String[]{\r\n                random.getKey(),\r\n                String.valueOf(random.getValue()[0]),\r\n                String.valueOf(random.getValue()[1])\r\n        };\r\n    }\r\n    // ฟังก์ชันสุ่มห้องสำหรับ Terminal\r\n    public String[] randomTerminalRoom(){\r\n        List<Map.Entry<String, int[]>> list = new ArrayList<>(MinigameLocation.terminalLocation.entrySet());\r\n        Map.Entry<String, int[]> random = list.get(new Random().nextInt(list.size()));\r\n\r\n        return new String[]{\r\n                random.getKey(),\r\n                String.valueOf(random.getValue()[0]),\r\n                String.valueOf(random.getValue()[1])\r\n        };\r\n    }\r\n\r\n    public String[] fixedBanIpLogLocation(){\r\n        int[] location = MinigameLocation.getBanIpLog(\"server\");\r\n\r\n        return new String[]{\r\n                \"server\",\r\n                String.valueOf(location[0]),\r\n                String.valueOf(location[1])\r\n        };\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/network/MinigameManager.java b/src/network/MinigameManager.java
+--- a/src/network/MinigameManager.java	(revision cb46a348f30337018cd9dbe5a08d165df4cd3d60)
++++ b/src/network/MinigameManager.java	(date 1774621340886)
+@@ -15,6 +15,10 @@
+ 
+     public boolean taskTerminal = false;
+     public String[] currentTerminalLocation = {"","",""};
++
++    public boolean taskBanIpLog = false;
++    public String[] currentBanIpLogLocation = {"","",""};
++
+     private boolean isPlaying = false;
+     private int score = 0;
+     public String taskText = "";
+Index: src/entity/Player.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package entity;\r\n\r\nimport java.awt.*;\r\nimport javax.swing.ImageIcon;\r\nimport javax.swing.JPanel;\r\nimport ui.Camera;\r\n\r\npublic class Player extends JPanel {\r\n    public int xDelta = 0;\r\n    public int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้\r\n    public int offsetX = 0;\r\n\r\n    public core.GamePanel panel;\r\n\r\n    private Camera camera;\r\n\r\n    //Animation\r\n    private Image[] frames;\r\n    private Image[] idleFrames; // เปลี่ยนมาใช้ Array เก็บรูปท่ายืนแทน\r\n    private int currentFrame = 0;\r\n    \r\n    private int totalFrames = 8; // จำนวนรูปตอนเดิน\r\n    private int totalIdleFrames = 7;\r\n    \r\n    public boolean checkRight = false;\r\n    public boolean moving = false;\r\n\r\n    //เราเพิ่มความเร็วในการเดิน\r\n    private int speed = 7;\r\n    private int aniTick = 0;\r\n    private int aniSpeed = 10;\r\n\r\n    //แก้ไม่ให้ตัวละครเดินแล้วดูกระตุก ตอนอยู่กลางกล้อง\r\n    public boolean leftPressed = false;\r\n    public boolean rightPressed = false;\r\n\r\n    private long lastStepTime = 0;\r\n    private long stepInterval = 370; // ยิ่งน้อยเสียงยิ่งรัว\r\n\r\n    public Player() {\r\n        //setFocusable(true);\r\n        //setFocusTraversalKeysEnabled(false); ให้ไป focus ตัว inputManager ตัวเดียว\r\n        frames = new Image[totalFrames];\r\n        idleFrames = new Image[totalIdleFrames];\r\n\r\n        // โหลด animation ท่ายืนนิ่ง จากโฟลเดอร์ player_idle\r\n        for (int i = 0; i < totalIdleFrames; i++) {\r\n            try {\r\n                idleFrames[i] = new ImageIcon(\"src/entity/player_idle/\" + (i + 1) + \".png\").getImage();\r\n            } catch (Exception e) {\r\n                System.out.println(\"Error โหลดรูปท่ายืนไม่สำเร็จ: /entity/player_idle/\" + (i + 1) + \".png\");\r\n            }\r\n        }\r\n\r\n        // โหลด animation ตัวละคร แบบใช้ path ตรง เพื่อให้เหมือนกัน\r\n        for (int i = 0; i < totalFrames; i++) {\r\n            try {\r\n                frames[i] = new ImageIcon(\"src/entity/player/\" + (i + 1) + \".png\").getImage();\r\n            } catch (Exception e) {\r\n                // ถ้าหาไฟล์ไม่เจอ จะได้รู้ว่าพังที่ไฟล์ไหน\r\n                System.out.println(\"Error โหลดรูปไม่สำเร็จ: /entity/player/\" + (i + 1) + \".png\");\r\n            }\r\n        }\r\n\r\n        //  เอมย้ายไปไว้ใน input manager ที่เดียว เพราะว่าตอนเอมทำแล้วมันไม่โฟกัสตัว inputmanager มาโฟกัสตัวนี้แทน เลยรวมอันนี้เข้าไปใน input manager ด้วยเลยละกันนะ\r\n\r\n    }\r\n\r\n    //อัพเดทตำแหน่งในนี้แทน เรียก player.update(); ใน gamePanel ที่ method update\r\n    //มันจะได้ขยับตามเวลาใน gameloop แล้วจะ smooth ขึ้น\r\n    public void update() {\r\n        if (panel.isInMinigame()){\r\n            rightPressed = false;\r\n            leftPressed = false;\r\n            moving = false;\r\n            return;\r\n        }\r\n\r\n        //เพิ่มเช็ค แมพเล็กกว่าขนาดจอ ไม่งั้น player จะเดินออกจอได้ (ติดลบ)\r\n        int maxX = Math.max(0, camera.getWorldWidth() - 140);\r\n\r\n        if (rightPressed) {\r\n            xDelta += speed;\r\n\r\n            if (xDelta > maxX) {\r\n                xDelta = maxX;\r\n            }\r\n        }\r\n\r\n        if (leftPressed) {\r\n            xDelta -= speed;\r\n\r\n            if (xDelta < 0) {\r\n                xDelta = 0;\r\n            }\r\n        }\r\n        // เช็กว่าผู้เล่นกำลังกดปุ่มเดินหรือไม่\r\n        boolean isMoving = leftPressed || rightPressed;\r\n\r\n        if (isMoving) {\r\n            long currentTime = System.currentTimeMillis();\r\n\r\n            // เช็กจังหวะ: ถ้าเวลาปัจจุบันลบเวลาที่ก้าวล่าสุด มากกว่าช่วงที่ตั้งไว้\r\n            if (currentTime - lastStepTime >= stepInterval) {\r\n\r\n                if (panel.getSound() != null) {\r\n                    panel.getSound().playSound(\"walk2\");\r\n                }\r\n                // อัปเดตเวลาล่าสุดที่ก้าวเท้า\r\n                lastStepTime = currentTime;\r\n                }\r\n            }\r\n        }\r\n\r\n    public void setCamera(Camera camera) {\r\n        this.camera = camera;\r\n    }\r\n\r\n    @Override\r\n    public void paintComponent(Graphics g) {\r\n        super.paintComponent(g);\r\n\r\n        Graphics2D g2 = (Graphics2D) g;\r\n\r\n        // ให้ Animation ทำงานตลอดเวลา ไม่ว่าจะเดินหรือยืนนิ่ง\r\n        aniTick++;\r\n        if (aniTick >= aniSpeed) {\r\n            aniTick = 0;\r\n            currentFrame++;\r\n        }\r\n\r\n        //เพิ่มกรณีที่ map เล็กกว่าขนาดจอ ให้วาด player ให้อยุ่ใน map\r\n        int offsetX = 0;\r\n\r\n        if (camera.getWorldWidth() < camera.getScreenWidth()) {\r\n            offsetX = (camera.getScreenWidth() - camera.getWorldWidth()) / 2;\r\n            //โดยบวกเพิ่มค่าบริเวณที่ว่างระหว่างแมพกับจอเข้าไปตอนวาด\r\n        }\r\n\r\n        int drawX = xDelta - camera.getX() + offsetX;\r\n        int drawY = yDelta;\r\n\r\n        // เช็คว่าจะวาดรูปเดินหรือรูปยืนนิ่ง และจัดการเฟรมไม่ให้เกินจำนวนรูปที่มี\r\n        Image currentImg;\r\n        if (moving) {\r\n            if (currentFrame >= totalFrames) currentFrame = 0;\r\n            currentImg = frames[currentFrame];\r\n        } else {\r\n            if (currentFrame >= totalIdleFrames) currentFrame = 0;\r\n            currentImg = idleFrames[currentFrame];\r\n        }\r\n        \r\n        if (currentImg == null) return;\r\n\r\n        int originalWidth = currentImg.getWidth(null);\r\n        int originalHeight = currentImg.getHeight(null);\r\n\r\n        double scale = 1; //ขออณุญาติเปลี่ยนเปนขนาดที่ art ต้องการ\r\n\r\n        int width = (int) (originalWidth * scale);\r\n        int height = (int) (originalHeight * scale);\r\n\r\n        Component observer = (panel != null) ? panel : this;\r\n\r\n        if (checkRight) {\r\n            g2.drawImage(\r\n                    currentImg,\r\n                    drawX + width,\r\n                    drawY,\r\n                    -width,\r\n                    height,\r\n                    observer\r\n            );\r\n        } else {\r\n            g2.drawImage(\r\n                    currentImg,\r\n                    drawX,\r\n                    drawY,\r\n                    width,\r\n                    height,\r\n                    observer\r\n            );\r\n        }\r\n    }\r\n\r\n    public int getxDelta() { //ส่งไปให้กล้องใช้\r\n        return xDelta;\r\n    }\r\n\r\n    public void setPanel(core.GamePanel panel) {\r\n        this.panel = panel;\r\n    }\r\n\r\n    public void draw(Graphics2D g2) {\r\n\r\n        // ให้ Animation ทำงานตลอดเวลา ไม่ว่าจะเดินหรือยืนนิ่ง\r\n        aniTick++;\r\n        if (aniTick >= aniSpeed) {\r\n            aniTick = 0;\r\n            currentFrame++;\r\n        }\r\n\r\n        //เพิ่มกรณีที่ map เล็กกว่าขนาดจอ ให้วาด player ให้อยุ่ใน map\r\n        offsetX = 0;\r\n\r\n        if (camera.getWorldWidth() < camera.getScreenWidth()) {\r\n            offsetX = (camera.getScreenWidth() - camera.getWorldWidth()) / 2;\r\n        }\r\n\r\n        int drawX = xDelta - camera.getX() + offsetX;\r\n        int drawY = yDelta;\r\n\r\n        // เช็คว่าจะวาดรูปเดินหรือรูปยืนนิ่ง และจัดการเฟรมไม่ให้เกินจำนวนรูปที่มี\r\n        Image currentImg;\r\n        if (moving) {\r\n            if (currentFrame >= totalFrames) currentFrame = 0;\r\n            currentImg = frames[currentFrame];\r\n        } else {\r\n            if (currentFrame >= totalIdleFrames) currentFrame = 0;\r\n            currentImg = idleFrames[currentFrame];\r\n        }\r\n        \r\n        if (currentImg == null) return;\r\n\r\n        int originalWidth = currentImg.getWidth(null);\r\n        int originalHeight = currentImg.getHeight(null);\r\n\r\n        double scale = 1;\r\n\r\n        int width = (int) (originalWidth * scale);\r\n        int height = (int) (originalHeight * scale);\r\n\r\n        Component observer = (panel != null) ? panel : this;\r\n\r\n        if (checkRight) {\r\n            g2.drawImage(\r\n                    currentImg,\r\n                    drawX + width,\r\n                    drawY,\r\n                    -width,\r\n                    height,\r\n                    observer\r\n            );\r\n        } else {\r\n            g2.drawImage(\r\n                    currentImg,\r\n                    drawX,\r\n                    drawY,\r\n                    width,\r\n                    height,\r\n                    observer\r\n            );\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/entity/Player.java b/src/entity/Player.java
+--- a/src/entity/Player.java	(revision cb46a348f30337018cd9dbe5a08d165df4cd3d60)
++++ b/src/entity/Player.java	(date 1774621020499)
+@@ -6,7 +6,7 @@
+ import ui.Camera;
+ 
+ public class Player extends JPanel {
+-    public int xDelta = 0;
++    public int xDelta = 80;
+     public int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
+     public int offsetX = 0;
+ 
+@@ -22,7 +22,7 @@
+     private int totalFrames = 8; // จำนวนรูปตอนเดิน
+     private int totalIdleFrames = 7;
+     
+-    public boolean checkRight = false;
++    public boolean checkRight = true;
+     public boolean moving = false;
+ 
+     //เราเพิ่มความเร็วในการเดิน
+Index: src/out/production/Amonghack/.idea/workspace.xml
+===================================================================
+diff --git a/src/out/production/Amonghack/.idea/workspace.xml b/src/out/production/Amonghack/.idea/workspace.xml
+deleted file mode 100644
+--- a/src/out/production/Amonghack/.idea/workspace.xml	(revision cb46a348f30337018cd9dbe5a08d165df4cd3d60)
++++ /dev/null	(revision cb46a348f30337018cd9dbe5a08d165df4cd3d60)
+@@ -1,23 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunManager">
+-    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+-      <option name="MAIN_CLASS_NAME" value="main.Game" />
+-      <module name="Amonghack" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="main.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-    <recent_temporary>
+-      <list>
+-        <item itemvalue="Application.Game" />
+-      </list>
+-    </recent_temporary>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: out/production/Project_op/out/production/Amonghack/.idea/workspace.xml
+===================================================================
+diff --git a/out/production/Project_op/out/production/Amonghack/.idea/workspace.xml b/out/production/Project_op/out/production/Amonghack/.idea/workspace.xml
+deleted file mode 100644
+--- a/out/production/Project_op/out/production/Amonghack/.idea/workspace.xml	(revision cb46a348f30337018cd9dbe5a08d165df4cd3d60)
++++ /dev/null	(revision cb46a348f30337018cd9dbe5a08d165df4cd3d60)
+@@ -1,23 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunManager">
+-    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+-      <option name="MAIN_CLASS_NAME" value="main.Game" />
+-      <module name="Amonghack" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="main.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-    <recent_temporary>
+-      <list>
+-        <item itemvalue="Application.Game" />
+-      </list>
+-    </recent_temporary>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"6fcc999f-01b1-469d-b5cc-86af910d6f4c\" name=\"Changes\" comment=\"คอมมิท\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/main/Game.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/main/Game.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/audio/Sound.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/audio/Sound.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/core/InputManager.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/core/InputManager.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/Game.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/Game.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/MainMenu.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/MainMenu.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/map/mapImage/art.PNG\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/map/mapImage/art.PNG\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/map/mapImage/meeting.PNG\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/map/mapImage/meeting.PNG\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Game.executor\": \"Run\",\r\n    \"Application.dddGame.executor\": \"Run\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\"\r\n  }\r\n}]]></component>\r\n  <component name=\"TaskManager\">\r\n    <task id=\"LOCAL-00001\" summary=\"คอมมิท\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774600624558</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774600624558</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"คอมมิท\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"คอมมิท\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision cb46a348f30337018cd9dbe5a08d165df4cd3d60)
++++ b/.idea/workspace.xml	(date 1774621670591)
+@@ -4,21 +4,27 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="คอมมิท">
++    <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="ปรับตำแหน่ง npc เริ่มวัน">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/audio/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/Sound.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/MainMenu.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/map/mapImage/art.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/mapImage/art.PNG" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/map/mapImage/meeting.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/mapImage/meeting.PNG" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/entity/Player.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/out/production/Amonghack/.idea/workspace.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/network/MinigameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/MinigameManager.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/out/production/Amonghack/.idea/workspace.xml" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -28,17 +34,27 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.Game.executor": "Run",
+-    "Application.dddGame.executor": "Run",
+-    "git-widget-placeholder": "main",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Application.Game.executor&quot;: &quot;Run&quot;,
++    &quot;Application.dddGame.executor&quot;: &quot;Run&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+   }
+-}]]></component>
++}</component>
++  <component name="RunManager">
++    <configuration name="Game" type="Application" factoryName="Application">
++      <option name="MAIN_CLASS_NAME" value="main.Game" />
++      <module name="Project_op" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++  </component>
+   <component name="TaskManager">
+     <task id="LOCAL-00001" summary="คอมมิท">
+       <option name="closed" value="true" />

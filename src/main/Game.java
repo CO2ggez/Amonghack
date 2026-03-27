@@ -71,7 +71,7 @@ public class Game {
         System.out.println("Let's go");
 
         btn_close = new JButton(scaledIcon);
-        btn_close.setBounds(1860, 10, new_width, new_h);
+        btn_close.setBounds(1860, 1020, new_width, new_h);
         btn_close.setBorderPainted(false);
         btn_close.setContentAreaFilled(false);
         btn_close.setFocusPainted(false);
@@ -82,7 +82,7 @@ public class Game {
         player.setOpaque(false); //ลบ background ของ Player
         //textbook
         panel.add(player);
-        panel.setComponentZOrder(player, 1); //ดึง player ขึ้นมาข้างหน้าสุด
+
         panel.add(btn_close);
 
         cardcontain.revalidate();
