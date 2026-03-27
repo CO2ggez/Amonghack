@@ -209,6 +209,17 @@ public class BanIpLogMinigame implements Minigame {
 
         String lower = command.toLowerCase().trim();
 
+        if (missionCompleted) {
+            if (lower.equals("exit")) {
+                manager.closeGame();
+                return true;
+            }
+
+            appendLine("Mission already complete.");
+            appendLine("Type 'exit' to close terminal.");
+            return false;
+        }
+
         if (lower.equals("help")) {
             appendLine("Available Commands:");
             appendLine("read log - เปิดดู server log");
@@ -226,8 +237,11 @@ public class BanIpLogMinigame implements Minigame {
             if (ipSolved && dnsSolved) {
                 appendLine("No direct threat found.");
                 appendLine("Mission complete.");
-                manager.onWin();
-                return true;
+                appendLine("Type 'exit' to close terminal.");
+
+                missionCompleted = true;
+                manager.onWinStayOpen();
+                return false;
             }
 
             return false;
