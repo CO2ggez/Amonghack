@@ -12,6 +12,8 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
+import util.*;
+
 public class TerminalMinigame implements Minigame {
     // ขนาด terminal ตอนแสดงบนจอ
     private static final int WINDOW_WIDTH = 1100;
@@ -72,11 +74,12 @@ public class TerminalMinigame implements Minigame {
         terminalArea.setOpaque(false); // ด้านใน terminal เป็นสีดำอยู่แล้ว
         terminalArea.setForeground(new Color(0, 255, 70));
         terminalArea.setCaretColor(new Color(0, 255, 70));
-        terminalArea.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        terminalArea.setFont(FontUtil.THAI.deriveFont(44f));
         terminalArea.setLineWrap(false);
         terminalArea.setWrapStyleWord(false);
         terminalArea.setMargin(new Insets(0, 0, 0, 0));
         terminalArea.setBorder(null);
+        terminalScroll.
 
         ((AbstractDocument) terminalArea.getDocument()).setDocumentFilter(new TerminalDocumentFilter());
 
