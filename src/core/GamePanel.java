@@ -4,6 +4,7 @@ import audio.Sound;
 import entity.*;
 import event.EventManager;
 import event.EventSetup;
+import event.TriggerZone;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -11,12 +12,13 @@ import javax.swing.*;
 import map.RoomManager;
 import network.MinigameManager;
 import ui.Camera;
-import ui.DialogBox; // นำเข้า Event
-import ui.TextBook;
-import ui.TimeUI;   // นำเข้า Event
-import util.AssetLoader;   // นำเข้า AssetLoader
+import ui.CgLoader;
+import ui.DialogBox;
+import ui.Ending;
+import ui.TextBook;  
+import ui.TimeUI;
+import util.AssetLoader;
 import util.FontUtil;
-import event.TriggerZone;
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
@@ -28,62 +30,70 @@ public class GamePanel extends JPanel implements Runnable {
     private GameStateManager gsm;
     private boolean isTransitioning = false;
 
-    private int screenWidth = 1920; //เพื่ออิงขนาดจอจากอันนี้ที่เดียว
+    private int screenWidth = 1920; 
     private int screenHeight = 1080;
 
     private Player player;
-
     private RoomManager roomManager;
     private Camera camera;
-
     private InputManager inputManager;
-
     private EventManager eventManager;
     private EventSetup eventSetup;
-    private BufferedImage elevatorUI; // ตัวแปรรูปหน้าต่างลิฟต์
-
+    private BufferedImage elevatorUI; 
     private Sound sound;
 
-
-    private float fadeAlpha = 0f;      // 0.0 (ใส) ถึง 1.0 (ดำ)
+    private float fadeAlpha = 0f;      
     private boolean isFading = false;
-    private boolean isFadeOut = true;  // true = กำลังดำ, false = กำลังสว่าง
-    private Runnable postFadeAction;   // เก็บคำสั่ง "เปลี่ยนชั้น" ไว้ทำตอนจอดำสนิท
-
+    private boolean isFadeOut = true;  
+    private Runnable postFadeAction;   
     private MinigameManager minigameManager;
 
-    //ข้อความบอกevent ที่กดได้ (check ใน inputmanager)
     private String hintText = null;
     private boolean showHint = false;
 
     NPCmanager npcmanager;
 
-    //ข้อความแจ้งเตือนหลัง special event เสร็จ
     private String notificationText = null;
     private long notificationStartTime = 0;
-    private long notificationDuration = 2000; //วิ
+    private long notificationDuration = 2000; 
     private float notificationAlpha = 0f;
     private boolean showNotification = false;
 
+    public CgLoader cgLoader;
+    public Ending gameEnding;
+    public boolean showingEnding = false; 
+
     public void update() {
+        if (showingEnding) {
+            if (gameEnding != null && gameEnding.isFinished()) {
+                // เด้งกลับเมนูหรือปิดเกมเมื่อฉากจบจบลง (เลือกเอาคอมเมนต์ออกได้)
+                // System.exit(0);
+            }
+            return; 
+        }
+
         player.update();
         camera.update(player);
+
         if (timeManager != null && timeManager.isDayEnded() && !isTransitioning) {
             isTransitioning = true;
-
             if (sound != null) {
                 sound.stopSound("bg1");
             }
-
-            // สั่งหยุดเวลาไว้ก่อน
             timeManager.setPaused(true);
-            this.requestFocusInWindow();
+
+            if (gsm != null && gsm.getCurrentDay() == 5) {
+                isTransitioning = false; 
+                gsm.checkEndGame(); 
+            } else {
+                this.requestFocusInWindow();
+            }
         }
+
         if (gsm != null && !isTransitioning) {
             gsm.update();
         }
 
-        //เอาข้อความhint มาจากตำแหน่ง event ที่ player อยู่
         String hint = inputManager.getCurrentHint();
         if (hint != null) {
             hintText = hint;
@@ -99,12 +109,11 @@ public class GamePanel extends JPanel implements Runnable {
                 fadeAlpha += 0.05f;
                 if (fadeAlpha >= 1f) {
                     fadeAlpha = 1f;
-
                     if (postFadeAction != null) {
                         postFadeAction.run();
                         postFadeAction = null;
                     }
-                    isFadeOut = false; // เริ่มทำให้จอสว่างคืน
+                    isFadeOut = false; 
                 }
             } else {
                 fadeAlpha -= 0.05f;
@@ -115,14 +124,10 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
 
-        //อัพเดทข้อความแจ้งเตือน special event
         if (showNotification) {
             long elapsed = System.currentTimeMillis() - notificationStartTime;
-
             if (elapsed > notificationDuration) {
-                //ค่อยๆจาง
                 notificationAlpha -= 0.02f;
-
                 if (notificationAlpha <= 0f) {
                     notificationAlpha = 0f;
                     showNotification = false;
@@ -130,161 +135,108 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-
-
     }
 
     public void startNextDay() {
         if (isTransitioning) {
-            //บอก GameStateManager ให้ขยับไปวันถัดไป
             gsm.nextDay();
-
-            //รีเซ็ตเวลาใน TimeManager กลับไป 00:00
             timeManager.resetDay();
-            timeManager.setPaused(false); // ให้เวลาเดินต่อ
+            timeManager.setPaused(false); 
             isTransitioning = false;
 
             if (sound != null) {
                 sound.setVolume("bg1", 0.05f);
                 sound.loopSound("bg1");
             }
-
-            //ปิดสถานะจอดำ
             this.requestFocusInWindow();
-
-            }
         }
-
+    }
 
     public GamePanel(Player player) {
         this.player = player;
-
         setPreferredSize(new Dimension(1720, 800));
         setLayout(null);
         setBackground(Color.BLACK);
         setOpaque(true);
         timeManager = new TimeManager();
 
-        // Create TextBook FIRST
-        try {
+        cgLoader = new CgLoader();
+        gameEnding = new Ending(cgLoader);
 
+        try {
             textBook = new TextBook();
             textBook.setBounds(0, 0, screenWidth, screenHeight);
-            textBook.setVisible(false);  // Start hidden
-
-            add(textBook);  // Add to panel
+            textBook.setVisible(false);  
+            add(textBook);  
             setComponentZOrder(textBook, 0);
-
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Failed to load TextBook image");
         }
-        //สร้างแมพและกล้อง และ เชื่อมกล้องกับ player
 
         roomManager = new RoomManager(player);
         camera = new Camera(this,roomManager);
-
         eventManager = new EventManager();
         eventSetup = new EventSetup(eventManager);
-        eventSetup.loadZones(); // โหลดจุดคลิกต่างๆ
-
-        // --- โหลดรูปภาพ UI ---
-        // **สำคัญ: คุณต้องมีไฟล์รูปภาพลิฟต์ (เช่น elevator_ui.png) ไปใส่ไว้ในโฟลเดอร์ที่ระบุ**
+        eventSetup.loadZones(); 
         elevatorUI = AssetLoader.loadImage("/util/asst/ElevatorButton21G.png");
-
         minigameManager = new MinigameManager(this);
-
         player.setCamera(camera);
-
-        // 1. --- เลื่อนการสร้าง npcmanager มาไว้ตรงนี้ก่อน (เพื่อให้มีข้อมูลก่อนส่งไปให้ InputManager) ---
         npcmanager = new NPCmanager(roomManager);
-
-        // 2. --- แก้ไข: เติม npcmanager เข้าไปเป็นตัวแปรที่ 6 (ตัวสุดท้าย) ในวงเล็บ ---
         inputManager = new InputManager(camera, roomManager, this, player, minigameManager, npcmanager,textBook);
         addKeyListener(inputManager);
         player.setCamera(camera);
-
         gsm = new GameStateManager(this);
         timeUI = new TimeUI(timeManager, gsm);
         dialogBox = new DialogBox();
-
         sound = new Sound();
         sound.setVolume("bg1", 0.05f);
         sound.loopSound("bg1");
 
-
-
         setFocusable(true);
-
         startGameThread();
         SwingUtilities.invokeLater(() -> { requestFocusInWindow();});
     }
 
-    public EventManager getEventManager() {
-        return eventManager;
-    }
+    public EventManager getEventManager() { return eventManager; }
 
     private boolean shouldShowElevatorGuide() {
         if (roomManager == null || eventManager == null || player == null) return false;
-
         String room = roomManager.getCurrentRoomName();
         if (room == null || !room.startsWith("lift")) return false;
-
-        // ถ้าเปิดหน้าต่างลิฟต์แล้ว ไม่ต้องโชว์ลูกศร
         if (eventManager.isShowImage()) return false;
-
         TriggerZone zone = eventManager.getZoneByName("Elevator_Panel");
         if (zone == null) return false;
-
-        // ให้โชว์เฉพาะตอนผู้เล่นอยู่ใกล้แผงลิฟต์
         return Math.abs(player.xDelta - zone.getCenterX()) <= 350;
     }
 
     private void drawElevatorGuide(Graphics2D g2) {
         TriggerZone zone = eventManager.getZoneByName("Elevator_Panel");
         if (zone == null) return;
-
-        // world -> screen
         int targetX = zone.getCenterX() - camera.getX() - 50;
         int targetY = zone.getY() + 100;
-
-        // ขยับขึ้นลงนิดหน่อยให้ดูมีชีวิต
         int bob = (int) (Math.sin(System.currentTimeMillis() / 120.0) * 8);
-
-        // ถ้าอยู่นอกจอมาก ๆ ก็ไม่ต้องวาด
         if (targetX < -100 || targetX > getWidth() + 100) return;
-
         String text = "คลิกตรงนี้เพื่อใช้งานลิฟต์";
-
         Font oldFont = g2.getFont();
         g2.setFont(FontUtil.THAI.deriveFont(Font.BOLD, 24f));
         FontMetrics fm = g2.getFontMetrics();
-
         int textWidth = fm.stringWidth(text);
         int boxX = targetX - (textWidth / 2) - 18;
         int boxY = targetY - 110 + bob;
         int boxW = textWidth + 36;
         int boxH = 42;
-
-        // กล่องข้อความ
         g2.setColor(new Color(0, 0, 0, 170));
         g2.fillRoundRect(boxX, boxY, boxW, boxH, 20, 20);
-
         g2.setColor(Color.WHITE);
         g2.drawString(text, targetX - textWidth / 2, boxY + 28);
-
-        // เส้นลูกศร
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(4f));
         g2.drawLine(targetX, boxY + boxH, targetX, targetY - 25 + bob);
-
-        // หัวลูกศร
         Polygon arrowHead = new Polygon();
         arrowHead.addPoint(targetX, targetY - 5 + bob);
         arrowHead.addPoint(targetX - 14, targetY - 28 + bob);
         arrowHead.addPoint(targetX + 14, targetY - 28 + bob);
         g2.fillPolygon(arrowHead);
-
         g2.setFont(oldFont);
     }
 
@@ -308,110 +260,76 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        roomManager.drawMap(g,camera);//วาดแมพ
-
+        roomManager.drawMap(g,camera);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        //npc
         npcmanager.drawNPC(g, camera.getX());
 
-        if (gsm != null) {
-            gsm.draw(g2);
-        }
+        if (gsm != null) gsm.draw(g2);
+        if (timeUI != null) timeUI.draw(g2);
 
-        if (timeUI != null) {
-            timeUI.draw(g2);
-        }
-
-        // จะวาดตัวละคร Player ก็ต่อเมื่อกล่องข้อความไม่ได้เปิดอยู่
         if (dialogBox == null || !dialogBox.isVisible()) {
             player.draw(g2);
             player.setVisible(isTransitioning);
         }
 
         if (textBook != null && textBook.isVisible()) {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(new Color(0, 0, 0, 140));
-            g2d.fillRect(0, 0, getWidth(), getHeight());
+            g2.setColor(new Color(0, 0, 0, 140));
+            g2.fillRect(0, 0, getWidth(), getHeight());
         }
 
         g2.setFont(FontUtil.THAI);
-
-        //task text ขวาบน
         g2.setColor(Color.WHITE);
         g2.drawString(minigameManager.taskText, 1450 , 75);
 
-        if (shouldShowElevatorGuide()) {
-            drawElevatorGuide(g2);
-        }
+        if (shouldShowElevatorGuide()) drawElevatorGuide(g2);
 
         if (eventManager != null && eventManager.isShowImage()) {
             String activeEvent = eventManager.getActiveZoneName();
-
-            // เช็คว่ากดโดนลิฟต์ และ โหลดรูปมาสำเร็จ
             if (activeEvent.equals("Elevator_Panel") && elevatorUI != null) {
-                // ทำฉากด้านหลังมืดลง
                 g2.setColor(new Color(0, 0, 0, 140));
                 g2.fillRect(0, 0, getWidth(), getHeight());
-                // คำนวณให้รูปภาพวาดอยู่ตรงกลางหน้าจอพอดี
                 int uiX = (getWidth() - elevatorUI.getWidth()) / 2;
                 int uiY = (getHeight() - elevatorUI.getHeight()) / 2;
                 g2.drawImage(elevatorUI, uiX, uiY, null);
             }
         }
 
-        if (dialogBox != null) {
-            dialogBox.draw(g2);
-        }
+        if (dialogBox != null) dialogBox.draw(g2);
 
-        //วาดข้อความว่า interact event ได้
         if (showHint && hintText != null) {
             int playerScreenX = player.xDelta - camera.getX() + player.offsetX;
             int playerScreenY = player.yDelta - 20;
-
             FontMetrics fm = g2.getFontMetrics();
             int w = fm.stringWidth(hintText);
             int h = fm.getHeight();
-
-            // กล่องดำโปร่งใส
             g2.setColor(new Color(0, 0, 0, 150));
             g2.fillRect(playerScreenX-10, playerScreenY - h +10, w + 20, h);
-
-            // text
             g2.setColor(Color.WHITE);
             g2.drawString(hintText, playerScreenX , playerScreenY );
         }
 
-        //ทรานซิชั่นถมดำ
         if (fadeAlpha > 0) {
-            Graphics2D transition = (Graphics2D) g;
-            transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
-            transition.setColor(Color.BLACK);
-            transition.fillRect(0, 0, getWidth(), getHeight());
-            transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // รีเซ็ตค่ากลับ
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
+            g2.setColor(Color.BLACK);
+            g2.fillRect(0, 0, getWidth(), getHeight());
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); 
         }
 
-        //วาด special event
         if (showNotification && notificationText != null) {
-            g2.setComposite(AlphaComposite.getInstance(
-                    AlphaComposite.SRC_OVER, notificationAlpha));
-
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, notificationAlpha));
             FontMetrics fm = g2.getFontMetrics();
             int textWidth = fm.stringWidth(notificationText);
-
             int x = (getWidth() - textWidth) / 2;
-            int y = 250; // top center
-
-            // background
+            int y = 250; 
             g2.setColor(new Color(0, 0, 0, 150));
             g2.fillRect(x - 20, y - 40, textWidth + 40, 50);
-
             g2.setColor(Color.YELLOW);
             g2.drawString(notificationText, x, y);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        }
 
-            // reset alpha
-            g2.setComposite(AlphaComposite.getInstance(
-                    AlphaComposite.SRC_OVER, 1f));
+        if (showingEnding && gameEnding != null) {
+            gameEnding.draw(g2);
         }
     }
 
@@ -434,7 +352,6 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    //function แสดงข้อความ specialevent
     public void showNotification(String text) {
         this.notificationText = text;
         this.notificationStartTime = System.currentTimeMillis();
@@ -442,35 +359,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.showNotification = true;
     }
 
-    public int getScreenHeight() {
-        return screenHeight;
-    }
-
-    public int getScreenWidth() {
-        return screenWidth;
-    }
-
+    public int getScreenHeight() { return screenHeight; }
+    public int getScreenWidth() { return screenWidth; }
     public boolean getIsTransitioning() {return isTransitioning;}
-
-    public void setDialogBox(DialogBox dialogBox) {
-        this.dialogBox = dialogBox;
-    }
-
+    public void setDialogBox(DialogBox dialogBox) { this.dialogBox = dialogBox; }
     public Sound getSound() {return sound;}
-
-    public boolean isInMinigame() {
-        return minigameManager != null && minigameManager.isPlaying();
-    }
-
-    public GameStateManager getGSM() {
-        return gsm;
-    }
-
-    public NPCmanager getNpcmanager() {
-        return npcmanager;
-    }
-
-    public MinigameManager getMinigameManager() {
-        return minigameManager;
-    }
+    public boolean isInMinigame() { return minigameManager != null && minigameManager.isPlaying(); }
+    public GameStateManager getGSM() { return gsm; }
+    public NPCmanager getNpcmanager() { return npcmanager; }
+    public MinigameManager getMinigameManager() { return minigameManager; }
 }
