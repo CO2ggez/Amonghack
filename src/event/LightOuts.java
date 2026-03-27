@@ -51,7 +51,6 @@ public class LightOuts implements Minigame {
         breaker.setPreferredSize(new Dimension(400, 500));
 
         // Create trigger zone for the switch area
-        // You can adjust these coordinates based on where the switch is in your image
         switches = new TriggerZone("light_switch", 150, 200, 100, 100);
 
         // Add mouse listener to the panel
