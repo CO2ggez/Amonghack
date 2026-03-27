@@ -213,6 +213,13 @@ public class InputManager implements KeyListener {
                 return;
             }
 
+            if ((roomManager.getCurrentRoomName().equals(minigameManager.currentBanIpLogLocation[0])) &&
+                    isNear(Integer.parseInt(minigameManager.currentBanIpLogLocation[1]), Integer.parseInt(minigameManager.currentBanIpLogLocation[2]))
+                    && minigameManager.taskBanIpLog) {
+                minigameManager.startTask();
+                return;
+            }
+
             //task boss, janitor
             if(helpBossArea()){
                 minigameManager.taskBoss = false;
@@ -500,6 +507,12 @@ public class InputManager implements KeyListener {
                 isNear(Integer.parseInt(minigameManager.currentTerminalLocation[1]), Integer.parseInt(minigameManager.currentTerminalLocation[2]))
                 && minigameManager.taskTerminal) {
             return "[F] เปิด Terminal";
+        }
+
+        if ((roomManager.getCurrentRoomName().equals(minigameManager.currentBanIpLogLocation[0])) &&
+                isNear(Integer.parseInt(minigameManager.currentBanIpLogLocation[1]), Integer.parseInt(minigameManager.currentBanIpLogLocation[2]))
+                && minigameManager.taskBanIpLog) {
+            return "[F] ตรวจสอบ Server Log";
         }
 
         //ตำแหน่งช่วยงาน

@@ -16,6 +16,8 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public boolean taskTerminal = false;
     public String[] currentTerminalLocation = {"","",""};
     private boolean isPlaying = false;
+    public boolean taskBanIpLog = false;
+    public String[] currentBanIpLogLocation = {"","",""};
     private int score = 0;
     public String taskText = "";
 
@@ -23,6 +25,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public int helpBossScore = 0;
     public boolean taskBoss = false;
     public boolean taskJanitor = false;
+    private boolean currentTaskCompleted = false;
 
     public HashMap<String, Boolean> allMinigame = new HashMap<String, Boolean>();
 
@@ -32,6 +35,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
 
         allMinigame.put("lan", false);
         allMinigame.put("terminal", false);
+        allMinigame.put("baniplog", false);
     }
 
 
@@ -55,6 +59,9 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         } else if (type.equals("terminal")) {
             currentTerminalLocation = randomTerminalRoom();
             taskText = "เปิดใช้ Terminal ที่ห้อง " + currentTerminalLocation[0];
+        } else if (type.equals("baniplog")) {
+            currentBanIpLogLocation = fixedBanIpLogLocation();
+            taskText = "ตรวจสอบ Server Log ที่ห้อง " + currentBanIpLogLocation[0];
         }
 
 
@@ -64,6 +71,8 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         if (isPlaying) return; //กันเปิดมินิเกมซ้อน
 
         isPlaying = true;
+
+        currentTaskCompleted = false;
 
         Minigame game = null;
 
@@ -75,6 +84,15 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
             game = new TerminalMinigame(this);
             updateTaskStatus("terminal", false);
             taskTerminal = false;
+        } else if (taskBanIpLog) {
+            int currentDay = 1;
+            if (panel.getGSM() != null) {
+                currentDay = panel.getGSM().getCurrentDay();
+            }
+
+            game = new BanIpLogMinigame(this, currentDay);
+            updateTaskStatus("baniplog", false);
+            taskBanIpLog = false;
         }
 
         if (game == null) {
@@ -98,12 +116,26 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
             panel.repaint();
         }
         isPlaying = false;
+        currentTaskCompleted = false;
         panel.requestFocusInWindow();
 
         if(!allMinigame.containsValue(true)){
 
             taskText = "";
         }
+    }
+
+    public void onWinStayOpen() {
+        if (currentTaskCompleted) return;
+
+        currentTaskCompleted = true;
+        score++;
+
+        System.out.println("คะแนนมินิเกมตอนนี้ " + score);
+    }
+
+    public boolean isCurrentTaskCompleted() {
+        return currentTaskCompleted;
     }
 
     public void onWin() {
@@ -137,7 +169,11 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         } else if (type.equals("terminal")) {
             taskTerminal = isActive;
             allMinigame.put("terminal", isActive);
+        } else if (type.equals("baniplog")) {
+            taskBanIpLog = isActive;
+            allMinigame.put("baniplog", isActive);
         }
+
         //เพิ่มมินิเกมอื่น
     }
 
@@ -161,6 +197,16 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
                 random.getKey(),
                 String.valueOf(random.getValue()[0]),
                 String.valueOf(random.getValue()[1])
+        };
+    }
+
+    public String[] fixedBanIpLogLocation(){
+        int[] location = MinigameLocation.getBanIpLog("server");
+
+        return new String[]{
+                "server",
+                String.valueOf(location[0]),
+                String.valueOf(location[1])
         };
     }
 }
