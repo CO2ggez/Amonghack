@@ -17,11 +17,12 @@ public class TextBook extends JPanel {
 
     }
     public void importImg() throws IOException {
-        //use this as the prototype for other textbook file using if else Changing textbook when a certain event
+        //use this as the prototype for other textbook file using if else Changing textbook file when a certain event
         //happened
         InputStream is = getClass().getResourceAsStream("/util/asst/Textbook.png");
         image = ImageIO.read(is);
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
