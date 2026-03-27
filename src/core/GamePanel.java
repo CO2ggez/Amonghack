@@ -67,7 +67,6 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean isLightOut = false;
 
     public void update() {
-
         if (!showingEnding) {
             player.update();
             camera.update(player);
@@ -82,12 +81,13 @@ public class GamePanel extends JPanel implements Runnable {
 
             timeManager.setPaused(true);
 
+            // เช็คเงื่อนไขหมดเวลาของวันที่ 4 และ วันที่ 5
             if (gsm != null) {
-                if (gsm.getCurrentDay() == 4 && minigameManager.score < 8) {
+                /*if (gsm.getCurrentDay() == 4 && minigameManager.score < 8) {
                     isTransitioning = false;
                     showingEnding = true;
                     gameEnding.startEnding("CG-gameover");
-                } else if (gsm.getCurrentDay() == 5) {
+                } else */if (gsm.getCurrentDay() == 5) {
                     isTransitioning = false;
                     gsm.checkEndGame();
                 } else {
@@ -98,6 +98,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gsm != null && !isTransitioning) {
             gsm.update();
+        }
+
+        String hint = inputManager.getCurrentHint();
+        if (hint != null) {
+            hintText = hint;
+            showHint = true;
+        } else {
+            showHint = false;
         }
 
         npcmanager.updateNPC();
@@ -134,6 +142,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
+
 
     public void startNextDay() {
         if (isTransitioning) {

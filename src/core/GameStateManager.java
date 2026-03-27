@@ -8,6 +8,12 @@ public class GameStateManager {
     private AbstractState currentState;
     public GamePanel gamePanel;
 
+    // --- เพิ่มตัวแปร 3 ตัวนี้ตรงนี้ครับ (แก้ Error ตัวแดง) ---
+    private int currentEndingStep = 0;
+    private boolean passBoss = false;
+    private boolean passJanitor = false;
+    // ------------------------------------------------
+
     public GameStateManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         currentDay = 1;
@@ -52,18 +58,51 @@ public class GameStateManager {
 
         int bossScore = gamePanel.getMinigameManager().helpBossScore;
         int janitorScore = gamePanel.getMinigameManager().helpJanitorScore;
-        int totalScore = gamePanel.getMinigameManager().score; 
+        //int totalScore = gamePanel.getMinigameManager().score;
 
-        if (totalScore < 8) { 
+        /*if (totalScore < 8) {
+            // ถ้าคะแนนไม่ถึง 8 ให้ Game Over ทันที
             gamePanel.gameEnding.startEnding("CG-gameover");
-        }else{
-            if (bossScore >= 4) {
+            currentEndingStep = 99; // กำหนดไว้เพื่อให้รู้ว่าไม่มีคิวต่อแล้ว
+        } else {
+         */   // ถ้าคะแนนถึง 8 เซ็ตค่าว่าผ่านเงื่อนไขใครบ้าง
+            passBoss = (bossScore >= 4);
+            passJanitor = (janitorScore >= 4);
+
+            // เริ่มเล่นฉากจบคิวที่ 1
+            currentEndingStep = 1;
+            playNextEnding();
+       // }
+    }
+
+    // --- เมธอดใหม่สำหรับเช็คและเล่นฉากจบถัดไป ---
+    public void playNextEnding() {
+        if (currentEndingStep == 1) {
+            // คิวที่ 1: ขึ้น Ending ธรรมดา "เสมอ" ในทุกกรณีที่สอบผ่าน
+            currentEndingStep++;
+            gamePanel.gameEnding.startEnding("CG-ending-Arrest", StoryDialog.ENDING_CAUGHT);
+        }
+        else if (currentEndingStep == 2) {
+            // คิวที่ 2: เช็ค Ending หัวหน้า
+            currentEndingStep++;
+            if (passBoss) {
                 gamePanel.gameEnding.startEnding("CG-ending-chief", StoryDialog.ENDING_CHIEF);
-            } else if (janitorScore >= 4) {
+            } else {
+                playNextEnding(); // ถ้าคะแนนไม่ถึง ให้ข้ามคิวนี้ไปทันที
+            }
+        }
+        else if (currentEndingStep == 3) {
+            // คิวที่ 3: เช็ค Ending ภารโรง
+            currentEndingStep++;
+            if (passJanitor) {
                 gamePanel.gameEnding.startEnding("CG-ending-Janitor", StoryDialog.ENDING_JANITOR);
             } else {
-                gamePanel.gameEnding.startEnding("CG-ending-Arrest", StoryDialog.ENDING_CAUGHT);
+                playNextEnding(); // ถ้าคะแนนไม่ถึง ให้ข้ามคิวนี้ไปทันที
             }
+        }
+        else {
+            // ถ้าเล่นครบทุกคิวแล้ว (หรือเป็น Game Over) ให้จบเกม
+            System.exit(0);
         }
     }
 }
