@@ -12,6 +12,7 @@ public class Day1State extends AbstractState {
 
     private double h;
     private double lastH; //เพื่อเช็คว่าคำสั่งนั้นถูกเรียกใช้ครั้งที่แล้วเมื่อใด
+    private boolean banIpLogTriggeredAtFive = false;
     private ArrayList<String> taskList = new ArrayList<>();;
 
     public Day1State(GamePanel gamePanel) {
@@ -38,6 +39,12 @@ public class Day1State extends AbstractState {
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
         h = this.gamePanel.timeManager.getHours();
 
+        if (!banIpLogTriggeredAtFive && h >= 5.0) {
+            minigameManager.setTask("baniplog");
+            banIpLogTriggeredAtFive = true;
+            lastH = h;
+            return;
+        }
 
         if (h != lastH) {
 
