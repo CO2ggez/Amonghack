@@ -274,7 +274,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2.drawString(text, targetX - textWidth / 2, boxY + 28);
 
         // เส้นลูกศร
-        g2.setColor(Color.YELLOW);
+        g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(4f));
         g2.drawLine(targetX, boxY + boxH, targetX, targetY - 25 + bob);
 
