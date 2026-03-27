@@ -70,11 +70,8 @@ public class CgLoader{
                 if (dialogBoxImg != null) {
                     int imgWidth = dialogBoxImg.getWidth(null);
                     int imgHeight = dialogBoxImg.getHeight(null);
-                    
-                    int boxX = (1920 - imgWidth) / 2; 
-                    int boxY = 1080 - imgHeight - 40; 
 
-                    g.drawImage(dialogBoxImg, boxX, boxY, null);
+                    g.drawImage(dialogBoxImg, 0, 0, null);
 
                     g.setColor(Color.WHITE); 
                     g.setFont(storyFont);
@@ -85,11 +82,11 @@ public class CgLoader{
                         String name = parts[0].trim();
                         String text = parts[1].trim();
 
-                        g.drawString(name, boxX + 420+30, boxY + 870-70);
-                        g.drawString(text,boxX + 420, boxY + 870);
+                        g.drawString(name, 70*6 +30, 870 -70);
+                        g.drawString(text,70*6, 870);
 
                     }else{
-                        g.drawString(currentText, boxX + 420, boxY + 870);
+                        g.drawString(currentText, 70*6, 870);
                     }
 
                     

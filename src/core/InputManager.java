@@ -238,13 +238,15 @@ public class InputManager implements KeyListener {
                 minigameManager.taskBoss = false;
                 gamePanel.getSound().playSound("success");
                 gamePanel.showNotification("จัดเอกสารเรียบร้อยแล้ว");
-                minigameManager.helpBossScore++;
+
 
                 if(minigameManager.helpBossScore==0) {
                     gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_CHIEFOFFICE_HELP);
                 }else if(minigameManager.helpBossScore==3) {
                     gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_CHIEFOFFICE );
                 }
+
+                minigameManager.helpBossScore++;
 
             }
 
@@ -350,7 +352,8 @@ public class InputManager implements KeyListener {
                     case 3:
                         if (bossArea()) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_LIFT1);
-                            talkedToBoss = true; 
+                            talkedToBoss = true;
+                            gamePanel.finishedObjective = true;
                         
                         } else if (itsupportArea() && progressDay3 == 0) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_ITSUPPORT_PART1);

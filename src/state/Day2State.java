@@ -2,7 +2,7 @@ package state;
 
 import core.GamePanel;
 import network.MinigameManager;
-import ui.StoryDialog;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ public class Day2State extends AbstractState{
     private ArrayList<String> taskList = new ArrayList<>();;
     private boolean banIpLogTriggeredAtFive = false;
 
-    private boolean startedEnding = true;
+    private boolean startedDialogue = false;
 
     public Day2State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
@@ -31,32 +31,20 @@ public class Day2State extends AbstractState{
         //task ในวันนี้
         taskList.add("lan");
         taskList.add("terminal");
-        taskList.add("lan");
         taskList.add("terminal");
+        taskList.add("lan");
+
 
         minigameManager.resetTask();
     }
 
     @Override
     public void update() {
-        //ใส่ cg + หยุดเวลา
-        if (startedEnding) {
-            startedEnding = false;
 
-            gamePanel.timeManager.setPaused(true);
-            gamePanel.showingEnding = true;
-
-            gamePanel.gameEnding.startEnding("CG3-BedRoom", StoryDialog.DAY1_BEDROOM);
-            return;
-        }
-
-        //จบcg เดินเวลาเริ่มเกม
-        if (gamePanel.showingEnding) {
-            if (gamePanel.gameEnding.isFinished()) {
-                gamePanel.showingEnding = false;
-                gamePanel.timeManager.setPaused(false);
-            }
-            return;
+        if (!startedDialogue) {
+            //sound phone ring ++++++++++++++++++++++++++++++++++++++++++++++++
+            startedDialogue = true;
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_LIFT1);
         }
 
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"

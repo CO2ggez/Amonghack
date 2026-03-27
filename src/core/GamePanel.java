@@ -62,9 +62,9 @@ public class GamePanel extends JPanel implements Runnable {
     public CgLoader cgLoader;
     public Ending gameEnding;
     public boolean showingEnding = false;
-    private boolean waitingNextEnding = false;
     //เช็คไฟดับ
     private boolean isLightOut = false;
+    public boolean finishedObjective = false;
 
     public void update() {
         if (showingEnding) {
@@ -428,5 +428,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public RoomManager getRoomManager() {
+        return roomManager;
     }
 }

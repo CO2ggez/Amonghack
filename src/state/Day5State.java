@@ -14,6 +14,7 @@ public class Day5State extends AbstractState{
     private double lastH; //เพื่อเช็คว่าคำสั่งนั้นถูกเรียกใช้ครั้งที่แล้วเมื่อใด
     private ArrayList<String> taskList = new ArrayList<>();;
     private boolean banIpLogTriggeredAtFive = false;
+    private boolean startedDialogue = false;
 
     public Day5State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
@@ -38,6 +39,11 @@ public class Day5State extends AbstractState{
     @Override
     public void update() {
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
+        if (!startedDialogue) {
+            startedDialogue = true;
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY5_LIFT1);
+        }
+
         h = this.gamePanel.timeManager.getHours();
 
         if (!banIpLogTriggeredAtFive && h >= 5.0) {
@@ -61,8 +67,6 @@ public class Day5State extends AbstractState{
 
 
         }
-
-
 
     }
 

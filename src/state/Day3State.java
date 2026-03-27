@@ -3,6 +3,7 @@ package state;
 import core.GamePanel;
 import network.MinigameManager;
 
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -14,6 +15,8 @@ public class Day3State extends AbstractState{
     private double lastH; //เพื่อเช็คว่าคำสั่งนั้นถูกเรียกใช้ครั้งที่แล้วเมื่อใด
     private ArrayList<String> taskList = new ArrayList<>();;
     private boolean banIpLogTriggeredAtFive = false;
+
+    private String obj = "รายงานความผิดปกติหกับหัวหน้า";
 
     public Day3State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
@@ -27,8 +30,8 @@ public class Day3State extends AbstractState{
         gamePanel.getPlayer().checkRight=true;
 
         //task ในวันนี้
-        taskList.add("lan");
         taskList.add("terminal");
+        taskList.add("lan");
         taskList.add("lan");
         taskList.add("terminal");
 
@@ -38,6 +41,8 @@ public class Day3State extends AbstractState{
     @Override
     public void update() {
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
+
+
 
         h = this.gamePanel.timeManager.getHours();
 
@@ -61,6 +66,15 @@ public class Day3State extends AbstractState{
             }
 
 
+        }
+
+        if(!obj.equals("")&&minigameManager.taskText.equals("")){
+            minigameManager.taskText = obj;
+        } else if (gamePanel.finishedObjective) {
+            if(minigameManager.taskText.equals(obj)){
+                minigameManager.taskText = "";
+            }
+            obj = "";
         }
 
     }
