@@ -62,6 +62,8 @@ public class Day4State extends AbstractState {
         }
 
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
+
+
         h = this.gamePanel.timeManager.getHours();
 
         if (!banIpLogTriggeredAtFive && h >= 5.0) {

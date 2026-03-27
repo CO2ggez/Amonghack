@@ -2,7 +2,7 @@ package state;
 
 import core.GamePanel;
 import network.MinigameManager;
-import ui.StoryDialog;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -12,9 +12,10 @@ public class Day2State extends AbstractState {
 
     private double h;
     private double lastH; //เพื่อเช็คว่าคำสั่งนั้นถูกเรียกใช้ครั้งที่แล้วเมื่อใด
-    private ArrayList<String> taskList = new ArrayList<>();
+    private ArrayList<String> taskList = new ArrayList<>();;
     private boolean banIpLogTriggeredAtFive = false;
 
+    private boolean startedDialogue = false;
     // จัดการ CG คั่นก่อนจบวัน
     private boolean isPlayingEndCG = false;
     private boolean endCgTriggered = false;
@@ -27,14 +28,15 @@ public class Day2State extends AbstractState {
         setupNPC();
         setSpecialTask();
 
-        gamePanel.getPlayer().xDelta = 100;
-        gamePanel.getPlayer().checkRight = true;
+        gamePanel.getPlayer().xDelta=100;
+        gamePanel.getPlayer().checkRight=true;
 
         //task ในวันนี้
         taskList.add("lan");
         taskList.add("terminal");
-        taskList.add("lan");
         taskList.add("terminal");
+        taskList.add("lan");
+
 
         minigameManager.resetTask();
 
@@ -58,6 +60,11 @@ public class Day2State extends AbstractState {
                 }
             }
             return;
+
+        if (!startedDialogue) {
+            //sound phone ring ++++++++++++++++++++++++++++++++++++++++++++++++
+            startedDialogue = true;
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_LIFT1);
         }
 
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
@@ -69,6 +76,7 @@ public class Day2State extends AbstractState {
             lastH = h;
             return;
         }
+
 
         if (h != lastH) {
             if ((h + 1) % 1.5 == 0 && !taskList.isEmpty()) {

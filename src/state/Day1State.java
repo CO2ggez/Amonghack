@@ -34,6 +34,10 @@ public class Day1State extends AbstractState {
             StoryDialog.PRE_DAY0_CG2
     };
 
+    private ArrayList<String> objList = new ArrayList<>();
+
+
+
     public Day1State(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
@@ -46,13 +50,18 @@ public class Day1State extends AbstractState {
         taskList.add("lan");
         taskList.add("terminal");
 
+        objList.add("ไปห้องหัวหน้า");
+        objList.add("ไปห้อง it support");
+        objList.add("ไปห้อง server");
+        objList.add("ไปห้อง art");
+
         minigameManager.resetTask();
     }
 
     @Override
     public void update() {
 
-        //CG day 0
+        //เล่น cgแรก
         if (startedEnding) {
             startedEnding = false;
 
@@ -121,6 +130,30 @@ public class Day1State extends AbstractState {
             }
         }
 
+        if (gamePanel.getMinigameManager().taskText.equals("")) {
+            if(!objList.isEmpty()){
+                minigameManager.taskText = objList.getFirst();
+            }
+        }
+
+        //ลบ objective ตามห้องที่ไป
+        if (!objList.isEmpty()) {
+
+            String currentObj = objList.get(0);
+            String targetRoom = getRoomFromObjective(currentObj);
+            String currentRoom = gamePanel.getRoomManager().getCurrentRoomName();
+
+            if (targetRoom != null && targetRoom.equals(currentRoom)){
+                if(currentObj.equals(minigameManager.taskText)){
+                    minigameManager.taskText = "";
+                }
+                objList.remove(0);
+
+            }
+        }
+
+
+
         // เช็คที่ 5.9 (ประมาณ 05:54 AM) ก่อนจะตัดจบวันตอน 06:00 AM
         if (h >= 5.9 && !endCgTriggered) {
             endCgTriggered = true;
@@ -148,5 +181,16 @@ public class Day1State extends AbstractState {
     public void setSpecialTask(){
         gamePanel.getMinigameManager().taskBoss = true;
         gamePanel.getMinigameManager().taskJanitor = true;
+    }
+
+    //หาชื่อห้องจากประโยคobjective
+    private String getRoomFromObjective(String obj) {
+        switch (obj) {
+            case "ไปห้องหัวหน้า": return "chiefoffice";
+            case "ไปห้อง it support": return "itsupport";
+            case "ไปห้อง server": return "server";
+            case "ไปห้อง art": return "art";
+        }
+        return null;
     }
 }
