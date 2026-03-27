@@ -100,9 +100,8 @@ public class GamePanel extends JPanel implements Runnable {
                 }
 =======
             if (gsm != null && gsm.getCurrentDay() == 5) {
-                isTransitioning = false;
-                gsm.checkEndGame();
->>>>>>> 176c90fba41800c22bcc831227effb9b301fcca4
+                isTransitioning = false; 
+                gsm.checkEndGame(); 
             } else {
                 this.requestFocusInWindow();
             }
