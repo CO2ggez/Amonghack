@@ -1,26 +1,39 @@
 package ui;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.*;
+import util.FontUtil;
 
 public class CgLoader{
     private Map<String, Image> cgGallery;
     private Image currentCg;
     private boolean visible = false;
+    private String currentText = "";
+    private Font storyFont = FontUtil.THAI.deriveFont(Font.PLAIN, 28f); 
+    private Image dialogBoxImg;
 
     public CgLoader() {
         cgGallery = new HashMap<>();
         loadAllCgs();
+        loadDialogBox();
+    }
+
+    private void loadDialogBox() {
+        try {
+            // โหลดรูป DialogBox.png
+            dialogBoxImg = new ImageIcon(getClass().getResource("/ui/DialogBox.png")).getImage();
+        } catch (Exception e) {
+            System.out.println("Could not load DialogBox.png");
+        }
     }
 
     private void loadAllCgs() {
         String[] cgNames = {"CG1-JobApplication", "CG2-JobInterview","CG3-BedRoom", "CG-ending-Arrest", "CG-ending-chief","CG-ending-Janitor"};
-
         for (String name : cgNames) {
             try {
-                Image img = new ImageIcon(getClass().getResource("CgImage/" + name + ".png")).getImage();
+                Image img = new ImageIcon(getClass().getResource("/ui/CgImage/" + name + ".png")).getImage();
                 if (img != null) {
                     cgGallery.put(name, img);
                 }
@@ -30,24 +43,51 @@ public class CgLoader{
         }
     }
 
-    //เลือก cg ให้แสดง ใส่ชื่อไฟล์รูป
     public void setCg(String name) {
         if (cgGallery.containsKey(name)) {
             currentCg = cgGallery.get(name);
             visible = true;
+            this.currentText = ""; 
         } else {
             System.out.println("CG not found: " + name);
             visible = false;
         }
     }
 
+    public void setCgWithStory(String name, String storyText) {
+        setCg(name); 
+        if (visible) {
+            this.currentText = storyText; 
+        }
+    }
+
     public void draw(Graphics g) {
         if (visible && currentCg != null) {
             g.drawImage(currentCg, 0, 0, null);
+
+            if (currentText != null && !currentText.isEmpty()) {
+                // ปรับตำแหน่งกล่องข้อความให้อยู่ด้านล่าง
+                int boxX = 250; 
+                int boxY = 750; 
+                int boxWidth = 1420; 
+                int boxHeight = 250;
+
+                if (dialogBoxImg != null) {
+                    g.drawImage(dialogBoxImg, boxX, boxY, boxWidth, boxHeight, null);
+                } else {
+                    g.setColor(new Color(0, 0, 0, 150)); 
+                    g.fillRect(boxX, boxY, boxWidth, boxHeight);
+                }
+
+                g.setColor(Color.WHITE); 
+                g.setFont(storyFont); 
+                g.drawString(currentText, boxX + 60, boxY + 80); 
+            }
         }
     }
 
     public void hide() {
         visible = false;
+        currentText = ""; 
     }
 }

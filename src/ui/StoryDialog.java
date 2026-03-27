@@ -385,7 +385,7 @@ public class StoryDialog {
     };
 
     /* ------------------------------------------------------------------
-        [MAP]  : MAP_FLOOR01 @ chiefoffice
+        [MAP]  : MAP_FLOOR01 @ chiefoffice ( ถ้าช่วยจัดเอกสาร ครั้งที่ 3 )
        ------------------------------------------------------------------ */
     public static final String[] DAY3_CHIEFOFFICE = {
         "Momoka: อ้อ จะว่าไปนายได้ Keycard จาก Wei ไปรึยังน่ะ",

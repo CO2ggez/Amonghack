@@ -20,24 +20,19 @@ public class InputManager implements KeyListener {
     private MinigameManager minigameManager;
     private NPCmanager npcManager; 
 
-    // --- ตัวแปรสำหรับจัดการเนื้อเรื่อง ---
     private int currentTrackedDay = 1;
     
-    // สถานะว่าคุยกับใครไปแล้วบ้าง (จะถูกรีเซ็ตเมื่อเปลี่ยนวัน)
     private boolean talkedToBoss = false;
     private boolean talkedToHR = false;
     private boolean talkedToIT = false;
     private boolean talkedToJanitor = false;
     private boolean talkedToServer = false;
     
-
-    // ตัวแปรเก็บความคืบหน้าของเหตุการณ์ที่ต้องทำต่อเนื่องในแต่ละวัน
     private int progressDay2 = 0;
     private int progressDay3 = 0;
     private int progressDay4 = 0;
     private int progressDay5 = 0;
 
-    // --- Helper Method เช็คระยะห่างว่าอยู่ใกล้ไหม ---
     private boolean isNear(int minX, int maxX) {
         return player.xDelta >= minX && player.xDelta <= maxX;
     }
@@ -45,6 +40,11 @@ public class InputManager implements KeyListener {
     private TextBook textBook;
 
     public void interact() {
+        if (gamePanel != null && gamePanel.showingEnding && gamePanel.gameEnding != null && !gamePanel.gameEnding.isFinished()) {
+            gamePanel.gameEnding.nextLine();
+            return; 
+        }
+
         if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {
             gamePanel.dialogBox.nextText();
         }
@@ -119,20 +119,24 @@ public class InputManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // [แก้ไข] ล็อกการเดินและการกดปุ่มอื่นๆ ทั้งหมดขณะมีกล่องข้อความแสดงอยู่
+        if (gamePanel != null && gamePanel.showingEnding) {
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                interact();
+            }
+            return; 
+        }
+
         if (gamePanel != null && gamePanel.dialogBox != null && gamePanel.dialogBox.isVisible()) {
             player.leftPressed = false;
             player.rightPressed = false;
             player.moving = false;
             
-            // อนุญาตให้กดแค่ปุ่ม Spacebar เพื่ออ่านข้อความถัดไป
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 interact();
             }
-            return; // ยกเลิกการทำงานของปุ่มอื่นๆ ที่เหลือ
+            return; 
         }
 
-        //ไว้กด N บังคับเปลี่ยนวัน
         if (e.getKeyCode() == KeyEvent.VK_N) {
             if (gamePanel.getIsTransitioning()) {
                 gamePanel.startNextDay();
@@ -146,7 +150,6 @@ public class InputManager implements KeyListener {
             return;
         }
         
-        // ---------------- ระบบเคลื่อนย้ายฉากและเกม ----------------
         if (e.getKeyCode() == KeyEvent.VK_F) {
             String roomName = roomManager.getCurrentRoomName();
 
@@ -221,7 +224,6 @@ public class InputManager implements KeyListener {
                 return;
             }
 
-            //task boss, janitor
             if(helpBossArea()){
                 minigameManager.taskBoss = false;
                 minigameManager.helpBossScore++;
@@ -257,11 +259,9 @@ public class InputManager implements KeyListener {
             player.moving = true;
         }
 
-        // ---------------- ระบบเนื้อเรื่อง (กด E) ----------------
         if (e.getKeyCode() == KeyEvent.VK_E) {
             if (gamePanel != null && gamePanel.dialogBox != null && !gamePanel.dialogBox.isVisible()) {
                 
-                // [แก้ไข] บังคับหยุดเดินทันทีเมื่อเริ่มกดคุย
                 player.leftPressed = false;
                 player.rightPressed = false;
                 player.moving = false;
@@ -271,7 +271,6 @@ public class InputManager implements KeyListener {
                     actualDay = gamePanel.getGSM().getCurrentDay();
                 }
 
-                // รีเซ็ตตัวแปรเมื่อเปลี่ยนวัน
                 if (actualDay != currentTrackedDay) {
                     currentTrackedDay = actualDay;
                     talkedToBoss = false;
@@ -287,7 +286,6 @@ public class InputManager implements KeyListener {
 
                 String room = roomManager.getCurrentRoomName();
                 
-                // --- ใช้ switch case แทน if-else สำหรับเช็ควัน ---
                 switch (actualDay) {
                     case 1:
                         if (bossArea()) {
@@ -305,12 +303,7 @@ public class InputManager implements KeyListener {
                         } else if (room.equals("server") && !talkedToServer && isNear(500, 800)) { 
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_SERVER);
                             talkedToServer = true;
-                            // --- Update Textbook Day 1 ---
-                            try {
-                                textBook.update();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
+                            try { textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
                         }
                         break;
                         
@@ -333,12 +326,7 @@ public class InputManager implements KeyListener {
                         } else if (room.equals("server") && progressDay2 == 1 && isNear(500, 800)) { 
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_SERVER); 
                             progressDay2 = 2;
-                            // --- Update Textbook Day 2 ---
-                            try {
-                                textBook.update();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
+                            try { textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
                         }
                         break;
                         
@@ -380,12 +368,7 @@ public class InputManager implements KeyListener {
                         } else if (room.equals("server") && progressDay3 == 3 && isNear(500, 800)) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_SERVER); 
                             progressDay3 = 4;
-                            // --- Update Textbook Day 3 ---
-                            try {
-                                textBook.update();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
+                            try { textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
                         }
                         break;
                         
@@ -393,18 +376,23 @@ public class InputManager implements KeyListener {
                         if (bossArea() && progressDay4 == 0) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_LIFT1); 
                             progressDay4 = 1;
-                        } else if (room.equals("meeting") && progressDay4 == 1 && isNear(600, 900)) { 
+                            talkedToBoss = true;
+                        } else if (room.equals("server") && progressDay4 == 1 && isNear(600, 900)) { 
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_SERVER); 
                             progressDay4 = 2;
-                            // --- Update Textbook Day 4 ---
-                            try {
-                                textBook.update();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
+                            try { textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
                         } else if (bossArea() && progressDay4 == 2) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_CHIEFOFFICE); 
                             progressDay4 = 3;
+                        } else if (hrArea() && progressDay4 > 0) {
+                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_OFFICE);
+                            talkedToHR = true;
+                        } else if (itsupportArea() && progressDay4 > 0) {
+                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_ITSUPPORT);
+                            talkedToIT = true;
+                        } else if (janitorArea() && progressDay4 > 0) {
+                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_RESTROOM);
+                            talkedToJanitor = true;
                         }
                         break;
                         
@@ -455,7 +443,6 @@ public class InputManager implements KeyListener {
             interact();
         }
 
-        //textbook draw
         if (e.getKeyCode() == KeyEvent.VK_M){
             textBook.setVisible(!textBook.isVisible());
 
@@ -467,8 +454,7 @@ public class InputManager implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_D) player.rightPressed = false;
         if (e.getKeyCode() == KeyEvent.VK_A) player.leftPressed = false;
         
-        // [แก้ไข] อัปเดตสถานะการเดินก็ต่อเมื่อไม่มีกล่องข้อความเท่านั้น
-        if (gamePanel == null || gamePanel.dialogBox == null || !gamePanel.dialogBox.isVisible()) {
+        if (gamePanel == null || gamePanel.dialogBox == null || (!gamePanel.dialogBox.isVisible() && !gamePanel.showingEnding)) {
             player.moving = player.leftPressed || player.rightPressed; 
         }
     }
@@ -517,7 +503,6 @@ public class InputManager implements KeyListener {
             return "[F] ตรวจสอบ Server Log";
         }
 
-        //ตำแหน่งช่วยงาน
         if(helpBossArea()){
             return "[F] ช่วยจัดเอกสาร";
         }
@@ -525,7 +510,6 @@ public class InputManager implements KeyListener {
             return "[F] ช่วยเก็บไม้กวาด";
         }
 
-        // --- เช็ค Hint ของระบบเนื้อเรื่องตามวัน (เปลี่ยนมาใช้ switch แทน) ---
         int actualDay = 1;
         if (gamePanel.getGSM() != null) {
             actualDay = gamePanel.getGSM().getCurrentDay();
@@ -555,7 +539,7 @@ public class InputManager implements KeyListener {
                 break;
             case 4:
                 if (bossArea() && progressDay4 == 0) return "[E] ขออนุญาตหัวหน้าไล่สาย LAN";
-                if (room.equals("meeting") && progressDay4 == 1 && isNear(600, 900)) return "[E] สำรวจพื้นที่ต้องสงสัย"; 
+                if (room.equals("server") && progressDay4 == 1 && isNear(600, 900)) return "[E] สำรวจพื้นที่ต้องสงสัย"; 
                 if (bossArea() && progressDay4 == 2) return "[E] แจ้งหัวหน้าเรื่องอุปกรณ์แปลกปลอม";
                 break;
             case 5:
@@ -567,7 +551,6 @@ public class InputManager implements KeyListener {
         return null;
     }
 
-    // --- เช็คว่าเราอยู่ตำแหน่ง NPC นั้นไหม ---
     public boolean bossArea(){
         return (roomManager.getCurrentRoomName().equals(npcManager.boss.inRoom) && !talkedToBoss && isNear(npcManager.boss.getX()-150, npcManager.boss.getX()+300));
     }

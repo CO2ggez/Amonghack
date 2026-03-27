@@ -20,7 +20,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public String[] currentBanIpLogLocation = {"","",""};
 
     private boolean isPlaying = false;
-    private int score = 0;
+    public int score = 0; //check gameover (8 point)
     public String taskText = "";
 
     public int helpJanitorScore = 0; //คะแนน สำหรับฉากจบภารโรง (check 4 point)
