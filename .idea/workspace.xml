@@ -6,6 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="แก้ไขกิทระเบิด">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/CG_inprogress.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/GameStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GameStateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/TimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/TimeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +113,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774633218220</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="แก้ไขกิทระเบิด">
+      <option name="closed" value="true" />
+      <created>1774637260403</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1774637260403</updated>
+    </task>
+    <task id="LOCAL-00006" summary="แก้ไขกิทระเบิด">
+      <option name="closed" value="true" />
+      <created>1774637330142</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1774637330142</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

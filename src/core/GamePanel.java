@@ -69,8 +69,11 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         if (showingEnding) {
             if (gameEnding != null && gameEnding.isFinished()) {
-                // เด้งกลับเมนูหรือปิดเกมเมื่อฉากจบจบลง (เลือกเอาคอมเมนต์ออกได้)
-                // System.exit(0);
+                if (gsm != null) {
+                    gsm.playNextEnding(); // <--- สั่งให้รันฉากจบอันต่อไป
+                } else {
+                    System.exit(0);
+                }
             }
             return;
         }
@@ -85,24 +88,13 @@ public class GamePanel extends JPanel implements Runnable {
             }
             timeManager.setPaused(true);
 
-            // --- MODIFIED: เช็คเงื่อนไขหมดเวลาของวันที่ 4 และ วันที่ 5 ---
+            // เช็คเงื่อนไขหมดเวลาของวันที่ 4 และ วันที่ 5
             if (gsm != null) {
-                if (gsm.getCurrentDay() == 4 && minigameManager.score < 8) {
-                    // ถ้าวันที่ 4 คะแนนไม่ถึง 8 -> Game Over
+                /*if (gsm.getCurrentDay() == 4 && minigameManager.score < 8) {
                     isTransitioning = false;
                     showingEnding = true;
-                    // --- MODIFIED: เรียกใช้แบบไม่มีข้อความ ---
                     gameEnding.startEnding("CG-gameover");
-
-                } else if (gsm.getCurrentDay() == 5) {
-                    // ถ้าถึงวันที่ 5 -> ไปเช็คฉากจบ
-                    isTransitioning = false;
-                    gsm.checkEndGame();
-                } else {
-                    this.requestFocusInWindow();
-                }
-
-                if (gsm != null && gsm.getCurrentDay() == 5) {
+                } else */if (gsm.getCurrentDay() == 5) {
                     isTransitioning = false;
                     gsm.checkEndGame();
                 } else {

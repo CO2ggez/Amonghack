@@ -89,7 +89,7 @@ public class Game {
 
     public static void main(String[] args) {
         //แก้จอยืดครับ
-        System.setProperty("sun.java2d.uiScale", "1.0");
+        System.setProperty("sun.java2d.uiScale", "1.0");dd
         SwingUtilities.invokeLater(Game::new);
     }
 }
