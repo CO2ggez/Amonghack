@@ -17,6 +17,8 @@ public class Day3State extends AbstractState{
     private boolean banIpLogTriggeredAtFive = false;
 
     private String obj = "รายงานความผิดปกติหกับหัวหน้า";
+    private boolean startedDialogue = false;
+    private boolean lastLight = gamePanel.get
 
     public Day3State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
@@ -58,11 +60,14 @@ public class Day3State extends AbstractState{
 
             if((h+1)%1.5 == 0  && !taskList.isEmpty()){
                 //settask ทีละเกมแล้วลบออก
-                minigameManager.setTask(taskList.getFirst());
-                taskList.remove(taskList.getFirst());
+                if(!minigameManager.taskLightOut){
+                    minigameManager.setTask(taskList.getFirst());
+                    taskList.remove(taskList.getFirst());
 
-                lastH = h;
-                System.out.println(taskList.size());
+                    lastH = h;
+                    System.out.println(taskList.size());
+                }
+
             }
 
 

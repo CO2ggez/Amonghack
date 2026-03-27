@@ -132,6 +132,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
             panel.remove(currentGamePanel);
             panel.repaint();
         }
+
         isPlaying = false;
         currentTaskCompleted = false;
         panel.requestFocusInWindow();

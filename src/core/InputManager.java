@@ -378,14 +378,18 @@ public class InputManager implements KeyListener {
                                     
                                     gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_ITSUPPORT_PART2);
                                     progressDay3 = 2;
+
+                                    while(gamePanel.dialogBox.isVisible()) Thread.sleep(100);
+
+                                    minigameManager.setTask("lightOut");
+                                    gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_ITSUPPORT_PART3);
+
+                                    while(gamePanel.dialogBox.isVisible()) Thread.sleep(100);
                                     
                                 } catch (Exception ex) { ex.printStackTrace(); }
                             }).start();
 
-                        } else if (room.equals("liftG") && progressDay3 == 2 && isNear(200, 500)) { 
-                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_LIFTG); 
-                            progressDay3 = 3;
-                        } else if (room.equals("server") && progressDay3 == 3 && isNear(500, 800)) {
+                        }else if (room.equals("server") && progressDay3 == 3 && isNear(500, 800)) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_SERVER); 
                             progressDay3 = 4;
                             try { textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
@@ -560,7 +564,6 @@ public class InputManager implements KeyListener {
             case 3:
                 if (bossArea()) return "[E] คุยกับหัวหน้า";
                 if (itsupportArea() && progressDay3 == 0) return "[E] คุยกับ IT Support";
-                if (room.equals("liftG") && progressDay3 == 2 && isNear(200, 500)) return "[E] ตรวจสอบตู้ไฟ / คุยกับภารโรง"; 
                 if (room.equals("server") && progressDay3 == 3 && isNear(500, 800)) return "[E] ตรวจ Log หลังไฟดับ"; 
                 break;
             case 4:
