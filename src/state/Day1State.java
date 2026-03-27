@@ -48,6 +48,7 @@ public class Day1State extends AbstractState {
     @Override
     public void update() {
 
+        //เล่น cgแรก
         if (startedEnding) {
             startedEnding = false;
 
@@ -55,22 +56,21 @@ public class Day1State extends AbstractState {
             gamePanel.showingEnding = true;
 
             cgIndex = 0;
-            System.out.println("Start CG: " + cgIndex);
 
             gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
             return;
         }
-
+        //เล่น cg ต่อตอนเสร็จ cg นั้นๆ
         if (gamePanel.showingEnding) {
 
             if (gamePanel.gameEnding.isFinished()) {
 
                 cgIndex++;
-                System.out.println("Next CG: " + cgIndex);
 
                 if (cgIndex < cgList.length) {
                     gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
                 } else {
+                    //เริ่มเดินเวลา ตอนcg หมด
                     gamePanel.showingEnding = false;
                     gamePanel.timeManager.setPaused(false);
                 }
