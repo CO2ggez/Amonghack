@@ -26,21 +26,32 @@ public class TimeUI {
 
         //จบวัน
         if (tm.isDayEnded()) {
+
             g.setColor(new Color(0, 0, 0, 200));
-            g.fillRect(0, 0, 1720, 800);
+            g.fillRect(0, 0, 1920, 1080);
 
             g.setColor(Color.WHITE);
             g.setFont(new Font("Tahoma", Font.BOLD, 80));
-            String text = "Day " + gsm.getCurrentDay() + " Ended";
+
+            String text;
+            String promptText;
+
+            // เช็คว่าเป็นวันที่ 5 (หรือมากกว่า) หรือไม่
+            if (gsm.getCurrentDay() >= 5) {
+                text = "The End";
+                promptText = "Click the [X] button on bottom right to Exit";
+            } else {
+                text = "Day " + gsm.getCurrentDay() + " Ended";
+                promptText = "Press ANY KEY to start Next Day";
+            }
 
             FontMetrics metrics = g.getFontMetrics();
-            int x = (1720 - metrics.stringWidth(text)) / 2;
-            int y = ((800 - metrics.getHeight()) / 2) + metrics.getAscent();
+            int x = (1920 - metrics.stringWidth(text)) / 2;
+            int y = ((1080 - metrics.getHeight()) / 2) + metrics.getAscent();
             g.drawString(text, x, y);
 
             g.setFont(new Font("Tahoma", Font.PLAIN, 30));
-            String promptText = "Press ANY KEY to start Next Day";
-            int promptX = (1720 - g.getFontMetrics(new Font("Tahoma", Font.PLAIN, 30)).stringWidth(promptText)) / 2;
+            int promptX = (1920 - g.getFontMetrics(new Font("Tahoma", Font.PLAIN, 30)).stringWidth(promptText)) / 2;
             g.drawString(promptText, promptX, y + 60);
         }
     }

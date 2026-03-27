@@ -139,7 +139,10 @@ public class InputManager implements KeyListener {
 
         if (e.getKeyCode() == KeyEvent.VK_N) {
             if (gamePanel.getIsTransitioning()) {
-                gamePanel.startNextDay();
+                // คืนค่าเดิม แต่ดักไว้ว่าถ้ายังไม่ถึงวันที่ 5 ค่อยเปลี่ยนวัน
+                if (gamePanel.getGSM() != null && gamePanel.getGSM().getCurrentDay() < 5) {
+                    gamePanel.startNextDay();
+                }
             } else {
                 gamePanel.timeManager.forceEndDay();
             }
