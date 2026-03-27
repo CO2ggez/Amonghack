@@ -67,42 +67,27 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean isLightOut = false;
 
     public void update() {
-        if (showingEnding) {
-            if (gameEnding != null && gameEnding.isFinished()) {
-                // เด้งกลับเมนูหรือปิดเกมเมื่อฉากจบจบลง (เลือกเอาคอมเมนต์ออกได้)
-                // System.exit(0);
-            }
-            return;
-        }
 
-        player.update();
-        camera.update(player);
+        if (!showingEnding) {
+            player.update();
+            camera.update(player);
+        }
 
         if (timeManager != null && timeManager.isDayEnded() && !isTransitioning) {
             isTransitioning = true;
+
             if (sound != null) {
                 sound.stopSound("bg1");
             }
+
             timeManager.setPaused(true);
 
-            // --- MODIFIED: เช็คเงื่อนไขหมดเวลาของวันที่ 4 และ วันที่ 5 ---
             if (gsm != null) {
                 if (gsm.getCurrentDay() == 4 && minigameManager.score < 8) {
-                    // ถ้าวันที่ 4 คะแนนไม่ถึง 8 -> Game Over
                     isTransitioning = false;
                     showingEnding = true;
-                    // --- MODIFIED: เรียกใช้แบบไม่มีข้อความ ---
                     gameEnding.startEnding("CG-gameover");
-
                 } else if (gsm.getCurrentDay() == 5) {
-                    // ถ้าถึงวันที่ 5 -> ไปเช็คฉากจบ
-                    isTransitioning = false;
-                    gsm.checkEndGame();
-                } else {
-                    this.requestFocusInWindow();
-                }
-
-                if (gsm != null && gsm.getCurrentDay() == 5) {
                     isTransitioning = false;
                     gsm.checkEndGame();
                 } else {
@@ -113,14 +98,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gsm != null && !isTransitioning) {
             gsm.update();
-        }
-
-        String hint = inputManager.getCurrentHint();
-        if (hint != null) {
-            hintText = hint;
-            showHint = true;
-        } else {
-            showHint = false;
         }
 
         npcmanager.updateNPC();
@@ -157,7 +134,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-
 
     public void startNextDay() {
         if (isTransitioning) {

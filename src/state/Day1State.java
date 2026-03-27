@@ -18,7 +18,7 @@ public class Day1State extends AbstractState {
 
     private boolean startedEnding = true;
     private int cgIndex = 0;
-    private boolean waitNextCg = false;
+    private boolean startedDialogue = false;
 
     private String[] cgList = {
             "CG1-JobApplication",
@@ -37,7 +37,7 @@ public class Day1State extends AbstractState {
         setupNPC();
         setSpecialTask();
 
-        taskList.add("lightOut");
+        taskList.add("lan");
         taskList.add("terminal");
         taskList.add("lan");
         taskList.add("terminal");
@@ -51,9 +51,13 @@ public class Day1State extends AbstractState {
         if (startedEnding) {
             startedEnding = false;
 
+            gamePanel.timeManager.setPaused(true);
             gamePanel.showingEnding = true;
-            gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
 
+            cgIndex = 0;
+            System.out.println("Start CG: " + cgIndex);
+
+            gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
             return;
         }
 
@@ -61,22 +65,23 @@ public class Day1State extends AbstractState {
 
             if (gamePanel.gameEnding.isFinished()) {
 
-                if (!waitNextCg) {
-                    waitNextCg = true;
-                    return; //อยู่ประโยคสุดท้าย สร้าง cg ใหม่ประโยคหน้า
-                }
-
-                waitNextCg = false;
                 cgIndex++;
+                System.out.println("Next CG: " + cgIndex);
 
                 if (cgIndex < cgList.length) {
                     gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
                 } else {
                     gamePanel.showingEnding = false;
+                    gamePanel.timeManager.setPaused(false);
                 }
             }
 
             return;
+        }
+
+        if (!startedDialogue) {
+            startedDialogue = true;
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_LIFT1);
         }
 
         h = this.gamePanel.timeManager.getHours();
@@ -89,13 +94,10 @@ public class Day1State extends AbstractState {
         }
 
         if (h != lastH) {
-
             if ((h + 1) % 1.5 == 0 && !taskList.isEmpty()) {
-                minigameManager.setTask(taskList.getFirst());
-                taskList.remove(taskList.getFirst());
-
+                minigameManager.setTask(taskList.get(0));
+                taskList.remove(0);
                 lastH = h;
-                System.out.println(taskList.size());
             }
         }
     }

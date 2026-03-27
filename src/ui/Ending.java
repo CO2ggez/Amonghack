@@ -40,15 +40,13 @@ public class Ending {
         // --- ADDED: ถ้าเป็นโหมดแสดงแค่ภาพ (ไม่มีข้อความ) พอกด Spacebar/คลิก ก็จะถือว่าจบเลย ---
         if (storyLines == null) {
             isFinished = true;
-            cgLoader.hide();
             return;
         }
 
         currentLineIndex++; 
         
         if (currentLineIndex >= storyLines.length) {
-            isFinished = true; 
-            cgLoader.hide(); 
+            isFinished = true;
         } else {
             updateCgView(); 
         }

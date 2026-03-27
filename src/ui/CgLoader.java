@@ -11,7 +11,7 @@ public class CgLoader{
     private Image currentCg;
     private boolean visible = false;
     private String currentText = "";
-    private Font storyFont = FontUtil.THAI.deriveFont(Font.PLAIN, 28f); 
+    private Font storyFont = FontUtil.THAI.deriveFont(Font.PLAIN, 50f);
     private Image dialogBoxImg;
 
     public CgLoader() {
@@ -77,9 +77,21 @@ public class CgLoader{
                     g.drawImage(dialogBoxImg, boxX, boxY, null);
 
                     g.setColor(Color.WHITE); 
-                    g.setFont(storyFont); 
-                    
-                    g.drawString(currentText, boxX + 420, boxY + 870); 
+                    g.setFont(storyFont);
+
+                    if (currentText.contains(":")) {
+                        String[] parts = currentText.split(":", 2);
+
+                        String name = parts[0].trim();
+                        String text = parts[1].trim();
+
+                        g.drawString(name, boxX + 420+30, boxY + 870-70);
+                        g.drawString(text,boxX + 420, boxY + 870);
+
+                    }else{
+                        g.drawString(currentText, boxX + 420, boxY + 870);
+                    }
+
                     
                 } else {
                     int boxX = 250; 
