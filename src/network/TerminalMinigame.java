@@ -12,7 +12,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import util.*;
+import util.FontUtil;
 
 public class TerminalMinigame implements Minigame {
     // ขนาด terminal ตอนแสดงบนจอ
@@ -79,7 +79,6 @@ public class TerminalMinigame implements Minigame {
         terminalArea.setWrapStyleWord(false);
         terminalArea.setMargin(new Insets(0, 0, 0, 0));
         terminalArea.setBorder(null);
-        terminalScroll.
 
         ((AbstractDocument) terminalArea.getDocument()).setDocumentFilter(new TerminalDocumentFilter());
 
