@@ -68,8 +68,6 @@ public class Game {
         Image scaledImage = originalIcon.getImage().getScaledInstance(new_width, new_h, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-        System.out.println("Let's go");
-
         btn_close = new JButton(scaledIcon);
         btn_close.setBounds(1860, 1020, new_width, new_h);
         btn_close.setBorderPainted(false);
