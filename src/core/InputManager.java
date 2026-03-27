@@ -239,6 +239,13 @@ public class InputManager implements KeyListener {
                 gamePanel.getSound().playSound("success");
                 gamePanel.showNotification("จัดเอกสารเรียบร้อยแล้ว");
                 minigameManager.helpBossScore++;
+
+                if(minigameManager.helpBossScore==0) {
+                    gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_CHIEFOFFICE_HELP);
+                }else if(minigameManager.helpBossScore==3) {
+                    gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_CHIEFOFFICE );
+                }
+
             }
 
             if(helpJanitorArea()){

@@ -248,6 +248,9 @@ public class BanIpLogMinigame implements Minigame {
 
         if (lower.equals("exit")) {
             manager.closeGame();
+            if(missionCompleted && manager.getGamePanel().getGSM().getCurrentDay() == 4){
+                manager.getGamePanel().dialogBox.startDialog(ui.StoryDialog.DAY4_LOG );
+            }
             return true;
         }
 

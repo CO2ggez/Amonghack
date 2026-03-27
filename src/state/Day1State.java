@@ -2,6 +2,7 @@ package state;
 
 import core.GamePanel;
 import network.MinigameManager;
+import ui.StoryDialog;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,32 +12,73 @@ public class Day1State extends AbstractState {
     public MinigameManager minigameManager;
 
     private double h;
-    private double lastH; //เพื่อเช็คว่าคำสั่งนั้นถูกเรียกใช้ครั้งที่แล้วเมื่อใด
+    private double lastH;
     private boolean banIpLogTriggeredAtFive = false;
-    private ArrayList<String> taskList = new ArrayList<>();;
+    private ArrayList<String> taskList = new ArrayList<>();
+
+    private boolean startedEnding = true;
+    private int cgIndex = 0;
+    private boolean waitNextCg = false;
+
+    private String[] cgList = {
+            "CG1-JobApplication",
+            "CG2-JobInterview",
+    };
+
+    private String[][] dialogList = {
+            StoryDialog.PRE_DAY0_CG1,
+            StoryDialog.PRE_DAY0_CG2
+    };
 
     public Day1State(GamePanel gamePanel) {
-        //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
-        //NPC Location set up -----------------
         setupNPC();
         setSpecialTask();
 
-        //task ในวันนี้
-        taskList.add("lan");
+        taskList.add("lightOut");
         taskList.add("terminal");
         taskList.add("lan");
         taskList.add("terminal");
 
         minigameManager.resetTask();
-
     }
 
     @Override
     public void update() {
-        //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
+
+        if (startedEnding) {
+            startedEnding = false;
+
+            gamePanel.showingEnding = true;
+            gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
+
+            return;
+        }
+
+        if (gamePanel.showingEnding) {
+
+            if (gamePanel.gameEnding.isFinished()) {
+
+                if (!waitNextCg) {
+                    waitNextCg = true;
+                    return; //อยู่ประโยคสุดท้าย สร้าง cg ใหม่ประโยคหน้า
+                }
+
+                waitNextCg = false;
+                cgIndex++;
+
+                if (cgIndex < cgList.length) {
+                    gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
+                } else {
+                    gamePanel.showingEnding = false;
+                }
+            }
+
+            return;
+        }
+
         h = this.gamePanel.timeManager.getHours();
 
         if (!banIpLogTriggeredAtFive && h >= 5.0) {
@@ -48,29 +90,20 @@ public class Day1State extends AbstractState {
 
         if (h != lastH) {
 
-            //ทุก 1.5 ชม เล่น task & เริ่มตอน 0.30
-            if((h+1)%1.5 == 0  && !taskList.isEmpty()){
-                //settask ทีละเกมแล้วลบออก
+            if ((h + 1) % 1.5 == 0 && !taskList.isEmpty()) {
                 minigameManager.setTask(taskList.getFirst());
                 taskList.remove(taskList.getFirst());
 
                 lastH = h;
                 System.out.println(taskList.size());
             }
-
-
         }
-
-
     }
 
     @Override
-    public void draw(Graphics2D g) {
-        //เอาไว้ วาดภาพหรือใส่ UI พิเศษ ที่มีเฉพาะวันนั้น
-    }
+    public void draw(Graphics2D g) {}
 
     public void setupNPC(){
-
         gamePanel.getNpcmanager().showAllNPCs();
 
         gamePanel.getNpcmanager().janitor.setLocation("art",1600);
