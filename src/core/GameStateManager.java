@@ -55,13 +55,15 @@ public class GameStateManager {
         int totalScore = gamePanel.getMinigameManager().score; 
 
         if (totalScore < 8) { 
-            gamePanel.gameEnding.startEnding("CG-ending-Arrest", StoryDialog.ENDING_CAUGHT);
-        } else if (bossScore >= 4) {
-            gamePanel.gameEnding.startEnding("CG-ending-chief", StoryDialog.ENDING_CHIEF);
-        } else if (janitorScore >= 4) {
-            gamePanel.gameEnding.startEnding("CG-ending-Janitor", StoryDialog.ENDING_JANITOR);
-        } else {
-            gamePanel.gameEnding.startEnding("CG-ending-Arrest", StoryDialog.ENDING_CAUGHT);
+            gamePanel.gameEnding.startEnding("CG-gameover");
+        }else{
+            if (bossScore >= 4) {
+                gamePanel.gameEnding.startEnding("CG-ending-chief", StoryDialog.ENDING_CHIEF);
+            } else if (janitorScore >= 4) {
+                gamePanel.gameEnding.startEnding("CG-ending-Janitor", StoryDialog.ENDING_JANITOR);
+            } else {
+                gamePanel.gameEnding.startEnding("CG-ending-Arrest", StoryDialog.ENDING_CAUGHT);
+            }
         }
     }
 }

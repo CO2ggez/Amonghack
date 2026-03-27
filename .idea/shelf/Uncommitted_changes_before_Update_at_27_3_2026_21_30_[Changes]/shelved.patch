@@ -1,0 +1,112 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"6fcc999f-01b1-469d-b5cc-86af910d6f4c\" name=\"Changes\" comment=\"fix previous commit\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/core/GamePanel.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/core/GamePanel.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/core/InputManager.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/core/InputManager.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/ui/TextBook.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/ui/TextBook.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\"><![CDATA[{\r\n  \"lastFilter\": {\r\n    \"state\": \"OPEN\",\r\n    \"assignee\": \"aimlxisse\"\r\n  }\r\n}]]></component>\r\n  <component name=\"GithubPullRequestsUISettings\"><![CDATA[{\r\n  \"selectedUrlAndAccountId\": {\r\n    \"url\": \"https://github.com/CO2ggez/Amonghack.git\",\r\n    \"accountId\": \"386b1a18-37f9-4a38-919e-4000ffbaa745\"\r\n  }\r\n}]]></component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 6,\r\n  \"fromUser\": false\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"3BWvGfpWEAFfwj45j8HUXv3CAxe\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Game.executor\": \"Run\",\r\n    \"Application.dddGame.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"RunOnceActivity.typescript.service.memoryLimit.init\": \"true\",\r\n    \"codeWithMe.voiceChat.enabledByDefault\": \"false\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\"\r\n  }\r\n}]]></component>\r\n  <component name=\"TaskManager\">\r\n    <task id=\"LOCAL-00001\" summary=\"คอมมิท\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774600624558</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774600624558</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"fix previous commit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774615218717</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774615218717</updated>\r\n    </task>\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"6fcc999f-01b1-469d-b5cc-86af910d6f4c\" name=\"Changes\" comment=\"fix previous commit\" />\r\n      <created>1774617548132</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1774617548132</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"คอมมิท\" />\r\n    <MESSAGE value=\"change font in Therminal\" />\r\n    <MESSAGE value=\"fix previous commit\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"fix previous commit\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 7a91e0ff16e8601713ac6966d7b232a5a90c9643)
++++ b/.idea/workspace.xml	(date 1774621811204)
+@@ -5,21 +5,10 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="fix previous commit">
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/ui/TextBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TextBook.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -29,46 +18,46 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+-  "lastFilter": {
+-    "state": "OPEN",
+-    "assignee": "aimlxisse"
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;aimlxisse&quot;
+   }
+-}]]></component>
+-  <component name="GithubPullRequestsUISettings"><![CDATA[{
+-  "selectedUrlAndAccountId": {
+-    "url": "https://github.com/CO2ggez/Amonghack.git",
+-    "accountId": "386b1a18-37f9-4a38-919e-4000ffbaa745"
++}</component>
++  <component name="GithubPullRequestsUISettings">{
++  &quot;selectedUrlAndAccountId&quot;: {
++    &quot;url&quot;: &quot;https://github.com/CO2ggez/Amonghack.git&quot;,
++    &quot;accountId&quot;: &quot;386b1a18-37f9-4a38-919e-4000ffbaa745&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="ProblemsViewState">
+     <option name="selectedTabId" value="CurrentFile" />
+   </component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "associatedIndex": 6,
+-  "fromUser": false
+-}]]></component>
++  <component name="ProjectColorInfo">{
++  &quot;associatedIndex&quot;: 6,
++  &quot;fromUser&quot;: false
++}</component>
+   <component name="ProjectId" id="3BWvGfpWEAFfwj45j8HUXv3CAxe" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.Game.executor": "Run",
+-    "Application.dddGame.executor": "Run",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+-    "codeWithMe.voiceChat.enabledByDefault": "false",
+-    "git-widget-placeholder": "main",
+-    "kotlin-language-version-configured": "true",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Application.Game.executor&quot;: &quot;Run&quot;,
++    &quot;Application.dddGame.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
++    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="TaskManager">
+     <task id="LOCAL-00001" summary="คอมมิท">
+       <option name="closed" value="true" />

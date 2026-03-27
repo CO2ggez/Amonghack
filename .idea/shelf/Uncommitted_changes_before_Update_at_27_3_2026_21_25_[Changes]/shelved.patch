@@ -1,0 +1,146 @@
+Index: src/core/TimeManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package core;\r\n\r\npublic class TimeManager implements Runnable {\r\n    private int inGameMinutes = 0; // 0 คือเริ่มที่ 00:00 AM\r\n    private boolean isPaused = false; // เอาไว้หยุดเวลาตอนคุย ทำไว้ก่อน\r\n    private boolean isDayEnded = false; // เช็คว่าหมดวันยัง\r\n    private boolean running = false;\r\n    private Thread timeThread;\r\n\r\n    //เริ่มนับเวลา\r\n    public void start() {\r\n        if (timeThread == null || !running) {\r\n            running = true;\r\n            timeThread = new Thread(this, \"GameTimeThread\");\r\n            timeThread.start();\r\n        }\r\n    }\r\n\r\n    public void stop() {\r\n        running = false;\r\n    }\r\n\r\n    //คำสั่งเอาไว้หยุดเวลาชั่วคราว เอาไว้หยุดเวลาตอนคุย ทำรอ dialog\r\n    public void setPaused(boolean p) {\r\n        isPaused = p;\r\n    }\r\n\r\n    public boolean isDayEnded() {\r\n        return isDayEnded;\r\n    }\r\n\r\n    public void forceEndDay() {\r\n        isDayEnded = true;\r\n        isPaused = true;\r\n    }\r\n\r\n    @Override\r\n    public void run() {\r\n        while (running) {\r\n            try {\r\n                Thread.sleep(2000); //ค่าปกติ 2000 เทสใช้ 5 ให้ time มันวิ่งไว\r\n                if (!isPaused && !isDayEnded) {\r\n                    inGameMinutes++;\r\n                    if (inGameMinutes >= 360) {\r\n                        isDayEnded = true;\r\n                    }\r\n                }\r\n            } catch (InterruptedException e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n    }\r\n\r\n    public String getTimeString() {\r\n        int h = inGameMinutes / 60;\r\n        int m = inGameMinutes % 60;\r\n        return String.format(\"%02d:%02d AM\", h, m);\r\n    }\r\n\r\n    //ใช้ตอนจะขึ้นวันใหม่\r\n    public void resetDay() {\r\n        this.inGameMinutes = 0; // กลับไปเริ่มที่ 00:00 AM\r\n        this.isDayEnded = false; // เอาป้ายจบวันออก\r\n    }\r\n\r\n    public double getHours() {\r\n        return (double) inGameMinutes /60;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/core/TimeManager.java b/src/core/TimeManager.java
+--- a/src/core/TimeManager.java	(revision 8ba6a941ca816449292b82ad7c550403615a939f)
++++ b/src/core/TimeManager.java	(date 1774620989574)
+@@ -38,7 +38,7 @@
+     public void run() {
+         while (running) {
+             try {
+-                Thread.sleep(2000); //ค่าปกติ 2000 เทสใช้ 5 ให้ time มันวิ่งไว
++                Thread.sleep(5); //ค่าปกติ 2000 เทสใช้ 5 ให้ time มันวิ่งไว
+                 if (!isPaused && !isDayEnded) {
+                     inGameMinutes++;
+                     if (inGameMinutes >= 360) {
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"6fcc999f-01b1-469d-b5cc-86af910d6f4c\" name=\"Changes\" comment=\"คอมมิท\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/main/Game.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/main/Game.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/audio/Sound.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/audio/Sound.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/core/InputManager.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/core/InputManager.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/Game.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/Game.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/MainMenu.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/MainMenu.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/map/mapImage/art.PNG\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/map/mapImage/art.PNG\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/map/mapImage/meeting.PNG\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/map/mapImage/meeting.PNG\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Game.executor\": \"Run\",\r\n    \"Application.dddGame.executor\": \"Run\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\"\r\n  }\r\n}]]></component>\r\n  <component name=\"TaskManager\">\r\n    <task id=\"LOCAL-00001\" summary=\"คอมมิท\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774600624558</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774600624558</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"คอมมิท\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"คอมมิท\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 8ba6a941ca816449292b82ad7c550403615a939f)
++++ b/.idea/workspace.xml	(date 1774621402137)
+@@ -7,18 +7,31 @@
+     <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="คอมมิท">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/audio/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/Sound.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/MainMenu.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/map/mapImage/art.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/mapImage/art.PNG" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/map/mapImage/meeting.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/mapImage/meeting.PNG" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_2.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_3.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_4.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_5.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_original.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/util/asst/textbook_original.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/core/TimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/TimeManager.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/util/asst/textbook_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/asst/textbook_2.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/util/asst/textbook_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/asst/textbook_3.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/util/asst/textbook_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/asst/textbook_4.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/util/asst/textbook_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/asst/textbook_5.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/util/asst/textbook_original.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/asst/textbook_original.png" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -27,18 +40,53 @@
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
++  "lastFilter": {
++    "state": "OPEN",
++    "assignee": "Villainfic"
++  }
++}]]></component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "https://github.com/CO2ggez/Amonghack.git",
++    "accountId": "2860a25a-49ae-49a2-9008-9ccd28bb8f54"
++  }
++}]]></component>
++  <component name="ProjectColorInfo"><![CDATA[{
++  "customColor": "",
++  "associatedIndex": 6
++}]]></component>
++  <component name="ProjectId" id="3BWm8GtRIqhEFvMKkrsuIq8O1kz" />
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
+   </component>
+   <component name="PropertiesComponent"><![CDATA[{
+   "keyToString": {
+     "Application.Game.executor": "Run",
+     "Application.dddGame.executor": "Run",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+     "git-widget-placeholder": "main",
++    "kotlin-language-version-configured": "true",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+     "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)"
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "vue.rearranger.settings.migration": "true"
+   }
+ }]]></component>
++  <component name="SharedIndexes">
++    <attachedChunks>
++      <set>
++        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
++        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
++      </set>
++    </attachedChunks>
++  </component>
+   <component name="TaskManager">
+     <task id="LOCAL-00001" summary="คอมมิท">
+       <option name="closed" value="true" />
+@@ -48,8 +96,19 @@
+       <option name="project" value="LOCAL" />
+       <updated>1774600624558</updated>
+     </task>
++    <task active="true" id="Default" summary="Default task">
++      <changelist id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="คอมมิท" />
++      <created>1774613043568</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1774613043568</updated>
++      <workItem from="1774613047088" duration="6171000" />
++    </task>
+     <option name="localTasksCounter" value="2" />
+     <servers />
++  </component>
++  <component name="TypeScriptGeneratedFilesManager">
++    <option name="version" value="3" />
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="คอมมิท" />

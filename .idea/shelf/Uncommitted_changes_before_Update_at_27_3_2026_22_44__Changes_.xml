@@ -1,0 +1,31 @@
+<changelist name="Uncommitted_changes_before_Update_at_27_3_2026_22_44_[Changes]" date="1774626364107" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_3_2026_22_44_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 27/3/2026 22:44 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/main/Game.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/main/MainMenu.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/network/MinigameManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/GamePanel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/InputManager$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/InputManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/TimeManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/TimeUI.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/InputManager$1.class" />
+  </binary>
+</changelist>
