@@ -31,7 +31,7 @@ public class LightOuts implements Minigame {
         // Set initial state (default: off)
         isOn = false;
 
-        // Create the panel with null layout
+        // Create the panel with null layout.
         breaker = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
