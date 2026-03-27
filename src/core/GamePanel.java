@@ -61,7 +61,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public CgLoader cgLoader;
     public Ending gameEnding;
-    public boolean showingEnding = false; 
+    public boolean showingEnding = false;
+
+    //เช็คไฟดับ
+    private boolean isLightOut = false;
 
     public void update() {
         if (showingEnding) {
@@ -69,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
                 // เด้งกลับเมนูหรือปิดเกมเมื่อฉากจบจบลง (เลือกเอาคอมเมนต์ออกได้)
                 // System.exit(0);
             }
-            return; 
+            return;
         }
 
         player.update();
@@ -83,8 +86,8 @@ public class GamePanel extends JPanel implements Runnable {
             timeManager.setPaused(true);
 
             if (gsm != null && gsm.getCurrentDay() == 5) {
-                isTransitioning = false; 
-                gsm.checkEndGame(); 
+                isTransitioning = false;
+                gsm.checkEndGame();
             } else {
                 this.requestFocusInWindow();
             }
@@ -113,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable {
                         postFadeAction.run();
                         postFadeAction = null;
                     }
-                    isFadeOut = false; 
+                    isFadeOut = false;
                 }
             } else {
                 fadeAlpha -= 0.05f;
@@ -141,7 +144,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (isTransitioning) {
             gsm.nextDay();
             timeManager.resetDay();
-            timeManager.setPaused(false); 
+            timeManager.setPaused(false);
             isTransitioning = false;
 
             if (sound != null) {
@@ -166,8 +169,8 @@ public class GamePanel extends JPanel implements Runnable {
         try {
             textBook = new TextBook();
             textBook.setBounds(0, 0, screenWidth, screenHeight);
-            textBook.setVisible(false);  
-            add(textBook);  
+            textBook.setVisible(false);
+            add(textBook);
             setComponentZOrder(textBook, 0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -177,7 +180,7 @@ public class GamePanel extends JPanel implements Runnable {
         camera = new Camera(this,roomManager);
         eventManager = new EventManager();
         eventSetup = new EventSetup(eventManager);
-        eventSetup.loadZones(); 
+        eventSetup.loadZones();
         elevatorUI = AssetLoader.loadImage("/util/asst/ElevatorButton21G.png");
         minigameManager = new MinigameManager(this);
         player.setCamera(camera);
@@ -264,14 +267,19 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         npcmanager.drawNPC(g, camera.getX());
 
-        if (gsm != null) gsm.draw(g2);
-        if (timeUI != null) timeUI.draw(g2);
-
         if (dialogBox == null || !dialogBox.isVisible()) {
             player.draw(g2);
             player.setVisible(isTransitioning);
         }
 
+        //จอมืดลงตอนไฟดับ
+        if (isLightOut) {
+            g2.setColor(new Color(0, 0, 0, 200));
+            g2.fillRect(0, 0, getWidth(), getHeight());
+        }
+
+        if (gsm != null) gsm.draw(g2);
+        if (timeUI != null) timeUI.draw(g2);
         if (textBook != null && textBook.isVisible()) {
             g2.setColor(new Color(0, 0, 0, 140));
             g2.fillRect(0, 0, getWidth(), getHeight());
@@ -312,7 +320,7 @@ public class GamePanel extends JPanel implements Runnable {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
             g2.setColor(Color.BLACK);
             g2.fillRect(0, 0, getWidth(), getHeight());
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); 
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
 
         if (showNotification && notificationText != null) {
@@ -320,7 +328,7 @@ public class GamePanel extends JPanel implements Runnable {
             FontMetrics fm = g2.getFontMetrics();
             int textWidth = fm.stringWidth(notificationText);
             int x = (getWidth() - textWidth) / 2;
-            int y = 250; 
+            int y = 250;
             g2.setColor(new Color(0, 0, 0, 150));
             g2.fillRect(x - 20, y - 40, textWidth + 40, 50);
             g2.setColor(Color.YELLOW);
@@ -331,6 +339,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (showingEnding && gameEnding != null) {
             gameEnding.draw(g2);
         }
+
     }
 
     @Override
@@ -368,4 +377,8 @@ public class GamePanel extends JPanel implements Runnable {
     public GameStateManager getGSM() { return gsm; }
     public NPCmanager getNpcmanager() { return npcmanager; }
     public MinigameManager getMinigameManager() { return minigameManager; }
+
+    public void setLightOut(boolean lightOut) {
+        isLightOut = lightOut;
+    }
 }

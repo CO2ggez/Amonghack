@@ -224,6 +224,13 @@ public class InputManager implements KeyListener {
                 return;
             }
 
+            if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLightOutLocation[0])) &&
+                    isNear(Integer.parseInt(minigameManager.currentLightOutLocation[1]), Integer.parseInt(minigameManager.currentLightOutLocation[2]))
+                    && minigameManager.taskLightOut) {
+                minigameManager.startTask();
+                return;
+            }
+
             if(helpBossArea()){
                 minigameManager.taskBoss = false;
                 minigameManager.helpBossScore++;
@@ -501,6 +508,12 @@ public class InputManager implements KeyListener {
                 isNear(Integer.parseInt(minigameManager.currentBanIpLogLocation[1]), Integer.parseInt(minigameManager.currentBanIpLogLocation[2]))
                 && minigameManager.taskBanIpLog) {
             return "[F] ตรวจสอบ Server Log";
+        }
+
+        if ((roomManager.getCurrentRoomName().equals(minigameManager.currentLightOutLocation[0])) &&
+                isNear(Integer.parseInt(minigameManager.currentLightOutLocation[1]), Integer.parseInt(minigameManager.currentLightOutLocation[2]))
+                && minigameManager.taskLightOut) {
+            return "[F] ตรวจสอบตู้ไฟ";
         }
 
         if(helpBossArea()){

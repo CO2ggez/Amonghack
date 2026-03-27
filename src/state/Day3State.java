@@ -26,7 +26,7 @@ public class Day3State extends AbstractState{
         //task ในวันนี้
         taskList.add("lan");
         taskList.add("terminal");
-        taskList.add("lan");
+        taskList.add("lightOut");
         taskList.add("terminal");
 
         minigameManager.resetTask();

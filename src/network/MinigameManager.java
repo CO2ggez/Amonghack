@@ -2,6 +2,7 @@ package network;
 
 import javax.swing.*;
 import core.GamePanel;
+import event.LightOuts;
 
 import java.util.*;
 
@@ -18,6 +19,9 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
 
     public boolean taskBanIpLog = false;
     public String[] currentBanIpLogLocation = {"","",""};
+
+    public boolean taskLightOut = false;
+    public String[] currentLightOutLocation = {"liftG","120","270"};
 
     private boolean isPlaying = false;
     public int score = 0; //check gameover (8 point)
@@ -38,6 +42,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         allMinigame.put("lan", false);
         allMinigame.put("terminal", false);
         allMinigame.put("baniplog", false);
+        allMinigame.put("lightOut", false);
     }
 
 
@@ -64,6 +69,9 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         } else if (type.equals("baniplog")) {
             currentBanIpLogLocation = fixedBanIpLogLocation();
             taskText = "ตรวจสอบ Server Log ที่ห้อง " + currentBanIpLogLocation[0];
+        } else if (type.equals("lightOut")) {
+            panel.setLightOut(true);
+            taskText = "ไปเช็คตู้ไฟที่ลิฟต์ชั้น G";
         }
 
 
@@ -95,6 +103,10 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
             game = new BanIpLogMinigame(this, currentDay);
             updateTaskStatus("baniplog", false);
             taskBanIpLog = false;
+        } else if (taskLightOut) {
+            game = new LightOuts(this);
+            updateTaskStatus("lightOut", false);
+            taskLightOut = false;
         }
 
         if (game == null) {
@@ -104,12 +116,15 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
 
         currentGamePanel = game.getPanel();
 
-        panel.add(currentGamePanel);
-        panel.repaint();
-        currentGamePanel.requestFocusInWindow();
         currentGamePanel.setBounds(0, 0, 1920, 1080);
         currentGamePanel.setFocusable(true);
         currentGamePanel.setOpaque(false);
+
+        panel.add(currentGamePanel);
+        panel.revalidate();
+        panel.repaint();
+        currentGamePanel.requestFocusInWindow();
+
     }
 
     public void closeGame() {
@@ -143,6 +158,7 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public void onWin() {
         score++;
         closeGame();
+        panel.setLightOut(false);
 
         System.out.println("คะแนนมินิเกมตอนนี้ " + score);
     }
@@ -174,6 +190,9 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
         } else if (type.equals("baniplog")) {
             taskBanIpLog = isActive;
             allMinigame.put("baniplog", isActive);
+        }else  if (type.equals("lightOut")) {
+            taskLightOut = isActive;
+            allMinigame.put("lightOut", isActive);
         }
 
         //เพิ่มมินิเกมอื่น
