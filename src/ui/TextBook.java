@@ -11,10 +11,11 @@ public class TextBook extends JPanel {
     public int update=0;
     public BufferedImage image;
     public TextBook() throws IOException {
-        setSize(300,300);
+        setPreferredSize(new Dimension(1920, 1080));
         //addKeyListener(new InputManager()); ขออณุญาติย่ายไปสร้างใน gamePanel แทน เนื่องจากระบบเปลี่ยนห้องจะใช้ด้วย
 
         importImg("/util/asst/textbook_original.png");
+        setOpaque(false);
 
     }
     public void importImg(String path) throws IOException {
@@ -39,17 +40,21 @@ public class TextBook extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Draw the image if it exists
         if (image != null) {
-            // Draw the image scaled to fit the panel
-            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-        } else {
-            // Optional: Draw placeholder if image failed to load
-            g.setColor(Color.GRAY);
-            g.fillRect(0, 0, getWidth(), getHeight());
-            g.setColor(Color.WHITE);
-            g.drawString("TextBook Image", 10, getHeight() / 2);
-        }
-    }
+            Graphics2D g2 = (Graphics2D) g;
 
+            // วาดหนังสือ (กลางจอ)
+            int w = getWidth();
+            int h = getHeight();
+
+            int imgW = w - 300;   // ปรับขนาดได้
+            int imgH = h - 200;
+
+            int x = (w - imgW) / 2;
+            int y = (h - imgH) / 2;
+
+            g2.drawImage(image, x, y, imgW, imgH, this);
+        }
+        
+    }
 }
