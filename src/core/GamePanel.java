@@ -81,8 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             timeManager.setPaused(true);
 
-<<<<<<< HEAD
-            // --- MODIFIED: เช็คเงื่อนไขหมดเวลาของวันที่ 4 และ วันที่ 5 ---
+      // --- MODIFIED: เช็คเงื่อนไขหมดเวลาของวันที่ 4 และ วันที่ 5 ---
             if (gsm != null) {
                 if (gsm.getCurrentDay() == 4 && minigameManager.score < 8) {
                     // ถ้าวันที่ 4 คะแนนไม่ถึง 8 -> Game Over
@@ -98,7 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
                 } else {
                     this.requestFocusInWindow();
                 }
-=======
+
             if (gsm != null && gsm.getCurrentDay() == 5) {
                 isTransitioning = false; 
                 gsm.checkEndGame(); 
@@ -151,6 +150,7 @@ public class GamePanel extends JPanel implements Runnable {
                     notificationText = null;
                 }
             }
+        }
         }
     }
 
