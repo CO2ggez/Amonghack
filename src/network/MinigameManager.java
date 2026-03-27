@@ -15,6 +15,10 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
 
     public boolean taskTerminal = false;
     public String[] currentTerminalLocation = {"","",""};
+
+    public boolean taskBanIpLog = false;
+    public String[] currentBanIpLogLocation = {"","",""};
+
     private boolean isPlaying = false;
     private int score = 0;
     public String taskText = "";
