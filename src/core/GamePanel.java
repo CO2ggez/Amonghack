@@ -275,6 +275,19 @@ public class GamePanel extends JPanel implements Runnable {
             player.setVisible(isTransitioning);
         }
 
+        RadialGradientPaint vignette = new RadialGradientPaint(
+                new Point(getWidth()/2, getHeight()/2),
+                Math.max(getWidth(), getHeight()) / 1.5f, // ขอบใกล้
+                new float[]{0.3f, 1f},                    // มืด
+                new Color[]{
+                        new Color(0,0,0,0),
+                        new Color(0,0,0,200)
+                }
+        );
+
+        g2.setPaint(vignette);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+
         if (textBook != null && textBook.isVisible()) {
             g2.setColor(new Color(0, 0, 0, 140));
             g2.fillRect(0, 0, getWidth(), getHeight());
