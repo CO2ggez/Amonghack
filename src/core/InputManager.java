@@ -278,6 +278,12 @@ public class InputManager implements KeyListener {
                         } else if (room.equals("server") && !talkedToServer && isNear(500, 800)) { 
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_SERVER);
                             talkedToServer = true;
+                            // --- Update Textbook Day 1 ---
+                            try {
+                                textBook.update();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         }
                         break;
                         
@@ -300,6 +306,12 @@ public class InputManager implements KeyListener {
                         } else if (room.equals("server") && progressDay2 == 1 && isNear(500, 800)) { 
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_SERVER); 
                             progressDay2 = 2;
+                            // --- Update Textbook Day 2 ---
+                            try {
+                                textBook.update();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         }
                         break;
                         
@@ -321,7 +333,7 @@ public class InputManager implements KeyListener {
                                     int startX = 0; 
                                     int targetX = player.xDelta - 100;
                                     
-                                    npcManager.boss.walkSpeed = 15;
+                                    npcManager.boss.walkSpeed = 10;
                                     npcManager.boss.x = startX;
                                     npcManager.boss.moveTo(targetX);
                                     
@@ -341,6 +353,12 @@ public class InputManager implements KeyListener {
                         } else if (room.equals("server") && progressDay3 == 3 && isNear(500, 800)) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_SERVER); 
                             progressDay3 = 4;
+                            // --- Update Textbook Day 3 ---
+                            try {
+                                textBook.update();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         }
                         break;
                         
@@ -351,6 +369,12 @@ public class InputManager implements KeyListener {
                         } else if (room.equals("meeting") && progressDay4 == 1 && isNear(600, 900)) { 
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_SERVER); 
                             progressDay4 = 2;
+                            // --- Update Textbook Day 4 ---
+                            try {
+                                textBook.update();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         } else if (bossArea() && progressDay4 == 2) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_CHIEFOFFICE); 
                             progressDay4 = 3;
