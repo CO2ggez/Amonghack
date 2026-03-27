@@ -6,23 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="คอมมิท">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/event/LightOuts$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/event/LightOuts$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/event/LightOuts.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/event/LightOuts.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/CgImage/CG-gameover.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/CgLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/CgLoader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/LogViewerUI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TimeUI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/TimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/TimeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/TimeUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TimeUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/Ending.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/Ending.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,16 +97,24 @@
       <updated>1774617548132</updated>
       <workItem from="1774625879420" duration="1914000" />
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="คอมมิท">
+      <option name="closed" value="true" />
+      <created>1774628271896</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1774628271896</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="คอมมิท" />
     <MESSAGE value="change font in Therminal" />
     <MESSAGE value="fix previous commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix previous commit" />
+    <MESSAGE value="คอมมิท" />
+    <option name="LAST_COMMIT_MESSAGE" value="คอมมิท" />
   </component>
 </project>
