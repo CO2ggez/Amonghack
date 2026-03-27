@@ -16,6 +16,7 @@ import ui.TextBook;
 import ui.TimeUI;   // นำเข้า Event
 import util.AssetLoader;   // นำเข้า AssetLoader
 import util.FontUtil;
+import event.TriggerZone;
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
@@ -60,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
     //ข้อความแจ้งเตือนหลัง special event เสร็จ
     private String notificationText = null;
     private long notificationStartTime = 0;
-    private long notificationDuration = 4000; //วิ
+    private long notificationDuration = 2000; //วิ
     private float notificationAlpha = 0f;
     private boolean showNotification = false;
 
@@ -193,13 +194,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         minigameManager = new MinigameManager(this);
 
-        //ตั้งtaskตอนนี้เป็น lan ถ้าไปถึงจุดที่เครื่องอยู่ใน inputmanager กด f แล้วจึงเริ่ม
-        minigameManager.setTask("lan");
-
-
         player.setCamera(camera);
-
-
 
         // 1. --- เลื่อนการสร้าง npcmanager มาไว้ตรงนี้ก่อน (เพื่อให้มีข้อมูลก่อนส่งไปให้ InputManager) ---
         npcmanager = new NPCmanager(roomManager);
@@ -227,6 +222,70 @@ public class GamePanel extends JPanel implements Runnable {
 
     public EventManager getEventManager() {
         return eventManager;
+    }
+
+    private boolean shouldShowElevatorGuide() {
+        if (roomManager == null || eventManager == null || player == null) return false;
+
+        String room = roomManager.getCurrentRoomName();
+        if (room == null || !room.startsWith("lift")) return false;
+
+        // ถ้าเปิดหน้าต่างลิฟต์แล้ว ไม่ต้องโชว์ลูกศร
+        if (eventManager.isShowImage()) return false;
+
+        TriggerZone zone = eventManager.getZoneByName("Elevator_Panel");
+        if (zone == null) return false;
+
+        // ให้โชว์เฉพาะตอนผู้เล่นอยู่ใกล้แผงลิฟต์
+        return Math.abs(player.xDelta - zone.getCenterX()) <= 350;
+    }
+
+    private void drawElevatorGuide(Graphics2D g2) {
+        TriggerZone zone = eventManager.getZoneByName("Elevator_Panel");
+        if (zone == null) return;
+
+        // world -> screen
+        int targetX = zone.getCenterX() - camera.getX() - 50;
+        int targetY = zone.getY() + 100;
+
+        // ขยับขึ้นลงนิดหน่อยให้ดูมีชีวิต
+        int bob = (int) (Math.sin(System.currentTimeMillis() / 120.0) * 8);
+
+        // ถ้าอยู่นอกจอมาก ๆ ก็ไม่ต้องวาด
+        if (targetX < -100 || targetX > getWidth() + 100) return;
+
+        String text = "คลิกตรงนี้เพื่อใช้งานลิฟต์";
+
+        Font oldFont = g2.getFont();
+        g2.setFont(FontUtil.THAI.deriveFont(Font.BOLD, 24f));
+        FontMetrics fm = g2.getFontMetrics();
+
+        int textWidth = fm.stringWidth(text);
+        int boxX = targetX - (textWidth / 2) - 18;
+        int boxY = targetY - 110 + bob;
+        int boxW = textWidth + 36;
+        int boxH = 42;
+
+        // กล่องข้อความ
+        g2.setColor(new Color(0, 0, 0, 170));
+        g2.fillRoundRect(boxX, boxY, boxW, boxH, 20, 20);
+
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, targetX - textWidth / 2, boxY + 28);
+
+        // เส้นลูกศร
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(4f));
+        g2.drawLine(targetX, boxY + boxH, targetX, targetY - 25 + bob);
+
+        // หัวลูกศร
+        Polygon arrowHead = new Polygon();
+        arrowHead.addPoint(targetX, targetY - 5 + bob);
+        arrowHead.addPoint(targetX - 14, targetY - 28 + bob);
+        arrowHead.addPoint(targetX + 14, targetY - 28 + bob);
+        g2.fillPolygon(arrowHead);
+
+        g2.setFont(oldFont);
     }
 
     private void startGameThread() {
@@ -274,7 +333,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         //task text ขวาบน
         g2.setColor(Color.WHITE);
-        g2.drawString(minigameManager.taskText, 1400 , 60);
+        g2.drawString(minigameManager.taskText, 1450 , 75);
+
+        if (shouldShowElevatorGuide()) {
+            drawElevatorGuide(g2);
+        }
 
         if (eventManager != null && eventManager.isShowImage()) {
             String activeEvent = eventManager.getActiveZoneName();
@@ -326,8 +389,6 @@ public class GamePanel extends JPanel implements Runnable {
         if (showNotification && notificationText != null) {
             g2.setComposite(AlphaComposite.getInstance(
                     AlphaComposite.SRC_OVER, notificationAlpha));
-
-            g2.setFont(FontUtil.THAI.deriveFont(32f));
 
             FontMetrics fm = g2.getFontMetrics();
             int textWidth = fm.stringWidth(notificationText);

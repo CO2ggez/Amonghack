@@ -28,7 +28,7 @@ public class DialogBox {
         imgBoss = loadCharImage("/ui/dialog_characters/boss.png");
         imgJanitor = loadCharImage("/ui/dialog_characters/janitor.png");
         imgMC = loadCharImage("/ui/dialog_characters/MC.png");
-        imgIT = loadCharImage("/ui/dialog_characters/it.png");  
+        imgIT = loadCharImage("/ui/dialog_characters/it.png");
     }
 
     // === ฟังก์ชันช่วยโหลดรูปและแจ้งเตือน ===
@@ -72,10 +72,10 @@ public class DialogBox {
             BufferedImage portraitToDraw = null;
 
             // เช็คคำขึ้นต้นเพื่อเลือกรูป
-            if (currentLine.startsWith("Lauren")) portraitToDraw = imgHR;
+            if (currentLine.startsWith("Lauren:")) portraitToDraw = imgHR;
             else if (currentLine.startsWith("Momoka:")) portraitToDraw = imgBoss;
             else if (currentLine.startsWith("Shu:")) portraitToDraw = imgJanitor;
-            else if (currentLine.startsWith("“Luca:")) portraitToDraw = imgMC;
+            else if (currentLine.startsWith("Luca:")) portraitToDraw = imgMC;
             else if (currentLine.startsWith("Wei:")) portraitToDraw = imgIT;
 
             if (portraitToDraw != null) {

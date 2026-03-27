@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class NPC {
-    protected int x;
-    protected int y = 882 - 384;
+    public int x;
+    public  int y = 882 - 384;
     protected int width = 64*6;
     protected int height = 64*6;
     public String inRoom;
@@ -16,7 +16,7 @@ public class NPC {
     protected int aniTick = 0;
     protected int aniIndex = 0;
     protected int aniSpeed = 13;
-    protected int walkSpeed = 4;
+    public int walkSpeed = 4;
 
     protected boolean visible = true;
     protected boolean isMoving = false;

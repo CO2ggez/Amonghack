@@ -52,6 +52,15 @@ public class EventManager {
         return activeZoneName;
     }
 
+    public TriggerZone getZoneByName(String name) {
+        for (TriggerZone zone : zones) {
+            if (zone.getName().equals(name)) {
+                return zone;
+            }
+        }
+        return null;
+    }
+
     // เพิ่มเมธอดนี้ไว้ด้านล่างสุดในคลาส EventManager
     public void closeEvent() {
         this.showImage = false;

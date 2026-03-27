@@ -2,6 +2,8 @@ package ui;
 
 import core.TimeManager;
 import core.GameStateManager;
+import util.FontUtil;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -19,8 +21,8 @@ public class TimeUI {
     public void draw(Graphics2D g) {
         //เวลามุมซ้ายบน
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 30));
-        g.drawString(tm.getTimeString(), 40, 50);
+        g.setFont(FontUtil.THAI.deriveFont(100f));
+        g.drawString(tm.getTimeString(), 40, 70);
 
         //จบวัน
         if (tm.isDayEnded()) {

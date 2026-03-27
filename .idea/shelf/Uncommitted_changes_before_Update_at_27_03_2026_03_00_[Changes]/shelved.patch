@@ -1,0 +1,364 @@
+Index: src/out/production/Amonghack/.idea/workspace.xml
+===================================================================
+diff --git a/src/out/production/Amonghack/.idea/workspace.xml b/src/out/production/Amonghack/.idea/workspace.xml
+deleted file mode 100644
+--- a/src/out/production/Amonghack/.idea/workspace.xml	(revision 1e62f3d06097237358cfba3d60a9466422e614c5)
++++ /dev/null	(revision 1e62f3d06097237358cfba3d60a9466422e614c5)
+@@ -1,23 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunManager">
+-    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+-      <option name="MAIN_CLASS_NAME" value="main.Game" />
+-      <module name="Amonghack" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="main.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-    <recent_temporary>
+-      <list>
+-        <item itemvalue="Application.Game" />
+-      </list>
+-    </recent_temporary>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: out/production/Project_op/out/production/Amonghack/.idea/workspace.xml
+===================================================================
+diff --git a/out/production/Project_op/out/production/Amonghack/.idea/workspace.xml b/out/production/Project_op/out/production/Amonghack/.idea/workspace.xml
+deleted file mode 100644
+--- a/out/production/Project_op/out/production/Amonghack/.idea/workspace.xml	(revision 1e62f3d06097237358cfba3d60a9466422e614c5)
++++ /dev/null	(revision 1e62f3d06097237358cfba3d60a9466422e614c5)
+@@ -1,23 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunManager">
+-    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+-      <option name="MAIN_CLASS_NAME" value="main.Game" />
+-      <module name="Amonghack" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="main.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-    <recent_temporary>
+-      <list>
+-        <item itemvalue="Application.Game" />
+-      </list>
+-    </recent_temporary>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"36f27b5a-ab10-4b85-a3eb-d80d0a27fd92\" name=\"Changes\" comment=\"ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/audio/Sound.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/audio/Sound.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/LanCable.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/LanCable.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/audio/Sound.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/audio/Sound.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/network/LanCable.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/network/LanCable.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/network/MinigameManager.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/network/MinigameManager.java\" afterDir=\"false\" />\r\n    <list default=\"true\" id=\"af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51\" name=\"Changes\" comment=\"กำเนิด npc มายืนบนโลก\">\r\n      <change beforePath=\"$PROJECT_DIR$/src/event/EventSetup.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/event/EventSetup.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 6\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"3BTGk8pUcZc1p8AqHCBcoi2jhyz\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Game.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"RunOnceActivity.typescript.service.memoryLimit.init\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/Windows10/Documents/NEW project/Amonghack/src/util/asst\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"Application.Game.executor\": \"Run\",\r\n    \"Application.Main.executor\": \"Run\",\r\n    \"Application.Unnamed.executor\": \"Run\",\r\n    \"Java Scratch.Unnamed.executor\": \"Run\",\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"RunOnceActivity.MCP Project settings loaded\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"RunOnceActivity.typescript.service.memoryLimit.init\": \"true\",\r\n    \"Shell Script.Unnamed.executor\": \"Run\",\r\n    \"com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"junie.onboarding.icon.badge.shown\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/AIMVIEW/Desktop/Project/AmongHack\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Project\",\r\n    \"project.structure.proportion\": \"0.15\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"to.speed.mode.migration.done\": \"true\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Windows10\\Documents\\NEW project\\Amonghack\\src\\util\\asst\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\AIMVIEW\\Desktop\\Project\\AmongHackOOP\\src\\entity\\idle\" />\r\n      <recent name=\"C:\\Users\\AIMVIEW\\Desktop\\Project\\AmongHackOOP\\src\\entity\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Game\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"main.Game\" />\r\n      <module name=\"Project_op\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"main.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Game\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"36f27b5a-ab10-4b85-a3eb-d80d0a27fd92\" name=\"Changes\" comment=\"\" />\r\n      <created>1771945757014</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1771945757014</updated>\r\n      <workItem from=\"1771945758935\" duration=\"5874000\" />\r\n      <workItem from=\"1772355419976\" duration=\"1265000\" />\r\n      <workItem from=\"1772446350681\" duration=\"8037000\" />\r\n      <workItem from=\"1772891558173\" duration=\"2849000\" />\r\n      <workItem from=\"1773661942308\" duration=\"2088000\" />\r\n      <workItem from=\"1773855379215\" duration=\"13720000\" />\r\n      <workItem from=\"1774181249957\" duration=\"235000\" />\r\n      <workItem from=\"1774182514141\" duration=\"598000\" />\r\n      <workItem from=\"1774207483447\" duration=\"12343000\" />\r\n      <workItem from=\"1774376190553\" duration=\"140000\" />\r\n      <workItem from=\"1774376822391\" duration=\"302000\" />\r\n      <workItem from=\"1774453223807\" duration=\"6033000\" />\r\n      <workItem from=\"1774428756600\" duration=\"2733000\" />\r\n      <workItem from=\"1774454989977\" duration=\"7778000\" />\r\n      <workItem from=\"1774515654051\" duration=\"5573000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้\">\r\n    <task id=\"LOCAL-00001\" summary=\"merge &amp; task text &amp; random lan location\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774483064578</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774483064578</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"merge &amp; task text &amp; random lan location\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774484047557</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774484047557</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"กำเนิด npc มายืนบนโลก\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774489309264</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774489309264</updated>\r\n    </task>\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51\" name=\"Changes\" comment=\"กำเนิด npc มายืนบนโลก\" />\r\n      <created>1774505788072</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1774505788072</updated>\r\n      <workItem from=\"1774505791572\" duration=\"3045000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774468237158</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774468237158</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"5\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"merge &amp; task text &amp; random lan location\" />\r\n    <MESSAGE value=\"กำเนิด npc มายืนบนโลก\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"กำเนิด npc มายืนบนโลก\" />\r\n    <MESSAGE value=\"เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้\" />\r\n    <MESSAGE value=\"lan\" />\r\n    <MESSAGE value=\"รวม main\" />\r\n    <MESSAGE value=\"ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 1e62f3d06097237358cfba3d60a9466422e614c5)
++++ b/.idea/workspace.xml	(date 1774555166087)
+@@ -4,16 +4,14 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม">
++    <list default="true" id="704f8cf0-f9d5-4921-a30b-194474a6e07c" name="Changes" comment="นิดหน่อยครับ">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/audio/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/Sound.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/network/LanCable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanCable.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/network/MinigameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/MinigameManager.java" afterDir="false" />
+-    <list default="true" id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก">
+-      <change beforePath="$PROJECT_DIR$/src/event/EventSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/event/EventSetup.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/out/production/Amonghack/.idea/workspace.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/out/production/Amonghack/.idea/workspace.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/state/Day2State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day2State.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/ui/CgLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/CgLoader.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/ui/DialogBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/DialogBox.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -29,90 +27,54 @@
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;AIMVIEW&quot;
++  }
++}</component>
++  <component name="GithubPullRequestsUISettings">{
++  &quot;selectedUrlAndAccountId&quot;: {
++    &quot;url&quot;: &quot;https://github.com/CO2ggez/Amonghack.git&quot;,
++    &quot;accountId&quot;: &quot;98ee0296-8efd-4151-a441-2b6501c9f7a4&quot;
++  }
++}</component>
++  <component name="ProblemsViewState">
++    <option name="selectedTabId" value="CurrentFile" />
+   </component>
+   <component name="ProjectColorInfo">{
+-  &quot;customColor&quot;: &quot;&quot;,
+-  &quot;associatedIndex&quot;: 6
++  &quot;associatedIndex&quot;: 3,
++  &quot;fromUser&quot;: false
+ }</component>
+-  <component name="ProjectId" id="3BTGk8pUcZc1p8AqHCBcoi2jhyz" />
++  <component name="ProjectId" id="3BUjb5LdE4yhAghMY9CA2pLaffn" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.Game.executor": "Run",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+-    "git-widget-placeholder": "main",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/Windows10/Documents/NEW project/Amonghack/src/util/asst",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "vue.rearranger.settings.migration": "true"
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "Application.Game.executor": "Run",
+-    "Application.Main.executor": "Run",
+-    "Application.Unnamed.executor": "Run",
+-    "Java Scratch.Unnamed.executor": "Run",
+-    "ModuleVcsDetector.initialDetectionPerformed": "true",
+-    "RunOnceActivity.MCP Project settings loaded": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+-    "Shell Script.Unnamed.executor": "Run",
+-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+-    "git-widget-placeholder": "main",
+-    "ignore.virus.scanning.warn.message": "true",
+-    "junie.onboarding.icon.badge.shown": "true",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/AIMVIEW/Desktop/Project/AmongHack",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "Project",
+-    "project.structure.proportion": "0.15",
+-    "project.structure.side.proportion": "0.2",
+-    "to.speed.mode.migration.done": "true",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Application.Game.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
+-  <component name="RecentsManager">
+-    <key name="CopyFile.RECENT_KEYS">
+-      <recent name="C:\Users\Windows10\Documents\NEW project\Amonghack\src\util\asst" />
+-    </key>
+-    <key name="MoveFile.RECENT_KEYS">
+-      <recent name="C:\Users\AIMVIEW\Desktop\Project\AmongHackOOP\src\entity\idle" />
+-      <recent name="C:\Users\AIMVIEW\Desktop\Project\AmongHackOOP\src\entity" />
+-    </key>
+-  </component>
++}</component>
+   <component name="RunManager">
+-    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++    <configuration name="Game" type="Application" factoryName="Application">
+       <option name="MAIN_CLASS_NAME" value="main.Game" />
+       <module name="Project_op" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="main.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <recent_temporary>
+-      <list>
+-        <item itemvalue="Application.Game" />
+-      </list>
+-    </recent_temporary>
+   </component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+@@ -123,83 +85,92 @@
+     </attachedChunks>
+   </component>
+   <component name="TaskManager">
+-    <task active="true" id="Default" summary="Default task">
+-      <changelist id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="" />
+-      <created>1771945757014</created>
+-      <option name="number" value="Default" />
+-      <option name="presentableId" value="Default" />
+-      <updated>1771945757014</updated>
+-      <workItem from="1771945758935" duration="5874000" />
+-      <workItem from="1772355419976" duration="1265000" />
+-      <workItem from="1772446350681" duration="8037000" />
+-      <workItem from="1772891558173" duration="2849000" />
+-      <workItem from="1773661942308" duration="2088000" />
+-      <workItem from="1773855379215" duration="13720000" />
+-      <workItem from="1774181249957" duration="235000" />
+-      <workItem from="1774182514141" duration="598000" />
+-      <workItem from="1774207483447" duration="12343000" />
+-      <workItem from="1774376190553" duration="140000" />
+-      <workItem from="1774376822391" duration="302000" />
+-      <workItem from="1774453223807" duration="6033000" />
+-      <workItem from="1774428756600" duration="2733000" />
+-      <workItem from="1774454989977" duration="7778000" />
+-      <workItem from="1774515654051" duration="5573000" />
+-    </task>
+-    <task id="LOCAL-00001" summary="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้">
+-    <task id="LOCAL-00001" summary="merge &amp; task text &amp; random lan location">
++    <task id="LOCAL-00001" summary="ลองใช้ dayState">
+       <option name="closed" value="true" />
+-      <created>1774483064578</created>
++      <created>1774537025269</created>
+       <option name="number" value="00001" />
+       <option name="presentableId" value="LOCAL-00001" />
+       <option name="project" value="LOCAL" />
+-      <updated>1774483064578</updated>
++      <updated>1774537025269</updated>
+     </task>
+-    <task id="LOCAL-00002" summary="merge &amp; task text &amp; random lan location">
++    <task id="LOCAL-00002" summary="special task แบบแค่กดแล้วเสร็จแลย">
+       <option name="closed" value="true" />
+-      <created>1774484047557</created>
++      <created>1774540143340</created>
+       <option name="number" value="00002" />
+       <option name="presentableId" value="LOCAL-00002" />
+       <option name="project" value="LOCAL" />
+-      <updated>1774484047557</updated>
++      <updated>1774540143340</updated>
+     </task>
+-    <task id="LOCAL-00003" summary="กำเนิด npc มายืนบนโลก">
++    <task id="LOCAL-00003" summary="special task แบบสวยขึ้น">
+       <option name="closed" value="true" />
+-      <created>1774489309264</created>
++      <created>1774542542741</created>
+       <option name="number" value="00003" />
+       <option name="presentableId" value="LOCAL-00003" />
+       <option name="project" value="LOCAL" />
+-      <updated>1774489309264</updated>
++      <updated>1774542542741</updated>
++    </task>
++    <task id="LOCAL-00004" summary="dialogueBox แบบที่artวาดฝัน">
++      <option name="closed" value="true" />
++      <created>1774545953836</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1774545953836</updated>
+     </task>
+     <task active="true" id="Default" summary="Default task">
+-      <changelist id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก" />
+-      <created>1774505788072</created>
++      <changelist id="704f8cf0-f9d5-4921-a30b-194474a6e07c" name="Changes" comment="dialogueBox แบบที่artวาดฝัน" />
++      <created>1774550612809</created>
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+-      <updated>1774505788072</updated>
+-      <workItem from="1774505791572" duration="3045000" />
++      <updated>1774550612809</updated>
++      <workItem from="1774550614365" duration="4517000" />
+     </task>
+-    <task id="LOCAL-00004" summary="ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม">
++    <task id="LOCAL-00005" summary="แก้ typo">
+       <option name="closed" value="true" />
+-      <created>1774468237158</created>
+-      <option name="number" value="00004" />
+-      <option name="presentableId" value="LOCAL-00004" />
++      <created>1774550974069</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1774550974069</updated>
++    </task>
++    <task id="LOCAL-00006" summary="แก้ typo">
++      <option name="closed" value="true" />
++      <created>1774551941791</created>
++      <option name="number" value="00006" />
++      <option name="presentableId" value="LOCAL-00006" />
++      <option name="project" value="LOCAL" />
++      <updated>1774551941791</updated>
++    </task>
++    <task id="LOCAL-00007" summary="ฟ้อนใหม่ครับ">
++      <option name="closed" value="true" />
++      <created>1774553383093</created>
++      <option name="number" value="00007" />
++      <option name="presentableId" value="LOCAL-00007" />
+       <option name="project" value="LOCAL" />
+-      <updated>1774468237158</updated>
++      <updated>1774553383093</updated>
+     </task>
+-    <option name="localTasksCounter" value="5" />
++    <task id="LOCAL-00008" summary="นิดหน่อยครับ">
++      <option name="closed" value="true" />
++      <created>1774554065257</created>
++      <option name="number" value="00008" />
++      <option name="presentableId" value="LOCAL-00008" />
++      <option name="project" value="LOCAL" />
++      <updated>1774554065257</updated>
++    </task>
++    <option name="localTasksCounter" value="9" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
+   </component>
+   <component name="VcsManagerConfiguration">
+-    <MESSAGE value="merge &amp; task text &amp; random lan location" />
+-    <MESSAGE value="กำเนิด npc มายืนบนโลก" />
+-    <option name="LAST_COMMIT_MESSAGE" value="กำเนิด npc มายืนบนโลก" />
+-    <MESSAGE value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
+-    <MESSAGE value="lan" />
+-    <MESSAGE value="รวม main" />
+-    <MESSAGE value="ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม" />
+-    <option name="LAST_COMMIT_MESSAGE" value="ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม" />
++    <MESSAGE value="ลองใช้ dayState" />
++    <MESSAGE value="special task แบบแค่กดแล้วเสร็จแลย" />
++    <MESSAGE value="special task แบบสวยขึ้น" />
++    <MESSAGE value="dialogueBox แบบที่artวาดฝัน" />
++    <MESSAGE value="แก้ typo" />
++    <MESSAGE value="ฟ้อนใหม่ครับ" />
++    <MESSAGE value="นิดหน่อยครับ" />
++    <option name="LAST_COMMIT_MESSAGE" value="นิดหน่อยครับ" />
+   </component>
+ </project>
+\ No newline at end of file
