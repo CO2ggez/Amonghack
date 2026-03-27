@@ -23,6 +23,9 @@ public class Day2State extends AbstractState{
         setupNPC();
         setSpecialTask();
 
+        gamePanel.getPlayer().xDelta=100;
+        gamePanel.getPlayer().checkRight=true;
+
         //task ในวันนี้
         taskList.add("lan");
         taskList.add("terminal");

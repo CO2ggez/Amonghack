@@ -62,15 +62,23 @@ public class GamePanel extends JPanel implements Runnable {
     public CgLoader cgLoader;
     public Ending gameEnding;
     public boolean showingEnding = false;
-
+    private boolean waitingNextEnding = false;
     //เช็คไฟดับ
     private boolean isLightOut = false;
 
     public void update() {
-        if (!showingEnding) {
-            player.update();
-            camera.update(player);
+        if (showingEnding) {
+
+            if (gsm != null && gsm.getCurrentDay() == 5) {
+                if (gameEnding != null && gameEnding.isFinished()) {
+                    gsm.playNextEnding();
+                }
+                return;
+            }
         }
+
+        player.update();
+        camera.update(player);
 
         if (timeManager != null && timeManager.isDayEnded() && !isTransitioning) {
             isTransitioning = true;
@@ -416,5 +424,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setLightOut(boolean lightOut) {
         isLightOut = lightOut;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
