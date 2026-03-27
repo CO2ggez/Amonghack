@@ -31,7 +31,7 @@ public class TimeUI {
             g.fillRect(0, 0, 1920, 1080);
 
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Tahoma", Font.BOLD, 80));
+            g.setFont(FontUtil.THAI.deriveFont(Font.BOLD, 150f));
 
             String text;
             String promptText;
@@ -50,8 +50,8 @@ public class TimeUI {
             int y = ((1080 - metrics.getHeight()) / 2) + metrics.getAscent();
             g.drawString(text, x, y);
 
-            g.setFont(new Font("Tahoma", Font.PLAIN, 30));
-            int promptX = (1920 - g.getFontMetrics(new Font("Tahoma", Font.PLAIN, 30)).stringWidth(promptText)) / 2;
+            g.setFont(FontUtil.THAI.deriveFont(Font.PLAIN, 80f));
+            int promptX = (1920 - g.getFontMetrics().stringWidth(promptText)) / 2;
             g.drawString(promptText, promptX, y + 60);
         }
     }

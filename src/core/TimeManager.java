@@ -2,7 +2,7 @@ package core;
 
 public class TimeManager implements Runnable {
     private int inGameMinutes = 0; // 0 คือเริ่มที่ 00:00 AM
-    private boolean isPaused = false; // เอาไว้หยุดเวลาตอนคุย ทำไว้ก่อน
+    private boolean isPaused = false;
     private boolean isDayEnded = false; // เช็คว่าหมดวันยัง
     private boolean running = false;
     private Thread timeThread;
@@ -16,11 +16,7 @@ public class TimeManager implements Runnable {
         }
     }
 
-    public void stop() {
-        running = false;
-    }
-
-    //คำสั่งเอาไว้หยุดเวลาชั่วคราว เอาไว้หยุดเวลาตอนคุย ทำรอ dialog
+    //คำสั่งเอาไว้หยุดเวลาชั่วคราว
     public void setPaused(boolean p) {
         isPaused = p;
     }
