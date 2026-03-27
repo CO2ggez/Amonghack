@@ -68,22 +68,31 @@ public class InputManager implements KeyListener {
 
                 if (em != null && em.isShowImage() && em.getActiveZoneName().equals("Elevator_Panel")) {
                     if (mouseX >= 906 && mouseX <= 1026 && mouseY >= 318 && mouseY <= 438) {
+                        gamePanel.getSound().playSound("click1");
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloor2, "lift2", 500);
-                            em.closeEvent(); 
+                            gamePanel.getSound().setVolume("ringLift", 0.08f);
+                            gamePanel.getSound().playSound("ringLift");
+                            em.closeEvent();
                         });
                         return; 
                     }
                     else if (mouseX >= 906 && mouseX <= 1026 && mouseY >= 480 && mouseY <= 606) {
+                        gamePanel.getSound().playSound("click1");
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloor1, "lift1", 500);
+                            gamePanel.getSound().setVolume("ringLift", 0.08f);
+                            gamePanel.getSound().playSound("ringLift");
                             em.closeEvent();
                         });
                         return;
                     }
                     else if (mouseX >= 906 && mouseX <= 1026 && mouseY >= 648 && mouseY <= 768) {
+                        gamePanel.getSound().playSound("click1");
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloorG, "liftG", 500);
+                            gamePanel.getSound().setVolume("ringLift", 0.08f);
+                            gamePanel.getSound().playSound("ringLift");
                             em.closeEvent();
                         });
                         return;
@@ -141,6 +150,8 @@ public class InputManager implements KeyListener {
             String roomName = roomManager.getCurrentRoomName();
 
             if (roomName.equals("stairG") && isNear(577, 864)) {
+                gamePanel.getSound().setVolume("stair", 2f);
+                gamePanel.getSound().playSound("stair");
                 gamePanel.startTransition(() -> {
                     roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500);
                 });
@@ -149,12 +160,16 @@ public class InputManager implements KeyListener {
 
             if (roomName.equals("stair1")) {
                 if (isNear(577, 864)) {
+                    gamePanel.getSound().setVolume("stair", 2f);
+                    gamePanel.getSound().playSound("stair");
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloor2, "stair2", 500);
                     });
                     return;
                 }
                 if (isNear(288, 576)) {
+                    gamePanel.getSound().setVolume("stair", 2f);
+                    gamePanel.getSound().playSound("stair");
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloorG, "stairG", 500);
                     });
@@ -163,6 +178,8 @@ public class InputManager implements KeyListener {
             }
 
             if (roomName.equals("stair2") && isNear(288, 576)) {
+                gamePanel.getSound().setVolume("stair", 2f);
+                gamePanel.getSound().playSound("stair");
                 gamePanel.startTransition(() -> {
                     roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500);
                 });
@@ -200,12 +217,14 @@ public class InputManager implements KeyListener {
             if(helpBossArea()){
                 minigameManager.taskBoss = false;
                 minigameManager.helpBossScore++;
+                gamePanel.getSound().playSound("success");
                 gamePanel.showNotification("จัดเอกสารเรียบร้อยแล้ว");
             }
 
             if(helpJanitorArea()){
                 minigameManager.taskJanitor = false;
                 minigameManager.helpJanitorScore++;
+                gamePanel.getSound().playSound("success");
                 gamePanel.showNotification("ไม้กวาดถูกเก็บเข้าตู้แล้ว");
             }
         } 

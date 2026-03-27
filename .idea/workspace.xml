@@ -4,202 +4,55 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม">
+    <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="คอมมิท">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/LanCable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/audio/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/Sound.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/LanCable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/LanCable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/MinigameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/MinigameManager.java" afterDir="false" />
-    <list default="true" id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก">
-      <change beforePath="$PROJECT_DIR$/src/event/EventSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/event/EventSetup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/map/mapImage/art.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/mapImage/art.PNG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/map/mapImage/meeting.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/mapImage/meeting.PNG" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 6
-}</component>
-  <component name="ProjectId" id="3BTGk8pUcZc1p8AqHCBcoi2jhyz" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Game.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Application.dddGame.executor": "Run",
     "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Windows10/Documents/NEW project/Amonghack/src/util/asst",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Game.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Java Scratch.Unnamed.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Shell Script.Unnamed.executor": "Run",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/AIMVIEW/Desktop/Project/AmongHack",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Windows10\Documents\NEW project\Amonghack\src\util\asst" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\AIMVIEW\Desktop\Project\AmongHackOOP\src\entity\idle" />
-      <recent name="C:\Users\AIMVIEW\Desktop\Project\AmongHackOOP\src\entity" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main.Game" />
-      <module name="Project_op" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="main.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Game" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="36f27b5a-ab10-4b85-a3eb-d80d0a27fd92" name="Changes" comment="" />
-      <created>1771945757014</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1771945757014</updated>
-      <workItem from="1771945758935" duration="5874000" />
-      <workItem from="1772355419976" duration="1265000" />
-      <workItem from="1772446350681" duration="8037000" />
-      <workItem from="1772891558173" duration="2849000" />
-      <workItem from="1773661942308" duration="2088000" />
-      <workItem from="1773855379215" duration="13720000" />
-      <workItem from="1774181249957" duration="235000" />
-      <workItem from="1774182514141" duration="598000" />
-      <workItem from="1774207483447" duration="12343000" />
-      <workItem from="1774376190553" duration="140000" />
-      <workItem from="1774376822391" duration="302000" />
-      <workItem from="1774453223807" duration="6033000" />
-      <workItem from="1774428756600" duration="2733000" />
-      <workItem from="1774454989977" duration="7778000" />
-      <workItem from="1774515654051" duration="5573000" />
-    </task>
-    <task id="LOCAL-00001" summary="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้">
-    <task id="LOCAL-00001" summary="merge &amp; task text &amp; random lan location">
+    <task id="LOCAL-00001" summary="คอมมิท">
       <option name="closed" value="true" />
-      <created>1774483064578</created>
+      <created>1774600624558</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1774483064578</updated>
+      <updated>1774600624558</updated>
     </task>
-    <task id="LOCAL-00002" summary="merge &amp; task text &amp; random lan location">
-      <option name="closed" value="true" />
-      <created>1774484047557</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1774484047557</updated>
-    </task>
-    <task id="LOCAL-00003" summary="กำเนิด npc มายืนบนโลก">
-      <option name="closed" value="true" />
-      <created>1774489309264</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1774489309264</updated>
-    </task>
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="af4ca8ec-ad9b-4fcf-b90e-d74ba28bbf51" name="Changes" comment="กำเนิด npc มายืนบนโลก" />
-      <created>1774505788072</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1774505788072</updated>
-      <workItem from="1774505791572" duration="3045000" />
-    </task>
-    <task id="LOCAL-00004" summary="ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม">
-      <option name="closed" value="true" />
-      <created>1774468237158</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1774468237158</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="merge &amp; task text &amp; random lan location" />
-    <MESSAGE value="กำเนิด npc มายืนบนโลก" />
-    <option name="LAST_COMMIT_MESSAGE" value="กำเนิด npc มายืนบนโลก" />
-    <MESSAGE value="เพิ่ม Class Camera &amp; CgLoader และเพิ่ม Code mapLoader โดยมีการเพิ่มเติมใน code GamePanel , Player เพื่อให้เชื่อมกะ camera ได้" />
-    <MESSAGE value="lan" />
-    <MESSAGE value="รวม main" />
-    <MESSAGE value="ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม" />
-    <option name="LAST_COMMIT_MESSAGE" value="ทรานซิชันเปลี่ยนห้องและมินิเกมของเอม" />
+    <MESSAGE value="คอมมิท" />
+    <option name="LAST_COMMIT_MESSAGE" value="คอมมิท" />
   </component>
 </project>

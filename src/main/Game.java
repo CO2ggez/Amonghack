@@ -5,6 +5,7 @@ import entity.Player;
 import java.awt.*;
 import javax.swing.*;
 import ui.TextBook;
+import audio.Sound;
 
 public class Game {
     private Player player = new Player();
@@ -17,6 +18,7 @@ public class Game {
     private JPanel cardcontain;
     private CardLayout cardLayout;
     private MainMenu mainMenu;
+    private Sound sound;
 
     public void setPanel(core.GamePanel panel) {
         this.panel = panel;
@@ -27,10 +29,15 @@ public class Game {
         cardLayout = new CardLayout();
         cardcontain = new JPanel(cardLayout);
         mainMenu = new MainMenu(this);
+        sound = new Sound();
+        sound.loopSound("menu_bg");
 
         cardcontain.add(mainMenu, "mainmenu");
 
         mainMenu.getBtn_start().addActionListener(e -> {
+
+            sound.playSound("click1");
+            sound.stopSound("menu_bg");
             startgame();
             panel.requestFocusInWindow();}
         );

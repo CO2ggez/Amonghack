@@ -25,6 +25,9 @@ public class Sound {
         loadSound("click1", "/audio/SoundWAV/click1.wav");
         loadSound("connect", "/audio/SoundWAV/connect.wav");
         loadSound("connect2", "/audio/SoundWAV/connect2.wav");
+        loadSound("menu_bg", "/audio/SoundWAV/menu_bg.wav");
+        loadSound("stair", "/audio/SoundWAV/stair.wav");
+        loadSound("success", "/audio/SoundWAV/success.wav");
     }
 
     private void loadSound(String name, String path) {

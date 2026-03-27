@@ -11,6 +11,7 @@ public class MainMenu extends JPanel{
 
     public JButton getBtn_start(){return btn_start;}
 
+
     public MainMenu(Game g){
         ImageIcon startIcon = new ImageIcon(getClass().getResource("start.png"));
         btn_start = new JButton(startIcon);
@@ -31,8 +32,11 @@ public class MainMenu extends JPanel{
         btn_close.setContentAreaFilled(false);
         btn_close.setFocusPainted(false);
         btn_close.setOpaque(false);
-        btn_close.addActionListener(e -> System.exit(0));
+        btn_close.addActionListener(e ->{
+            System.exit(0);
+        });
         add(btn_close);
+
 
         setLayout(null);
         btn_start.setBounds(1320, 540, 500, 160);
