@@ -229,7 +229,6 @@ public class InputManager implements KeyListener {
 
             if(helpBossArea()){
                 minigameManager.taskBoss = false;
-                minigameManager.helpBossScore++;
                 gamePanel.getSound().playSound("success");
                 gamePanel.showNotification("จัดเอกสารเรียบร้อยแล้ว");
                 minigameManager.helpBossScore++;
@@ -237,7 +236,6 @@ public class InputManager implements KeyListener {
 
             if(helpJanitorArea()){
                 minigameManager.taskJanitor = false;
-                minigameManager.helpJanitorScore++;
                 gamePanel.getSound().playSound("success");
                 gamePanel.showNotification("ไม้กวาดถูกเก็บเข้าตู้แล้ว");
                 minigameManager.helpJanitorScore++;
