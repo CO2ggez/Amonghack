@@ -16,13 +16,11 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public boolean taskTerminal = false;
     public String[] currentTerminalLocation = {"","",""};
     private boolean isPlaying = false;
-    public boolean taskBanIpLog = false;
-    public String[] currentBanIpLogLocation = {"","",""};
     private int score = 0;
     public String taskText = "";
 
-    public int helpJanitorScore = 0;
-    public int helpBossScore = 0;
+    public int helpJanitorScore = 0; //คะแนน สำหรับฉากจบภารโรง (check 4 point)
+    public int helpBossScore = 0;    //คะแนน สำหรับฉากจบหัวหน้า (check 4 point)
     public boolean taskBoss = false;
     public boolean taskJanitor = false;
     private boolean currentTaskCompleted = false;

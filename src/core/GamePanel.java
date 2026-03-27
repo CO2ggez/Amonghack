@@ -167,14 +167,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Create TextBook FIRST
         try {
+
             textBook = new TextBook();
-            int textbookWidth = 1100;   // Adjust as needed
-            int textbookHeight = 800;  // Adjust as needed
-            int x = (1920 - textbookWidth) / 2;   // Center horizontally
-            int y = (1080 - textbookHeight) / 2;  // Center vertically
-            textBook.setBounds(x, y, textbookWidth, textbookHeight);  // Set position and size (x, y, width, height)
+            textBook.setBounds(0, 0, screenWidth, screenHeight);
             textBook.setVisible(false);  // Start hidden
+
             add(textBook);  // Add to panel
+            setComponentZOrder(textBook, 0);
+
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Failed to load TextBook image");
@@ -327,6 +327,12 @@ public class GamePanel extends JPanel implements Runnable {
         if (dialogBox == null || !dialogBox.isVisible()) {
             player.draw(g2);
             player.setVisible(isTransitioning);
+        }
+
+        if (textBook != null && textBook.isVisible()) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setColor(new Color(0, 0, 0, 140));
+            g2d.fillRect(0, 0, getWidth(), getHeight());
         }
 
         g2.setFont(FontUtil.THAI);

@@ -29,6 +29,7 @@ public class InputManager implements KeyListener {
     private boolean talkedToIT = false;
     private boolean talkedToJanitor = false;
     private boolean talkedToServer = false;
+    
 
     // ตัวแปรเก็บความคืบหน้าของเหตุการณ์ที่ต้องทำต่อเนื่องในแต่ละวัน
     private int progressDay2 = 0;
@@ -457,6 +458,7 @@ public class InputManager implements KeyListener {
         //textbook draw
         if (e.getKeyCode() == KeyEvent.VK_M){
             textBook.setVisible(!textBook.isVisible());
+
         }
     }
 
