@@ -79,7 +79,7 @@ public class CgLoader{
                     g.setColor(Color.WHITE); 
                     g.setFont(storyFont); 
                     
-                    g.drawString(currentText, boxX + 80, boxY + 60); 
+                    g.drawString(currentText, boxX + 420, boxY + 870); 
                     
                 } else {
                     int boxX = 250; 
