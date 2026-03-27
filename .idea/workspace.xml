@@ -7,13 +7,14 @@
     <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="แก้ไขกิทระเบิด">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/CG_inprogress.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GameStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GameStateManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/TimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/TimeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/state/Day1State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day1State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/state/Day2State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day2State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/state/Day3State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day3State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/state/Day4State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day4State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/TimeUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TimeUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +97,7 @@
       <option name="presentableId" value="Default" />
       <updated>1774617548132</updated>
       <workItem from="1774625879420" duration="1914000" />
+      <workItem from="1774643708979" duration="4354000" />
     </task>
     <task id="LOCAL-00003" summary="คอมมิท">
       <option name="closed" value="true" />

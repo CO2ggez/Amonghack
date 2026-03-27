@@ -20,6 +20,10 @@ public class Day1State extends AbstractState {
     private int cgIndex = 0;
     private boolean startedDialogue = false;
 
+    // จัดการ CG คั่นก่อนจบวัน
+    private boolean isPlayingEndCG = false;
+    private boolean endCgTriggered = false;
+
     private String[] cgList = {
             "CG1-JobApplication",
             "CG2-JobInterview",
@@ -48,7 +52,7 @@ public class Day1State extends AbstractState {
     @Override
     public void update() {
 
-        //เล่น cgแรก
+        //CG day 0
         if (startedEnding) {
             startedEnding = false;
 
@@ -60,32 +64,48 @@ public class Day1State extends AbstractState {
             gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
             return;
         }
-        //เล่น cg ต่อตอนเสร็จ cg นั้นๆ
+
+        // เปลี่ยนรูป CG และออกจากโหมด CG
         if (gamePanel.showingEnding) {
 
             if (gamePanel.gameEnding.isFinished()) {
 
-                cgIndex++;
-
-                if (cgIndex < cgList.length) {
-                    gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
-                } else {
-                    //เริ่มเดินเวลา ตอนcg หมด
+                if (isPlayingEndCG) {
+                    // บังคับจบวัน CG ห้องนอน
                     gamePanel.showingEnding = false;
-                    gamePanel.timeManager.setPaused(false);
+                    isPlayingEndCG = false;
+                    gamePanel.timeManager.forceEndDay(); // บังคับจบวันเลย
+                } else {
+                    // CG เปิดเกม
+                    cgIndex++;
+
+                    if (cgIndex < cgList.length) {
+                        gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
+                    } else {
+                        // เริ่มเดินเวลา ตอน CG เปิดเกมจบ
+                        gamePanel.showingEnding = false;
+                        gamePanel.timeManager.setPaused(false);
+
+                        // เปิดเพลง เดะมาแก้อีกที
+                        if (gamePanel.getSound() != null) {
+                            gamePanel.getSound().loopSound("bg1");
+                        }
+                    }
                 }
             }
-
             return;
         }
 
+        // เริ่ม Day1
         if (!startedDialogue) {
             startedDialogue = true;
-            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_LIFT1);
+            gamePanel.dialogBox.startDialog(StoryDialog.DAY1_LIFT1);
         }
 
+        // ดึงเวลามา
         h = this.gamePanel.timeManager.getHours();
 
+        // เควส / มินิเกม
         if (!banIpLogTriggeredAtFive && h >= 5.0) {
             minigameManager.setTask("baniplog");
             banIpLogTriggeredAtFive = true;
@@ -100,6 +120,17 @@ public class Day1State extends AbstractState {
                 lastH = h;
             }
         }
+
+        // เช็คที่ 5.9 (ประมาณ 05:54 AM) ก่อนจะตัดจบวันตอน 06:00 AM
+        if (h >= 5.9 && !endCgTriggered) {
+            endCgTriggered = true;
+            isPlayingEndCG = true;
+
+            gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน
+            gamePanel.showingEnding = true;        // เข้าโหมดโชว์ CG
+            gamePanel.gameEnding.startEnding("CG3-BedRoom", StoryDialog.DAY1_BEDROOM); // โชว์ CG ห้องนอน
+            return;
+        }
     }
 
     @Override
@@ -108,10 +139,10 @@ public class Day1State extends AbstractState {
     public void setupNPC(){
         gamePanel.getNpcmanager().showAllNPCs();
 
-        gamePanel.getNpcmanager().janitor.setLocation("art",1600);
-        gamePanel.getNpcmanager().hr.setLocation("office",1100);
-        gamePanel.getNpcmanager().boss.setLocation("chiefoffice",1600);
-        gamePanel.getNpcmanager().itsupport.setLocation("itsupport",1400);
+        gamePanel.getNpcmanager().janitor.setLocation("art", 1600);
+        gamePanel.getNpcmanager().hr.setLocation("office", 1100);
+        gamePanel.getNpcmanager().boss.setLocation("chiefoffice", 1600);
+        gamePanel.getNpcmanager().itsupport.setLocation("itsupport", 1400);
     }
 
     public void setSpecialTask(){

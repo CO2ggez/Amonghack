@@ -62,7 +62,6 @@ public class GamePanel extends JPanel implements Runnable {
     public CgLoader cgLoader;
     public Ending gameEnding;
     public boolean showingEnding = false;
-    private boolean waitingNextEnding = false;
     //เช็คไฟดับ
     private boolean isLightOut = false;
 
