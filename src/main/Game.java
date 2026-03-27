@@ -78,11 +78,6 @@ public class Game {
         btn_close.setOpaque(false);
         btn_close.addActionListener(e -> System.exit(0));
 
-        player.setBounds(0, 0, screenWidth, screenHeight);
-        player.setOpaque(false); //ลบ background ของ Player
-        //textbook
-        panel.add(player);
-
         panel.add(btn_close);
 
         cardcontain.revalidate();

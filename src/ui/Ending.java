@@ -3,61 +3,70 @@ package ui;
 import java.awt.Graphics;
 
 public class Ending {
-    // --- ตัวแปรสำหรับควบคุมฉากจบ ---
     private CgLoader cgLoader;
-    private String[] storyLines;     // เก็บข้อความเนื้อเรื่องเป็นหน้าๆ
-    private int currentLineIndex;    // ตัวนับว่าตอนนี้กำลังแสดงข้อความหน้าไหนอยู่
-    private boolean isFinished;      // สถานะเช็คว่าฉากจบนี้เล่นจบหรือยัง
-    private String currentCgName;    // ชื่อไฟล์ภาพ CG ที่กำลังใช้อยู่
+    private String[] storyLines;     
+    private int currentLineIndex;    
+    private boolean isFinished;      
+    private String currentCgName;    
 
-    // Constructor รับค่า CgLoader จากระบบหลักมาใช้
     public Ending(CgLoader cgLoader) {
         this.cgLoader = cgLoader;
-        this.isFinished = true; // เริ่มต้นมาให้สถานะคือยังไม่ได้เล่น
+        this.isFinished = true; 
     }
 
-    // --- เมธอดสำหรับ "เริ่ม" เล่นฉากจบ ---
+    // --- ADDED: เมธอดใหม่ สำหรับเรียกโชว์แค่รูปภาพอย่างเดียว (ไม่มีกล่องข้อความ) ---
+    public void startEnding(String cgName) {
+        this.currentCgName = cgName;
+        this.storyLines = null; // เซ็ตให้ไม่มีข้อความ
+        this.currentLineIndex = 0;
+        this.isFinished = false;
+        
+        // สั่ง CgLoader ให้แสดงแค่ภาพ
+        cgLoader.setCg(cgName);
+    }
+
+    // --- เมธอดเดิม: สำหรับภาพพร้อมข้อความ ---
     public void startEnding(String cgName, String[] lines) {
         this.currentCgName = cgName;
         this.storyLines = lines;
         this.currentLineIndex = 0;
         this.isFinished = false;
-
         updateCgView();
     }
 
-    // --- เมธอดสำหรับ "เปลี่ยนหน้า" เนื้อเรื่อง ---
     public void nextLine() {
-        if (isFinished) return;
+        if (isFinished) return; 
 
-        currentLineIndex++;
+        // --- ADDED: ถ้าเป็นโหมดแสดงแค่ภาพ (ไม่มีข้อความ) พอกด Spacebar/คลิก ก็จะถือว่าจบเลย ---
+        if (storyLines == null) {
+            isFinished = true;
+            cgLoader.hide();
+            return;
+        }
+
+        currentLineIndex++; 
         
         if (currentLineIndex >= storyLines.length) {
             isFinished = true; 
-            cgLoader.hide();
+            cgLoader.hide(); 
         } else {
             updateCgView(); 
         }
     }
 
-    // เมธอดส่วนตัวสำหรับส่งข้อมูลไปให้ CgLoader วาด
     private void updateCgView() {
         if (storyLines != null && currentLineIndex < storyLines.length) {
             cgLoader.setCgWithStory(currentCgName, storyLines[currentLineIndex]);
         }
     }
 
-    // --- เมธอดสำหรับวาดลงจอ ---
     public void draw(Graphics g) {
         if (!isFinished) {
             cgLoader.draw(g);
         }
     }
 
-    // --- เมธอดสำหรับเช็คว่าฉากจบเล่นจบสมบูรณ์หรือยัง ---
     public boolean isFinished() {
         return isFinished;
     }
-
-    
 }

@@ -139,7 +139,10 @@ public class InputManager implements KeyListener {
 
         if (e.getKeyCode() == KeyEvent.VK_N) {
             if (gamePanel.getIsTransitioning()) {
-                gamePanel.startNextDay();
+                // คืนค่าเดิม แต่ดักไว้ว่าถ้ายังไม่ถึงวันที่ 5 ค่อยเปลี่ยนวัน
+                if (gamePanel.getGSM() != null && gamePanel.getGSM().getCurrentDay() < 5) {
+                    gamePanel.startNextDay();
+                }
             } else {
                 gamePanel.timeManager.forceEndDay();
             }
@@ -229,6 +232,7 @@ public class InputManager implements KeyListener {
                 minigameManager.helpBossScore++;
                 gamePanel.getSound().playSound("success");
                 gamePanel.showNotification("จัดเอกสารเรียบร้อยแล้ว");
+                minigameManager.helpBossScore++;
             }
 
             if(helpJanitorArea()){
@@ -236,6 +240,7 @@ public class InputManager implements KeyListener {
                 minigameManager.helpJanitorScore++;
                 gamePanel.getSound().playSound("success");
                 gamePanel.showNotification("ไม้กวาดถูกเก็บเข้าตู้แล้ว");
+                minigameManager.helpJanitorScore++;
             }
         } 
 

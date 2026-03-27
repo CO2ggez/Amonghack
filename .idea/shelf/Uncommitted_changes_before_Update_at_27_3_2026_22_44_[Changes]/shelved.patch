@@ -1,0 +1,218 @@
+Index: src/core/GamePanel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package core;\r\n\r\nimport audio.Sound;\r\nimport entity.*;\r\nimport event.EventManager;\r\nimport event.EventSetup;\r\nimport java.awt.*;\r\nimport java.awt.image.BufferedImage;\r\nimport java.io.IOException;\r\nimport javax.swing.*;\r\nimport map.RoomManager;\r\nimport network.MinigameManager;\r\nimport ui.Camera;\r\nimport ui.DialogBox; // นำเข้า Event\r\nimport ui.TextBook;\r\nimport ui.TimeUI;   // นำเข้า Event\r\nimport util.AssetLoader;   // นำเข้า AssetLoader\r\nimport util.FontUtil;\r\nimport event.TriggerZone;\r\n\r\npublic class GamePanel extends JPanel implements Runnable {\r\n    private Thread gameThread;\r\n    private final int FPS = 60;\r\n    public TimeManager timeManager;\r\n    private TimeUI timeUI;\r\n    public DialogBox dialogBox;\r\n    public TextBook textBook;\r\n    private GameStateManager gsm;\r\n    private boolean isTransitioning = false;\r\n\r\n    private int screenWidth = 1920; //เพื่ออิงขนาดจอจากอันนี้ที่เดียว\r\n    private int screenHeight = 1080;\r\n\r\n    private Player player;\r\n\r\n    private RoomManager roomManager;\r\n    private Camera camera;\r\n\r\n    private InputManager inputManager;\r\n\r\n    private EventManager eventManager;\r\n    private EventSetup eventSetup;\r\n    private BufferedImage elevatorUI; // ตัวแปรรูปหน้าต่างลิฟต์\r\n\r\n    private Sound sound;\r\n\r\n\r\n    private float fadeAlpha = 0f;      // 0.0 (ใส) ถึง 1.0 (ดำ)\r\n    private boolean isFading = false;\r\n    private boolean isFadeOut = true;  // true = กำลังดำ, false = กำลังสว่าง\r\n    private Runnable postFadeAction;   // เก็บคำสั่ง \"เปลี่ยนชั้น\" ไว้ทำตอนจอดำสนิท\r\n\r\n    private MinigameManager minigameManager;\r\n\r\n    //ข้อความบอกevent ที่กดได้ (check ใน inputmanager)\r\n    private String hintText = null;\r\n    private boolean showHint = false;\r\n\r\n    NPCmanager npcmanager;\r\n\r\n    //ข้อความแจ้งเตือนหลัง special event เสร็จ\r\n    private String notificationText = null;\r\n    private long notificationStartTime = 0;\r\n    private long notificationDuration = 2000; //วิ\r\n    private float notificationAlpha = 0f;\r\n    private boolean showNotification = false;\r\n\r\n    public void update() {\r\n        player.update();\r\n        camera.update(player);\r\n        if (timeManager != null && timeManager.isDayEnded() && !isTransitioning) {\r\n            isTransitioning = true;\r\n\r\n            if (sound != null) {\r\n                sound.stopSound(\"bg1\");\r\n            }\r\n\r\n            // สั่งหยุดเวลาไว้ก่อน\r\n            timeManager.setPaused(true);\r\n            this.requestFocusInWindow();\r\n        }\r\n        if (gsm != null && !isTransitioning) {\r\n            gsm.update();\r\n        }\r\n\r\n        //เอาข้อความhint มาจากตำแหน่ง event ที่ player อยู่\r\n        String hint = inputManager.getCurrentHint();\r\n        if (hint != null) {\r\n            hintText = hint;\r\n            showHint = true;\r\n        } else {\r\n            showHint = false;\r\n        }\r\n\r\n        npcmanager.updateNPC();\r\n\r\n        if (isFading) {\r\n            if (isFadeOut) {\r\n                fadeAlpha += 0.05f;\r\n                if (fadeAlpha >= 1f) {\r\n                    fadeAlpha = 1f;\r\n\r\n                    if (postFadeAction != null) {\r\n                        postFadeAction.run();\r\n                        postFadeAction = null;\r\n                    }\r\n                    isFadeOut = false; // เริ่มทำให้จอสว่างคืน\r\n                }\r\n            } else {\r\n                fadeAlpha -= 0.05f;\r\n                if (fadeAlpha <= 0f) {\r\n                    fadeAlpha = 0f;\r\n                    isFading = false;\r\n                }\r\n            }\r\n        }\r\n\r\n        //อัพเดทข้อความแจ้งเตือน special event\r\n        if (showNotification) {\r\n            long elapsed = System.currentTimeMillis() - notificationStartTime;\r\n\r\n            if (elapsed > notificationDuration) {\r\n                //ค่อยๆจาง\r\n                notificationAlpha -= 0.02f;\r\n\r\n                if (notificationAlpha <= 0f) {\r\n                    notificationAlpha = 0f;\r\n                    showNotification = false;\r\n                    notificationText = null;\r\n                }\r\n            }\r\n        }\r\n\r\n\r\n    }\r\n\r\n    public void startNextDay() {\r\n        if (isTransitioning) {\r\n            //บอก GameStateManager ให้ขยับไปวันถัดไป\r\n            gsm.nextDay();\r\n\r\n            //รีเซ็ตเวลาใน TimeManager กลับไป 00:00\r\n            timeManager.resetDay();\r\n            timeManager.setPaused(false); // ให้เวลาเดินต่อ\r\n            isTransitioning = false;\r\n\r\n            if (sound != null) {\r\n                sound.setVolume(\"bg1\", 0.05f);\r\n                sound.loopSound(\"bg1\");\r\n            }\r\n\r\n            //ปิดสถานะจอดำ\r\n            this.requestFocusInWindow();\r\n\r\n            }\r\n        }\r\n\r\n\r\n    public GamePanel(Player player) {\r\n        this.player = player;\r\n\r\n        setPreferredSize(new Dimension(1720, 800));\r\n        setLayout(null);\r\n        setBackground(Color.BLACK);\r\n        setOpaque(true);\r\n        timeManager = new TimeManager();\r\n\r\n        // Create TextBook FIRST\r\n        try {\r\n\r\n            textBook = new TextBook();\r\n            textBook.setBounds(0, 0, screenWidth, screenHeight);\r\n            textBook.setVisible(false);  // Start hidden\r\n\r\n            add(textBook);  // Add to panel\r\n            setComponentZOrder(textBook, 0);\r\n\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n            System.err.println(\"Failed to load TextBook image\");\r\n        }\r\n        //สร้างแมพและกล้อง และ เชื่อมกล้องกับ player\r\n\r\n        roomManager = new RoomManager(player);\r\n        camera = new Camera(this,roomManager);\r\n\r\n        eventManager = new EventManager();\r\n        eventSetup = new EventSetup(eventManager);\r\n        eventSetup.loadZones(); // โหลดจุดคลิกต่างๆ\r\n\r\n        // --- โหลดรูปภาพ UI ---\r\n        // **สำคัญ: คุณต้องมีไฟล์รูปภาพลิฟต์ (เช่น elevator_ui.png) ไปใส่ไว้ในโฟลเดอร์ที่ระบุ**\r\n        elevatorUI = AssetLoader.loadImage(\"/util/asst/ElevatorButton21G.png\");\r\n\r\n        minigameManager = new MinigameManager(this);\r\n\r\n        player.setCamera(camera);\r\n\r\n        // 1. --- เลื่อนการสร้าง npcmanager มาไว้ตรงนี้ก่อน (เพื่อให้มีข้อมูลก่อนส่งไปให้ InputManager) ---\r\n        npcmanager = new NPCmanager(roomManager);\r\n\r\n        // 2. --- แก้ไข: เติม npcmanager เข้าไปเป็นตัวแปรที่ 6 (ตัวสุดท้าย) ในวงเล็บ ---\r\n        inputManager = new InputManager(camera, roomManager, this, player, minigameManager, npcmanager,textBook);\r\n        addKeyListener(inputManager);\r\n        player.setCamera(camera);\r\n\r\n        gsm = new GameStateManager(this);\r\n        timeUI = new TimeUI(timeManager, gsm);\r\n        dialogBox = new DialogBox();\r\n\r\n        sound = new Sound();\r\n        sound.setVolume(\"bg1\", 0.05f);\r\n        sound.loopSound(\"bg1\");\r\n\r\n\r\n\r\n        setFocusable(true);\r\n\r\n        startGameThread();\r\n        SwingUtilities.invokeLater(() -> { requestFocusInWindow();});\r\n    }\r\n\r\n    public EventManager getEventManager() {\r\n        return eventManager;\r\n    }\r\n\r\n    private boolean shouldShowElevatorGuide() {\r\n        if (roomManager == null || eventManager == null || player == null) return false;\r\n\r\n        String room = roomManager.getCurrentRoomName();\r\n        if (room == null || !room.startsWith(\"lift\")) return false;\r\n\r\n        // ถ้าเปิดหน้าต่างลิฟต์แล้ว ไม่ต้องโชว์ลูกศร\r\n        if (eventManager.isShowImage()) return false;\r\n\r\n        TriggerZone zone = eventManager.getZoneByName(\"Elevator_Panel\");\r\n        if (zone == null) return false;\r\n\r\n        // ให้โชว์เฉพาะตอนผู้เล่นอยู่ใกล้แผงลิฟต์\r\n        return Math.abs(player.xDelta - zone.getCenterX()) <= 350;\r\n    }\r\n\r\n    private void drawElevatorGuide(Graphics2D g2) {\r\n        TriggerZone zone = eventManager.getZoneByName(\"Elevator_Panel\");\r\n        if (zone == null) return;\r\n\r\n        // world -> screen\r\n        int targetX = zone.getCenterX() - camera.getX() - 50;\r\n        int targetY = zone.getY() + 100;\r\n\r\n        // ขยับขึ้นลงนิดหน่อยให้ดูมีชีวิต\r\n        int bob = (int) (Math.sin(System.currentTimeMillis() / 120.0) * 8);\r\n\r\n        // ถ้าอยู่นอกจอมาก ๆ ก็ไม่ต้องวาด\r\n        if (targetX < -100 || targetX > getWidth() + 100) return;\r\n\r\n        String text = \"คลิกตรงนี้เพื่อใช้งานลิฟต์\";\r\n\r\n        Font oldFont = g2.getFont();\r\n        g2.setFont(FontUtil.THAI.deriveFont(Font.BOLD, 24f));\r\n        FontMetrics fm = g2.getFontMetrics();\r\n\r\n        int textWidth = fm.stringWidth(text);\r\n        int boxX = targetX - (textWidth / 2) - 18;\r\n        int boxY = targetY - 110 + bob;\r\n        int boxW = textWidth + 36;\r\n        int boxH = 42;\r\n\r\n        // กล่องข้อความ\r\n        g2.setColor(new Color(0, 0, 0, 170));\r\n        g2.fillRoundRect(boxX, boxY, boxW, boxH, 20, 20);\r\n\r\n        g2.setColor(Color.WHITE);\r\n        g2.drawString(text, targetX - textWidth / 2, boxY + 28);\r\n\r\n        // เส้นลูกศร\r\n        g2.setColor(Color.WHITE);\r\n        g2.setStroke(new BasicStroke(4f));\r\n        g2.drawLine(targetX, boxY + boxH, targetX, targetY - 25 + bob);\r\n\r\n        // หัวลูกศร\r\n        Polygon arrowHead = new Polygon();\r\n        arrowHead.addPoint(targetX, targetY - 5 + bob);\r\n        arrowHead.addPoint(targetX - 14, targetY - 28 + bob);\r\n        arrowHead.addPoint(targetX + 14, targetY - 28 + bob);\r\n        g2.fillPolygon(arrowHead);\r\n\r\n        g2.setFont(oldFont);\r\n    }\r\n\r\n    private void startGameThread() {\r\n        if (timeManager != null) {\r\n            timeManager.start();\r\n        }\r\n        gameThread = new Thread(this);\r\n        gameThread.start();\r\n    }\r\n\r\n    public void startTransition(Runnable action) {\r\n        this.postFadeAction = action;\r\n        this.isFading = true;\r\n        this.isFadeOut = true;\r\n        this.fadeAlpha = 0f;\r\n    }\r\n\r\n    @Override\r\n    protected void paintComponent(Graphics g) {\r\n        super.paintComponent(g);\r\n        Graphics2D g2 = (Graphics2D) g;\r\n\r\n        roomManager.drawMap(g,camera);//วาดแมพ\r\n\r\n        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);\r\n\r\n        //npc\r\n        npcmanager.drawNPC(g, camera.getX());\r\n\r\n        if (gsm != null) {\r\n            gsm.draw(g2);\r\n        }\r\n\r\n        if (timeUI != null) {\r\n            timeUI.draw(g2);\r\n        }\r\n\r\n        // จะวาดตัวละคร Player ก็ต่อเมื่อกล่องข้อความไม่ได้เปิดอยู่\r\n        if (dialogBox == null || !dialogBox.isVisible()) {\r\n            player.draw(g2);\r\n            player.setVisible(isTransitioning);\r\n        }\r\n\r\n        if (textBook != null && textBook.isVisible()) {\r\n            Graphics2D g2d = (Graphics2D) g;\r\n            g2d.setColor(new Color(0, 0, 0, 140));\r\n            g2d.fillRect(0, 0, getWidth(), getHeight());\r\n        }\r\n\r\n        g2.setFont(FontUtil.THAI);\r\n\r\n        //task text ขวาบน\r\n        g2.setColor(Color.WHITE);\r\n        g2.drawString(minigameManager.taskText, 1450 , 75);\r\n\r\n        if (shouldShowElevatorGuide()) {\r\n            drawElevatorGuide(g2);\r\n        }\r\n\r\n        if (eventManager != null && eventManager.isShowImage()) {\r\n            String activeEvent = eventManager.getActiveZoneName();\r\n\r\n            // เช็คว่ากดโดนลิฟต์ และ โหลดรูปมาสำเร็จ\r\n            if (activeEvent.equals(\"Elevator_Panel\") && elevatorUI != null) {\r\n                // ทำฉากด้านหลังมืดลง\r\n                g2.setColor(new Color(0, 0, 0, 140));\r\n                g2.fillRect(0, 0, getWidth(), getHeight());\r\n                // คำนวณให้รูปภาพวาดอยู่ตรงกลางหน้าจอพอดี\r\n                int uiX = (getWidth() - elevatorUI.getWidth()) / 2;\r\n                int uiY = (getHeight() - elevatorUI.getHeight()) / 2;\r\n                g2.drawImage(elevatorUI, uiX, uiY, null);\r\n            }\r\n        }\r\n\r\n        if (dialogBox != null) {\r\n            dialogBox.draw(g2);\r\n        }\r\n\r\n        //วาดข้อความว่า interact event ได้\r\n        if (showHint && hintText != null) {\r\n            int playerScreenX = player.xDelta - camera.getX() + player.offsetX;\r\n            int playerScreenY = player.yDelta - 20;\r\n\r\n            FontMetrics fm = g2.getFontMetrics();\r\n            int w = fm.stringWidth(hintText);\r\n            int h = fm.getHeight();\r\n\r\n            // กล่องดำโปร่งใส\r\n            g2.setColor(new Color(0, 0, 0, 150));\r\n            g2.fillRect(playerScreenX-10, playerScreenY - h +10, w + 20, h);\r\n\r\n            // text\r\n            g2.setColor(Color.WHITE);\r\n            g2.drawString(hintText, playerScreenX , playerScreenY );\r\n        }\r\n\r\n        //ทรานซิชั่นถมดำ\r\n        if (fadeAlpha > 0) {\r\n            Graphics2D transition = (Graphics2D) g;\r\n            transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));\r\n            transition.setColor(Color.BLACK);\r\n            transition.fillRect(0, 0, getWidth(), getHeight());\r\n            transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // รีเซ็ตค่ากลับ\r\n        }\r\n\r\n        //วาด special event\r\n        if (showNotification && notificationText != null) {\r\n            g2.setComposite(AlphaComposite.getInstance(\r\n                    AlphaComposite.SRC_OVER, notificationAlpha));\r\n\r\n            FontMetrics fm = g2.getFontMetrics();\r\n            int textWidth = fm.stringWidth(notificationText);\r\n\r\n            int x = (getWidth() - textWidth) / 2;\r\n            int y = 250; // top center\r\n\r\n            // background\r\n            g2.setColor(new Color(0, 0, 0, 150));\r\n            g2.fillRect(x - 20, y - 40, textWidth + 40, 50);\r\n\r\n            g2.setColor(Color.YELLOW);\r\n            g2.drawString(notificationText, x, y);\r\n\r\n            // reset alpha\r\n            g2.setComposite(AlphaComposite.getInstance(\r\n                    AlphaComposite.SRC_OVER, 1f));\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void run() {\r\n        double drawInterval = 1_000_000_000.0 / FPS;\r\n        double delta = 0;\r\n        long lastTime = System.nanoTime();\r\n\r\n        while (gameThread != null) {\r\n            long currentTime = System.nanoTime();\r\n            delta += (currentTime - lastTime) / drawInterval;\r\n            lastTime = currentTime;\r\n\r\n            if (delta >= 1) {\r\n                update();\r\n                repaint();\r\n                delta--;\r\n            }\r\n        }\r\n    }\r\n\r\n    //function แสดงข้อความ specialevent\r\n    public void showNotification(String text) {\r\n        this.notificationText = text;\r\n        this.notificationStartTime = System.currentTimeMillis();\r\n        this.notificationAlpha = 1f;\r\n        this.showNotification = true;\r\n    }\r\n\r\n    public int getScreenHeight() {\r\n        return screenHeight;\r\n    }\r\n\r\n    public int getScreenWidth() {\r\n        return screenWidth;\r\n    }\r\n\r\n    public boolean getIsTransitioning() {return isTransitioning;}\r\n\r\n    public void setDialogBox(DialogBox dialogBox) {\r\n        this.dialogBox = dialogBox;\r\n    }\r\n\r\n    public Sound getSound() {return sound;}\r\n\r\n    public boolean isInMinigame() {\r\n        return minigameManager != null && minigameManager.isPlaying();\r\n    }\r\n\r\n    public GameStateManager getGSM() {\r\n        return gsm;\r\n    }\r\n\r\n    public NPCmanager getNpcmanager() {\r\n        return npcmanager;\r\n    }\r\n\r\n    public MinigameManager getMinigameManager() {\r\n        return minigameManager;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/core/GamePanel.java b/src/core/GamePanel.java
+--- a/src/core/GamePanel.java	(revision 3214ce7d46ba38d7191611c13711a5465b0702a8)
++++ b/src/core/GamePanel.java	(date 1774625541319)
+@@ -159,7 +159,7 @@
+     public GamePanel(Player player) {
+         this.player = player;
+ 
+-        setPreferredSize(new Dimension(1720, 800));
++        setPreferredSize(new Dimension(getScreenWidth(), getScreenHeight()));
+         setLayout(null);
+         setBackground(Color.BLACK);
+         setOpaque(true);
+@@ -319,10 +319,6 @@
+             gsm.draw(g2);
+         }
+ 
+-        if (timeUI != null) {
+-            timeUI.draw(g2);
+-        }
+-
+         // จะวาดตัวละคร Player ก็ต่อเมื่อกล่องข้อความไม่ได้เปิดอยู่
+         if (dialogBox == null || !dialogBox.isVisible()) {
+             player.draw(g2);
+@@ -337,6 +333,7 @@
+ 
+         g2.setFont(FontUtil.THAI);
+ 
++
+         //task text ขวาบน
+         g2.setColor(Color.WHITE);
+         g2.drawString(minigameManager.taskText, 1450 , 75);
+@@ -382,12 +379,16 @@
+             g2.drawString(hintText, playerScreenX , playerScreenY );
+         }
+ 
++        if (timeUI != null) {
++            timeUI.draw(g2);
++        }
++
+         //ทรานซิชั่นถมดำ
+         if (fadeAlpha > 0) {
+             Graphics2D transition = (Graphics2D) g;
+             transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
+             transition.setColor(Color.BLACK);
+-            transition.fillRect(0, 0, getWidth(), getHeight());
++            transition.fillRect(0, 0, 1920, 1080);
+             transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // รีเซ็ตค่ากลับ
+         }
+ 
+Index: src/ui/TimeUI.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ui;\r\n\r\nimport core.TimeManager;\r\nimport core.GameStateManager;\r\nimport util.FontUtil;\r\n\r\nimport java.awt.Color;\r\nimport java.awt.Font;\r\nimport java.awt.Graphics2D;\r\nimport java.awt.FontMetrics;\r\n\r\npublic class TimeUI {\r\n    private TimeManager tm;\r\n    private GameStateManager gsm;\r\n\r\n    public TimeUI(TimeManager tm, GameStateManager gsm) {\r\n        this.tm = tm;\r\n        this.gsm = gsm;\r\n    }\r\n\r\n    public void draw(Graphics2D g) {\r\n        //เวลามุมซ้ายบน\r\n        g.setColor(Color.WHITE);\r\n        g.setFont(FontUtil.THAI.deriveFont(100f));\r\n        g.drawString(tm.getTimeString(), 40, 70);\r\n\r\n        //จบวัน\r\n        if (tm.isDayEnded()) {\r\n            g.setColor(new Color(0, 0, 0, 200));\r\n            g.fillRect(0, 0, 1720, 800);\r\n\r\n            g.setColor(Color.WHITE);\r\n            g.setFont(new Font(\"Tahoma\", Font.BOLD, 80));\r\n            String text = \"Day \" + gsm.getCurrentDay() + \" Ended\";\r\n\r\n            FontMetrics metrics = g.getFontMetrics();\r\n            int x = (1720 - metrics.stringWidth(text)) / 2;\r\n            int y = ((800 - metrics.getHeight()) / 2) + metrics.getAscent();\r\n            g.drawString(text, x, y);\r\n\r\n            g.setFont(new Font(\"Tahoma\", Font.PLAIN, 30));\r\n            String promptText = \"Press ANY KEY to start Next Day\";\r\n            int promptX = (1720 - g.getFontMetrics(new Font(\"Tahoma\", Font.PLAIN, 30)).stringWidth(promptText)) / 2;\r\n            g.drawString(promptText, promptX, y + 60);\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/ui/TimeUI.java b/src/ui/TimeUI.java
+--- a/src/ui/TimeUI.java	(revision 3214ce7d46ba38d7191611c13711a5465b0702a8)
++++ b/src/ui/TimeUI.java	(date 1774625541281)
+@@ -27,20 +27,20 @@
+         //จบวัน
+         if (tm.isDayEnded()) {
+             g.setColor(new Color(0, 0, 0, 200));
+-            g.fillRect(0, 0, 1720, 800);
++            g.fillRect(0, 0, 1920, 1080);
+ 
+             g.setColor(Color.WHITE);
+             g.setFont(new Font("Tahoma", Font.BOLD, 80));
+             String text = "Day " + gsm.getCurrentDay() + " Ended";
+ 
+             FontMetrics metrics = g.getFontMetrics();
+-            int x = (1720 - metrics.stringWidth(text)) / 2;
+-            int y = ((800 - metrics.getHeight()) / 2) + metrics.getAscent();
++            int x = (1920 - metrics.stringWidth(text)) / 2;
++            int y = ((1080 - metrics.getHeight()) / 2) + metrics.getAscent();
+             g.drawString(text, x, y);
+ 
+             g.setFont(new Font("Tahoma", Font.PLAIN, 30));
+             String promptText = "Press ANY KEY to start Next Day";
+-            int promptX = (1720 - g.getFontMetrics(new Font("Tahoma", Font.PLAIN, 30)).stringWidth(promptText)) / 2;
++            int promptX = (1920 - g.getFontMetrics(new Font("Tahoma", Font.PLAIN, 30)).stringWidth(promptText)) / 2;
+             g.drawString(promptText, promptX, y + 60);
+         }
+     }
+Index: src/core/TimeManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package core;\r\n\r\npublic class TimeManager implements Runnable {\r\n    private int inGameMinutes = 0; // 0 คือเริ่มที่ 00:00 AM\r\n    private boolean isPaused = false; // เอาไว้หยุดเวลาตอนคุย ทำไว้ก่อน\r\n    private boolean isDayEnded = false; // เช็คว่าหมดวันยัง\r\n    private boolean running = false;\r\n    private Thread timeThread;\r\n\r\n    //เริ่มนับเวลา\r\n    public void start() {\r\n        if (timeThread == null || !running) {\r\n            running = true;\r\n            timeThread = new Thread(this, \"GameTimeThread\");\r\n            timeThread.start();\r\n        }\r\n    }\r\n\r\n    public void stop() {\r\n        running = false;\r\n    }\r\n\r\n    //คำสั่งเอาไว้หยุดเวลาชั่วคราว เอาไว้หยุดเวลาตอนคุย ทำรอ dialog\r\n    public void setPaused(boolean p) {\r\n        isPaused = p;\r\n    }\r\n\r\n    public boolean isDayEnded() {\r\n        return isDayEnded;\r\n    }\r\n\r\n    public void forceEndDay() {\r\n        isDayEnded = true;\r\n        isPaused = true;\r\n    }\r\n\r\n    @Override\r\n    public void run() {\r\n        while (running) {\r\n            try {\r\n                Thread.sleep(2000); //ค่าปกติ 2000 เทสใช้ 5 ให้ time มันวิ่งไว\r\n                if (!isPaused && !isDayEnded) {\r\n                    inGameMinutes++;\r\n                    if (inGameMinutes >= 360) {\r\n                        isDayEnded = true;\r\n                    }\r\n                }\r\n            } catch (InterruptedException e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n    }\r\n\r\n    public String getTimeString() {\r\n        int h = inGameMinutes / 60;\r\n        int m = inGameMinutes % 60;\r\n        return String.format(\"%02d:%02d AM\", h, m);\r\n    }\r\n\r\n    //ใช้ตอนจะขึ้นวันใหม่\r\n    public void resetDay() {\r\n        this.inGameMinutes = 0; // กลับไปเริ่มที่ 00:00 AM\r\n        this.isDayEnded = false; // เอาป้ายจบวันออก\r\n    }\r\n\r\n    public double getHours() {\r\n        return (double) inGameMinutes /60;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/core/TimeManager.java b/src/core/TimeManager.java
+--- a/src/core/TimeManager.java	(revision 3214ce7d46ba38d7191611c13711a5465b0702a8)
++++ b/src/core/TimeManager.java	(date 1774625541290)
+@@ -38,7 +38,7 @@
+     public void run() {
+         while (running) {
+             try {
+-                Thread.sleep(2000); //ค่าปกติ 2000 เทสใช้ 5 ให้ time มันวิ่งไว
++                Thread.sleep(500); //ค่าปกติ 2000 เทสใช้ 5 ให้ time มันวิ่งไว
+                 if (!isPaused && !isDayEnded) {
+                     inGameMinutes++;
+                     if (inGameMinutes >= 360) {
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"6fcc999f-01b1-469d-b5cc-86af910d6f4c\" name=\"Changes\" comment=\"fix previous commit\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/core/InputManager.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/core/GamePanel.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/core/GamePanel.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/core/InputManager.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/core/InputManager.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/ui/TextBook.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/ui/TextBook.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\"><![CDATA[{\r\n  \"lastFilter\": {\r\n    \"state\": \"OPEN\",\r\n    \"assignee\": \"aimlxisse\"\r\n  }\r\n}]]></component>\r\n  <component name=\"GithubPullRequestsUISettings\"><![CDATA[{\r\n  \"selectedUrlAndAccountId\": {\r\n    \"url\": \"https://github.com/CO2ggez/Amonghack.git\",\r\n    \"accountId\": \"386b1a18-37f9-4a38-919e-4000ffbaa745\"\r\n  }\r\n}]]></component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 6,\r\n  \"fromUser\": false\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"3BWvGfpWEAFfwj45j8HUXv3CAxe\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Game.executor\": \"Run\",\r\n    \"Application.dddGame.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"RunOnceActivity.typescript.service.memoryLimit.init\": \"true\",\r\n    \"codeWithMe.voiceChat.enabledByDefault\": \"false\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\"\r\n  }\r\n}]]></component>\r\n  <component name=\"TaskManager\">\r\n    <task id=\"LOCAL-00001\" summary=\"คอมมิท\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774600624558</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774600624558</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"fix previous commit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774615218717</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774615218717</updated>\r\n    </task>\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"6fcc999f-01b1-469d-b5cc-86af910d6f4c\" name=\"Changes\" comment=\"fix previous commit\" />\r\n      <created>1774617548132</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1774617548132</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"คอมมิท\" />\r\n    <MESSAGE value=\"change font in Therminal\" />\r\n    <MESSAGE value=\"fix previous commit\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"fix previous commit\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 3214ce7d46ba38d7191611c13711a5465b0702a8)
++++ b/.idea/workspace.xml	(date 1774626201648)
+@@ -4,22 +4,20 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="fix previous commit">
++    <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="คอมมิท">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$2.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$3.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$4.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame$TerminalDocumentFilter.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/network/TerminalMinigame.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TextBook.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/Game.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/main/MainMenu.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/network/MinigameManager.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/TimeUI.class" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/ui/TextBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TextBook.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/core/TimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/TimeManager.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/ui/TimeUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/TimeUI.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -29,25 +27,25 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+-  "lastFilter": {
+-    "state": "OPEN",
+-    "assignee": "aimlxisse"
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;aimlxisse&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="GithubPullRequestsUISettings"><![CDATA[{
+   "selectedUrlAndAccountId": {
+     "url": "https://github.com/CO2ggez/Amonghack.git",
+-    "accountId": "386b1a18-37f9-4a38-919e-4000ffbaa745"
++    "accountId": "2860a25a-49ae-49a2-9008-9ccd28bb8f54"
+   }
+ }]]></component>
+   <component name="ProblemsViewState">
+     <option name="selectedTabId" value="CurrentFile" />
+   </component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "associatedIndex": 6,
+-  "fromUser": false
+-}]]></component>
++  <component name="ProjectColorInfo">{
++  &quot;associatedIndex&quot;: 6,
++  &quot;fromUser&quot;: false
++}</component>
+   <component name="ProjectId" id="3BWvGfpWEAFfwj45j8HUXv3CAxe" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+@@ -66,9 +64,18 @@
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+     "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)"
++    "node.js.selected.package.tslint": "(autodetect)",
++    "vue.rearranger.settings.migration": "true"
+   }
+ }]]></component>
++  <component name="SharedIndexes">
++    <attachedChunks>
++      <set>
++        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
++        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
++      </set>
++    </attachedChunks>
++  </component>
+   <component name="TaskManager">
+     <task id="LOCAL-00001" summary="คอมมิท">
+       <option name="closed" value="true" />
+@@ -92,6 +99,7 @@
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+       <updated>1774617548132</updated>
++      <workItem from="1774625879420" duration="319000" />
+     </task>
+     <option name="localTasksCounter" value="3" />
+     <servers />

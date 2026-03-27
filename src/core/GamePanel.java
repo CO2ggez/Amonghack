@@ -15,7 +15,7 @@ import ui.Camera;
 import ui.CgLoader;
 import ui.DialogBox;
 import ui.Ending;
-import ui.TextBook;  
+import ui.TextBook;
 import ui.TimeUI;
 import util.AssetLoader;
 import util.FontUtil;
@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     private GameStateManager gsm;
     private boolean isTransitioning = false;
 
-    private int screenWidth = 1920; 
+    private int screenWidth = 1920;
     private int screenHeight = 1080;
 
     private Player player;
@@ -39,13 +39,13 @@ public class GamePanel extends JPanel implements Runnable {
     private InputManager inputManager;
     private EventManager eventManager;
     private EventSetup eventSetup;
-    private BufferedImage elevatorUI; 
+    private BufferedImage elevatorUI;
     private Sound sound;
 
-    private float fadeAlpha = 0f;      
+    private float fadeAlpha = 0f;
     private boolean isFading = false;
-    private boolean isFadeOut = true;  
-    private Runnable postFadeAction;   
+    private boolean isFadeOut = true;
+    private Runnable postFadeAction;
     private MinigameManager minigameManager;
 
     private String hintText = null;
@@ -55,21 +55,20 @@ public class GamePanel extends JPanel implements Runnable {
 
     private String notificationText = null;
     private long notificationStartTime = 0;
-    private long notificationDuration = 2000; 
+    private long notificationDuration = 2000;
     private float notificationAlpha = 0f;
     private boolean showNotification = false;
 
     public CgLoader cgLoader;
     public Ending gameEnding;
-    public boolean showingEnding = false; 
+    public boolean showingEnding = false;
 
     public void update() {
         if (showingEnding) {
             if (gameEnding != null && gameEnding.isFinished()) {
-                // เด้งกลับเมนูหรือปิดเกมเมื่อฉากจบจบลง (เลือกเอาคอมเมนต์ออกได้)
                 // System.exit(0);
             }
-            return; 
+            return;
         }
 
         player.update();
@@ -82,9 +81,28 @@ public class GamePanel extends JPanel implements Runnable {
             }
             timeManager.setPaused(true);
 
+<<<<<<< HEAD
+            // --- MODIFIED: เช็คเงื่อนไขหมดเวลาของวันที่ 4 และ วันที่ 5 ---
+            if (gsm != null) {
+                if (gsm.getCurrentDay() == 4 && minigameManager.score < 8) {
+                    // ถ้าวันที่ 4 คะแนนไม่ถึง 8 -> Game Over
+                    isTransitioning = false;
+                    showingEnding = true;
+                    // --- MODIFIED: เรียกใช้แบบไม่มีข้อความ ---
+                    gameEnding.startEnding("CG-gameover");
+
+                } else if (gsm.getCurrentDay() == 5) {
+                    // ถ้าถึงวันที่ 5 -> ไปเช็คฉากจบ
+                    isTransitioning = false; 
+                    gsm.checkEndGame(); 
+                } else {
+                    this.requestFocusInWindow();
+                }
+=======
             if (gsm != null && gsm.getCurrentDay() == 5) {
-                isTransitioning = false; 
-                gsm.checkEndGame(); 
+                isTransitioning = false;
+                gsm.checkEndGame();
+>>>>>>> 176c90fba41800c22bcc831227effb9b301fcca4
             } else {
                 this.requestFocusInWindow();
             }
@@ -113,7 +131,7 @@ public class GamePanel extends JPanel implements Runnable {
                         postFadeAction.run();
                         postFadeAction = null;
                     }
-                    isFadeOut = false; 
+                    isFadeOut = false;
                 }
             } else {
                 fadeAlpha -= 0.05f;
@@ -141,7 +159,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (isTransitioning) {
             gsm.nextDay();
             timeManager.resetDay();
-            timeManager.setPaused(false); 
+            timeManager.setPaused(false);
             isTransitioning = false;
 
             if (sound != null) {
@@ -155,6 +173,8 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel(Player player) {
         this.player = player;
         setPreferredSize(new Dimension(1720, 800));
+
+        setPreferredSize(new Dimension(getScreenWidth(), getScreenHeight()));
         setLayout(null);
         setBackground(Color.BLACK);
         setOpaque(true);
@@ -166,8 +186,8 @@ public class GamePanel extends JPanel implements Runnable {
         try {
             textBook = new TextBook();
             textBook.setBounds(0, 0, screenWidth, screenHeight);
-            textBook.setVisible(false);  
-            add(textBook);  
+            textBook.setVisible(false);
+            add(textBook);
             setComponentZOrder(textBook, 0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -177,7 +197,7 @@ public class GamePanel extends JPanel implements Runnable {
         camera = new Camera(this,roomManager);
         eventManager = new EventManager();
         eventSetup = new EventSetup(eventManager);
-        eventSetup.loadZones(); 
+        eventSetup.loadZones();
         elevatorUI = AssetLoader.loadImage("/util/asst/ElevatorButton21G.png");
         minigameManager = new MinigameManager(this);
         player.setCamera(camera);
@@ -267,10 +287,24 @@ public class GamePanel extends JPanel implements Runnable {
         if (gsm != null) gsm.draw(g2);
         if (timeUI != null) timeUI.draw(g2);
 
+        // จะวาดตัวละคร Player ก็ต่อเมื่อกล่องข้อความไม่ได้เปิดอยู่
         if (dialogBox == null || !dialogBox.isVisible()) {
             player.draw(g2);
             player.setVisible(isTransitioning);
         }
+
+        RadialGradientPaint vignette = new RadialGradientPaint(
+                new Point(getWidth()/2, getHeight()/2),
+                Math.max(getWidth(), getHeight()) / 1.5f, // ขอบใกล้
+                new float[]{0.3f, 1f},                    // มืด
+                new Color[]{
+                        new Color(0,0,0,0),
+                        new Color(0,0,0,200)
+                }
+        );
+
+        g2.setPaint(vignette);
+        g2.fillRect(0, 0, getWidth(), getHeight());
 
         if (textBook != null && textBook.isVisible()) {
             g2.setColor(new Color(0, 0, 0, 140));
@@ -278,6 +312,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         g2.setFont(FontUtil.THAI);
+
+
+        //task text ขวาบน
         g2.setColor(Color.WHITE);
         g2.drawString(minigameManager.taskText, 1450 , 75);
 
@@ -308,11 +345,21 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString(hintText, playerScreenX , playerScreenY );
         }
 
+        if (timeUI != null) {
+            timeUI.draw(g2);
+        }
+
+        //ทรานซิชั่นถมดำ
         if (fadeAlpha > 0) {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
             g2.setColor(Color.BLACK);
             g2.fillRect(0, 0, getWidth(), getHeight());
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); 
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            Graphics2D transition = (Graphics2D) g;
+            transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
+            transition.setColor(Color.BLACK);
+            transition.fillRect(0, 0, 1920, 1080);
+            transition.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // รีเซ็ตค่ากลับ
         }
 
         if (showNotification && notificationText != null) {
@@ -320,7 +367,7 @@ public class GamePanel extends JPanel implements Runnable {
             FontMetrics fm = g2.getFontMetrics();
             int textWidth = fm.stringWidth(notificationText);
             int x = (getWidth() - textWidth) / 2;
-            int y = 250; 
+            int y = 250;
             g2.setColor(new Color(0, 0, 0, 150));
             g2.fillRect(x - 20, y - 40, textWidth + 40, 50);
             g2.setColor(Color.YELLOW);

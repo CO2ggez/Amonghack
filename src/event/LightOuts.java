@@ -31,7 +31,7 @@ public class LightOuts implements Minigame {
         // Set initial state (default: off)
         isOn = false;
 
-        // Create the panel with null layout
+        // Create the panel with null layout.
         breaker = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -51,7 +51,6 @@ public class LightOuts implements Minigame {
         breaker.setPreferredSize(new Dimension(400, 500));
 
         // Create trigger zone for the switch area
-        // You can adjust these coordinates based on where the switch is in your image
         switches = new TriggerZone("light_switch", 150, 200, 100, 100);
 
         // Add mouse listener to the panel
