@@ -33,6 +33,8 @@ public class MinigameManager { //เอาไว้นับว่ามีก�
     public boolean taskJanitor = false;
     private boolean currentTaskCompleted = false;
 
+    public boolean afterMinigameDialogue = false;
+
     public HashMap<String, Boolean> allMinigame = new HashMap<String, Boolean>();
 
     public MinigameManager(GamePanel panel) {

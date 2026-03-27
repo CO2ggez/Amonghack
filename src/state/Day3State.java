@@ -16,9 +16,11 @@ public class Day3State extends AbstractState{
     private ArrayList<String> taskList = new ArrayList<>();;
     private boolean banIpLogTriggeredAtFive = false;
 
-    private String obj = "รายงานความผิดปกติหกับหัวหน้า";
+    private String obj = "รายงานความผิดปกติกับหัวหน้า";
     private boolean startedDialogue = false;
-    private boolean lastLight = gamePanel.get
+    private boolean startedLightout = false;
+
+    private boolean startedDialogue2 = false;
 
     public Day3State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
@@ -44,8 +46,6 @@ public class Day3State extends AbstractState{
     public void update() {
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
 
-
-
         h = this.gamePanel.timeManager.getHours();
 
         if (!banIpLogTriggeredAtFive && h >= 5.0) {
@@ -70,7 +70,6 @@ public class Day3State extends AbstractState{
 
             }
 
-
         }
 
         if(!obj.equals("")&&minigameManager.taskText.equals("")){
@@ -80,6 +79,29 @@ public class Day3State extends AbstractState{
                 minigameManager.taskText = "";
             }
             obj = "";
+        }
+
+        if(minigameManager.taskLightOut){
+            startedLightout = true;
+        }
+
+        //dialogue หลังไฟดับ
+        if (startedLightout && !startedDialogue&& !gamePanel.getLightOut()) {
+            startedDialogue = true;
+            gamePanel.getNpcmanager().janitor.setLocation("liftG",1920);
+            gamePanel.getNpcmanager().janitor.moveTo(500);
+            gamePanel.getPlayer().checkRight=true;
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_LIFTG);
+            gamePanel.getInputManager().progressDay3 = 3;
+        }
+
+        //dialogue หลังเช็คlog
+        if (minigameManager.afterMinigameDialogue && !startedDialogue2 && gamePanel.getInputManager().progressDay3 == 3) {
+            startedDialogue2 = true;
+
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_SERVER);
+            gamePanel.getInputManager().progressDay3 = 4;
+            try { gamePanel.textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
         }
 
     }

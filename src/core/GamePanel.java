@@ -284,11 +284,12 @@ public class GamePanel extends JPanel implements Runnable {
         if (gsm != null) gsm.draw(g2);
         if (timeUI != null) timeUI.draw(g2);
 
-        // จะวาดตัวละคร Player ก็ต่อเมื่อกล่องข้อความไม่ได้เปิดอยู่
-        if (dialogBox == null || !dialogBox.isVisible()) {
-            player.draw(g2);
-            player.setVisible(isTransitioning);
+        if (!(dialogBox == null || !dialogBox.isVisible())) {
+            player.moving = false;
         }
+
+        player.draw(g2);
+        player.setVisible(isTransitioning);
 
         //จอมืดลงตอนไฟดับ
         if (isLightOut) {
@@ -425,12 +426,18 @@ public class GamePanel extends JPanel implements Runnable {
     public void setLightOut(boolean lightOut) {
         isLightOut = lightOut;
     }
-
+    public boolean getLightOut() {
+        return isLightOut;
+    }
     public Player getPlayer() {
         return player;
     }
 
     public RoomManager getRoomManager() {
         return roomManager;
+    }
+
+    public InputManager getInputManager() {
+        return inputManager;
     }
 }

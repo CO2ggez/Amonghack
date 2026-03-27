@@ -22,15 +22,15 @@ public class InputManager implements KeyListener {
 
     private int currentTrackedDay = 1;
     
-    private boolean talkedToBoss = false;
-    private boolean talkedToHR = false;
-    private boolean talkedToIT = false;
-    private boolean talkedToJanitor = false;
+    public boolean talkedToBoss = false;
+    public boolean talkedToHR = false;
+    public boolean talkedToIT = false;
+    public boolean talkedToJanitor = false;
     private boolean talkedToServer = false;
     
     private int progressDay2 = 0;
-    private int progressDay3 = 0;
-    private int progressDay4 = 0;
+    public int progressDay3 = 0;
+    public int progressDay4 = 0;
     private int progressDay5 = 0;
 
     private boolean isNear(int minX, int maxX) {
@@ -242,7 +242,7 @@ public class InputManager implements KeyListener {
 
                 if(minigameManager.helpBossScore==0) {
                     gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_CHIEFOFFICE_HELP);
-                }else if(minigameManager.helpBossScore==3) {
+                }else if(minigameManager.helpBossScore==2) {
                     gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_CHIEFOFFICE );
                 }
 
@@ -389,10 +389,6 @@ public class InputManager implements KeyListener {
                                 } catch (Exception ex) { ex.printStackTrace(); }
                             }).start();
 
-                        }else if (room.equals("server") && progressDay3 == 3 && isNear(500, 800)) {
-                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_SERVER); 
-                            progressDay3 = 4;
-                            try { textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
                         }
                         break;
                         
@@ -400,7 +396,6 @@ public class InputManager implements KeyListener {
                         if (bossArea() && progressDay4 == 0) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_LIFT1); 
                             progressDay4 = 1;
-                            talkedToBoss = true;
                         } else if (room.equals("server") && progressDay4 == 1 && isNear(600, 900)) { 
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_SERVER); 
                             progressDay4 = 2;
@@ -408,6 +403,7 @@ public class InputManager implements KeyListener {
                         } else if (bossArea() && progressDay4 == 2) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_CHIEFOFFICE); 
                             progressDay4 = 3;
+
                         } else if (hrArea() && progressDay4 > 0) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_OFFICE);
                             talkedToHR = true;
@@ -564,12 +560,14 @@ public class InputManager implements KeyListener {
             case 3:
                 if (bossArea()) return "[E] คุยกับหัวหน้า";
                 if (itsupportArea() && progressDay3 == 0) return "[E] คุยกับ IT Support";
-                if (room.equals("server") && progressDay3 == 3 && isNear(500, 800)) return "[E] ตรวจ Log หลังไฟดับ"; 
                 break;
             case 4:
                 if (bossArea() && progressDay4 == 0) return "[E] ขออนุญาตหัวหน้าไล่สาย LAN";
                 if (room.equals("server") && progressDay4 == 1 && isNear(600, 900)) return "[E] สำรวจพื้นที่ต้องสงสัย"; 
                 if (bossArea() && progressDay4 == 2) return "[E] แจ้งหัวหน้าเรื่องอุปกรณ์แปลกปลอม";
+                if (hrArea()&& progressDay4 > 0) return "[E] คุยกับพนักงานแผนก HR";
+                if (itsupportArea()&& progressDay4 > 0) return "[E] คุยกับ IT Support";
+                if (janitorArea()&& progressDay4 > 0) return "[E] คุยกับภารโรง";
                 break;
             case 5:
                 if (room.equals("restroom") && progressDay5 == 0 && isNear(200, 500)) return "[E] เข้าจับกุม!";
