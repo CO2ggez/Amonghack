@@ -13,6 +13,7 @@ public class Day4State extends AbstractState {
     private double h;
     private double lastH; //เพื่อเช็คว่าคำสั่งนั้นถูกเรียกใช้ครั้งที่แล้วเมื่อใด
     private ArrayList<String> taskList = new ArrayList<>();;
+    private boolean banIpLogTriggeredAtFive = false;
 
     public Day4State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
@@ -35,6 +36,13 @@ public class Day4State extends AbstractState {
     public void update() {
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
         h = this.gamePanel.timeManager.getHours();
+
+        if (!banIpLogTriggeredAtFive && h >= 5.0) {
+            minigameManager.setTask("baniplog");
+            banIpLogTriggeredAtFive = true;
+            lastH = h;
+            return;
+        }
 
 
         if (h != lastH) {

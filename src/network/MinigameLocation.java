@@ -8,6 +8,8 @@ public class MinigameLocation {
 
     public static Map<String, int[]> terminalLocation = new HashMap<>();
 
+    public static Map<String, int[]> banIpLogLocation = new HashMap<>();
+
     static {
         lanLocation.put("office", new int[]{74*6, 129*6});
         lanLocation.put("server", new int[]{190*6, 239*6});
@@ -19,6 +21,8 @@ public class MinigameLocation {
         terminalLocation.put("itsupport", new int[]{300*6, 349*6});
         terminalLocation.put("market", new int[]{40*6,87*6});
         terminalLocation.put("art", new int[]{129*6,184*6});
+
+        banIpLogLocation.put("server", new int[]{300*6, 450*6});
     }
 
     public static int[] get(String room) {
@@ -26,5 +30,8 @@ public class MinigameLocation {
     }
     public static int[] getTerminal(String room) {
         return terminalLocation.get(room);
+    }
+    public static int[] getBanIpLog(String room) {
+        return banIpLogLocation.get(room);
     }
 }

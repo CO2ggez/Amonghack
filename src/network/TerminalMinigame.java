@@ -46,6 +46,8 @@ public class TerminalMinigame implements Minigame {
 
     private boolean systemUpdating = false;
 
+    private boolean missionCompleted = false;
+
 
     public TerminalMinigame(MinigameManager manager) {
         this.manager = manager;
@@ -259,6 +261,17 @@ public class TerminalMinigame implements Minigame {
 
         String lower = command.toLowerCase();
 
+        if (missionCompleted) {
+            if (lower.equals("exit")) {
+                manager.closeGame();
+                return true;
+            }
+
+            appendLine("Mission already complete.");
+            appendLine("Type 'exit' to close terminal.");
+            return false;
+        }
+
         if (lower.equals("help")) {
             appendLine("Available Commands:");
             appendLine("show network - แสดง IP เครื่องที่ต้องตั้ง");
@@ -322,8 +335,11 @@ public class TerminalMinigame implements Minigame {
             appendLine("IP updated: " + newIp);
             appendLine("Connection established.");
             appendLine("Mission complete.");
-            manager.onWin();
-            return true;
+            appendLine("Type 'exit' to close terminal.");
+
+            missionCompleted = true;
+            manager.onWinStayOpen();
+            return false;
         }
 
         appendLine("IP updated: " + newIp);
