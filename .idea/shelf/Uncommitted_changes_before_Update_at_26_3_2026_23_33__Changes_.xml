@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_26_3_2026_23_33_[Changes]" date="1774542819117" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_3_2026_23_33_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 26/3/2026 23:33 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/TimeManager.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/TimeManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_3_2026_23_33_[Changes]/TimeManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/InputManager.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/InputManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_3_2026_23_33_[Changes]/InputManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/InputManager$2.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/InputManager$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_3_2026_23_33_[Changes]/InputManager$2.class" />
+  </binary>
+</changelist>

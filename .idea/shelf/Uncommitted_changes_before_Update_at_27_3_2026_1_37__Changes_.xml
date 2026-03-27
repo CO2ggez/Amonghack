@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Update_at_27_3_2026_1_37_[Changes]" date="1774550226269" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_3_2026_1_37_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 27/3/2026 1:37 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/InputManager.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/InputManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_3_2026_1_37_[Changes]/InputManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/TextBook.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/ui/TextBook.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_3_2026_1_37_[Changes]/TextBook.class" />
+  </binary>
+</changelist>
