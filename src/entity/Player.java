@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import ui.Camera;
 
 public class Player extends JPanel {
-    public int xDelta = 0;
+    public int xDelta = 80;
     public int yDelta = 882 - 384; //เอมปรับตำแหน่งตามที่ฝ่าย art คุยกันไว้
     public int offsetX = 0;
 
@@ -22,7 +22,7 @@ public class Player extends JPanel {
     private int totalFrames = 8; // จำนวนรูปตอนเดิน
     private int totalIdleFrames = 7;
     
-    public boolean checkRight = false;
+    public boolean checkRight = true;
     public boolean moving = false;
 
     //เราเพิ่มความเร็วในการเดิน
