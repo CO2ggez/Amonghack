@@ -1,0 +1,47 @@
+<changelist name="Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]" date="1774632165924" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 28/03/2026 00:22 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/InputManager$2.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/InputManager$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]/InputManager$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/CgLoader.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/ui/CgLoader.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]/CgLoader.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/GamePanel.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/GamePanel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]/GamePanel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/state/Day1State.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/state/Day1State.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]/Day1State.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/network/MinigameManager.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/network/MinigameManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]/MinigameManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/GameStateManager.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/GameStateManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]/GameStateManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/ui/LogViewerUI.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/TimeManager.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/TimeManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]/TimeManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Project_op/core/InputManager.class" />
+    <option name="AFTER_PATH" value="out/production/Project_op/core/InputManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_03_2026_00_22_[Changes]/InputManager.class" />
+  </binary>
+</changelist>
