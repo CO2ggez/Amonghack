@@ -31,7 +31,7 @@ public class InputManager implements KeyListener {
     private int progressDay2 = 0;
     public int progressDay3 = 0;
     public int progressDay4 = 0;
-    private int progressDay5 = 0;
+    public int progressDay5 = 0;
 
     private boolean isNear(int minX, int maxX) {
         return player.xDelta >= minX && player.xDelta <= maxX;
@@ -417,43 +417,6 @@ public class InputManager implements KeyListener {
                         break;
                         
                     case 5:
-                        if (room.equals("restroom") && progressDay5 == 0 && isNear(200, 500)) { 
-                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY5_RESTROOM_PART1);
-                            progressDay5 = 1; 
-
-                            new Thread(() -> {
-                                try {
-                                    while(gamePanel.dialogBox.isVisible()) Thread.sleep(100);
-                                    
-                                    npcManager.boss.inRoom = "restroom";
-                                    npcManager.itsupport.inRoom = "restroom";
-                                    
-                                    int startX = 0; 
-                                    int targetX = player.xDelta - 100;
-                                    
-                                    npcManager.boss.walkSpeed = 15;
-                                    npcManager.itsupport.walkSpeed = 15;
-                                    
-                                    npcManager.boss.x = startX;
-                                    npcManager.itsupport.x = startX - 80;
-                                    
-                                    npcManager.boss.moveTo(targetX);
-                                    npcManager.itsupport.moveTo(targetX - 80);
-                                    
-                                    while(npcManager.boss.getX() != targetX || npcManager.itsupport.getX() != (targetX - 80)) {
-                                        Thread.sleep(50);
-                                    }
-                                    
-                                    gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY5_RESTROOM_PART2);
-                                    progressDay5 = 2;
-
-                                } catch (Exception ex) { ex.printStackTrace(); }
-                            }).start();
-
-                        } else if (bossArea() && progressDay5 == 2) {
-                            gamePanel.dialogBox.startDialog(ui.StoryDialog.ENDING_CHIEF); 
-                            progressDay5 = 3;
-                        } 
                         break;
                 }
             }
@@ -570,8 +533,6 @@ public class InputManager implements KeyListener {
                 if (janitorArea()&& progressDay4 > 0) return "[E] คุยกับภารโรง";
                 break;
             case 5:
-                if (room.equals("restroom") && progressDay5 == 0 && isNear(200, 500)) return "[E] เข้าจับกุม!";
-                if (bossArea() && progressDay5 == 2) return "[E] สรุปคดีกับหัวหน้า";
                 break;
         }
 
@@ -600,5 +561,45 @@ public class InputManager implements KeyListener {
 
     public boolean helpJanitorArea(){
         return roomManager.getCurrentRoomName().equals("restroom") && isNear(89*6, 143*6) && minigameManager.taskJanitor;
+    }
+
+    public void capture(){
+        if (roomManager.getCurrentRoomName().equals("restroom")&& isNear(200, 1500)) {
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY5_RESTROOM_PART1);
+            progressDay5 = 1;
+
+            new Thread(() -> {
+                try {
+                    while(gamePanel.dialogBox.isVisible()) Thread.sleep(100);
+
+                    npcManager.boss.inRoom = "restroom";
+                    npcManager.itsupport.inRoom = "restroom";
+
+                    int startX = 0;
+                    int targetX = player.xDelta - 100;
+
+                    npcManager.boss.walkSpeed = 15;
+                    npcManager.itsupport.walkSpeed = 15;
+
+                    npcManager.boss.x = startX;
+                    npcManager.itsupport.x = startX - 80;
+
+                    npcManager.boss.moveTo(targetX);
+                    npcManager.itsupport.moveTo(targetX - 80);
+
+                    while(npcManager.boss.getX() != targetX || npcManager.itsupport.getX() != (targetX - 80)) {
+                        Thread.sleep(50);
+                    }
+
+                    gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY5_RESTROOM_PART2);
+                    progressDay5 = 2;
+
+                } catch (Exception ex) { ex.printStackTrace(); }
+            }).start();
+
+        } else if (bossArea() && progressDay5 == 2) {
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.ENDING_CHIEF);
+            progressDay5 = 3;
+        }
     }
 }

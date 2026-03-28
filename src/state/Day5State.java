@@ -15,6 +15,7 @@ public class Day5State extends AbstractState{
     private ArrayList<String> taskList = new ArrayList<>();;
     private boolean banIpLogTriggeredAtFive = false;
     private boolean startedDialogue = false;
+    private boolean startedEnding = false;
 
     public Day5State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
@@ -45,6 +46,17 @@ public class Day5State extends AbstractState{
         }
 
         h = this.gamePanel.timeManager.getHours();
+
+        if (gamePanel.getInputManager().progressDay5 == 0 && h>=3) {
+            gamePanel.getInputManager().capture();
+        }
+
+        if (gamePanel.getInputManager().progressDay5 == 2&&!startedEnding) {
+            if (gamePanel.dialogBox == null || !gamePanel.dialogBox.isVisible()){
+                startedEnding = true;
+                gamePanel.getGSM().checkEndGame();
+            }
+        }
 
         if (!banIpLogTriggeredAtFive && h >= 5.0) {
             minigameManager.setTask("baniplog");
