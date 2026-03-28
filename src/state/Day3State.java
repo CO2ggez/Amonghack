@@ -118,6 +118,7 @@ public class Day3State extends AbstractState {
             return;
         }
 
+        //objective text ระหว่างว่าง task
         if (!obj.equals("") && minigameManager.taskText.equals("")) {
             minigameManager.taskText = obj;
         } else if (gamePanel.finishedObjective) {

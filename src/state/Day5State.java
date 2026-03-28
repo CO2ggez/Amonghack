@@ -17,6 +17,8 @@ public class Day5State extends AbstractState{
     private boolean startedDialogue = false;
     private boolean startedEnding = false;
 
+    private String obj = "ไปหา “คนที่คุณก็รู้ว่าใคร”";
+
     public Day5State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
         this.gamePanel = gamePanel;
@@ -55,6 +57,7 @@ public class Day5State extends AbstractState{
 
         if (gamePanel.getInputManager().progressDay5 == 0 && h>=3) {
             gamePanel.getInputManager().capture();
+            minigameManager.taskText = "";
         }
 
         if (gamePanel.getInputManager().progressDay5 == 2&&!startedEnding) {
@@ -84,6 +87,10 @@ public class Day5State extends AbstractState{
             }
 
 
+        }
+
+        if (!obj.equals("") && minigameManager.taskText.equals("")) {
+            minigameManager.taskText = obj;
         }
 
     }
