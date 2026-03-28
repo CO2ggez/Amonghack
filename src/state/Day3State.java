@@ -28,11 +28,17 @@ public class Day3State extends AbstractState {
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
-        setupNPC();
-        setSpecialTask();
+        gamePanel.getSound().setVolume("bg1", 0.5f);
+        gamePanel.getSound().loopSound("bg1");
 
+        // วาร์ปกลับไป lift ชั้น 1
+        gamePanel.getRoomManager().setRoom(gamePanel.getRoomManager().mapDataFloor1, 0);
+        // เซตตำแหน่งตัวละครให้กลับมาที่ลิฟต์
         gamePanel.getPlayer().xDelta = 100;
         gamePanel.getPlayer().checkRight = true;
+
+        setupNPC();
+        setSpecialTask();
 
         //task ในวันนี้
         taskList.add("terminal");
@@ -53,6 +59,7 @@ public class Day3State extends AbstractState {
         if (gamePanel.showingEnding) {
             if (gamePanel.gameEnding.isFinished()) {
                 if (isPlayingEndCG) {
+                    gamePanel.getSound().stopSound("bg_dayEnd");
                     gamePanel.showingEnding = false;
                     isPlayingEndCG = false;
                     gamePanel.timeManager.forceEndDay();
@@ -92,6 +99,10 @@ public class Day3State extends AbstractState {
         if (h >= 5.9 && !endCgTriggered) {
             endCgTriggered = true;
             isPlayingEndCG = true;
+
+            gamePanel.getSound().stopSound("bg1");
+            gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
+            gamePanel.getSound().loopSound("bg_dayEnd");
 
             gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน
             gamePanel.showingEnding = true;        // เข้าโหมดโชว์ CG

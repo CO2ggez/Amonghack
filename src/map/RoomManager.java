@@ -87,5 +87,10 @@ public class RoomManager {
         }
         return false;
     }
+    public void setRoom(String[] floor, int roomIndex) {
+        this.currentFloor = floor;
+        this.currentRoomIndex = roomIndex;
+        this.mapLoader = new MapLoader(this.currentFloor[this.currentRoomIndex]);
+    }
 
 }

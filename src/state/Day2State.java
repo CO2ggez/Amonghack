@@ -2,6 +2,7 @@ package state;
 
 import core.GamePanel;
 import network.MinigameManager;
+import ui.StoryDialog; // เพิ่ม import เพื่อเรียกใช้บทพูดได้โดยตรง
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,11 +26,17 @@ public class Day2State extends AbstractState {
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
+        gamePanel.getSound().setVolume("bg1", 0.5f);
+        gamePanel.getSound().loopSound("bg1");
+
+        // วาร์ปกลับไป lift ชั้น 1
+        gamePanel.getRoomManager().setRoom(gamePanel.getRoomManager().mapDataFloor1, 0);
+        // เซตตำแหน่งตัวละครให้กลับมาที่ลิฟต์
+        gamePanel.getPlayer().xDelta = 100;
+        gamePanel.getPlayer().checkRight = true;
+
         setupNPC();
         setSpecialTask();
-
-        gamePanel.getPlayer().xDelta=100;
-        gamePanel.getPlayer().checkRight=true;
 
         //task ในวันนี้
         taskList.add("lan");
@@ -51,6 +58,7 @@ public class Day2State extends AbstractState {
         if (gamePanel.showingEnding) {
             if (gamePanel.gameEnding.isFinished()) {
                 if (isPlayingEndCG) {
+                    gamePanel.getSound().stopSound("bg_dayEnd");
                     gamePanel.showingEnding = false;
                     isPlayingEndCG = false;
                     gamePanel.timeManager.forceEndDay();
@@ -60,11 +68,12 @@ public class Day2State extends AbstractState {
                 }
             }
             return;
+        }
 
         if (!startedDialogue) {
             //sound phone ring ++++++++++++++++++++++++++++++++++++++++++++++++
             startedDialogue = true;
-            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_LIFT1);
+            gamePanel.dialogBox.startDialog(StoryDialog.DAY2_LIFT1);
         }
 
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
@@ -93,6 +102,10 @@ public class Day2State extends AbstractState {
         if (h >= 5.9 && !endCgTriggered) {
             endCgTriggered = true;
             isPlayingEndCG = true;
+
+            gamePanel.getSound().stopSound("bg1");
+            gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
+            gamePanel.getSound().loopSound("bg_dayEnd");
 
             gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน
             gamePanel.showingEnding = true;        // เข้าโหมดโชว์ CG

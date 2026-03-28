@@ -8,11 +8,9 @@ public class GameStateManager {
     private AbstractState currentState;
     public GamePanel gamePanel;
 
-    // --- เพิ่มตัวแปร 3 ตัวนี้ตรงนี้ครับ (แก้ Error ตัวแดง) ---
     private int currentEndingStep = 0;
     private boolean passBoss = false;
     private boolean passJanitor = false;
-    // ------------------------------------------------
 
     public GameStateManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;

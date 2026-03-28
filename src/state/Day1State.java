@@ -63,6 +63,8 @@ public class Day1State extends AbstractState {
 
         //เล่น cgแรก
         if (startedEnding) {
+            gamePanel.getSound().setVolume("bg_cg_day0", 0.25f);
+            gamePanel.getSound().loopSound("bg_cg_day0");
             startedEnding = false;
 
             gamePanel.timeManager.setPaused(true);
@@ -74,47 +76,43 @@ public class Day1State extends AbstractState {
             return;
         }
 
-        // เปลี่ยนรูป CG และออกจากโหมด CG
+        //เล่น cg ต่อตอนเสร็จ cg นั้นๆ
         if (gamePanel.showingEnding) {
-
             if (gamePanel.gameEnding.isFinished()) {
 
+                // เช็คว่าเป็น CG จบวัน
                 if (isPlayingEndCG) {
-                    // บังคับจบวัน CG ห้องนอน
+                    gamePanel.getSound().stopSound("bg_dayEnd");
                     gamePanel.showingEnding = false;
                     isPlayingEndCG = false;
-                    gamePanel.timeManager.forceEndDay(); // บังคับจบวันเลย
+                    gamePanel.timeManager.forceEndDay();
+                    return;
+                }
+
+                cgIndex++;
+
+                if (cgIndex < cgList.length) {
+                    gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
                 } else {
-                    // CG เปิดเกม
-                    cgIndex++;
-
-                    if (cgIndex < cgList.length) {
-                        gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
-                    } else {
-                        // เริ่มเดินเวลา ตอน CG เปิดเกมจบ
-                        gamePanel.showingEnding = false;
-                        gamePanel.timeManager.setPaused(false);
-
-                        // เปิดเพลง เดะมาแก้อีกที
-                        if (gamePanel.getSound() != null) {
-                            gamePanel.getSound().loopSound("bg1");
-                        }
-                    }
+                    //เริ่มเดินเวลา ตอนcg หมด
+                    gamePanel.getSound().stopSound("bg_cg_day0");
+                    gamePanel.getSound().setVolume("bg1", 0.5f);
+                    gamePanel.getSound().loopSound("bg1");
+                    gamePanel.showingEnding = false;
+                    gamePanel.timeManager.setPaused(false);
                 }
             }
+
             return;
         }
 
-        // เริ่ม Day1
         if (!startedDialogue) {
             startedDialogue = true;
-            gamePanel.dialogBox.startDialog(StoryDialog.DAY1_LIFT1);
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_LIFT1);
         }
 
-        // ดึงเวลามา
         h = this.gamePanel.timeManager.getHours();
 
-        // เควส / มินิเกม
         if (!banIpLogTriggeredAtFive && h >= 5.0) {
             minigameManager.setTask("baniplog");
             banIpLogTriggeredAtFive = true;
@@ -124,6 +122,7 @@ public class Day1State extends AbstractState {
 
         if (h != lastH) {
             if ((h + 1) % 1.5 == 0 && !taskList.isEmpty()) {
+                //settask ทีละเกมแล้วลบออก
                 minigameManager.setTask(taskList.get(0));
                 taskList.remove(0);
                 lastH = h;
@@ -152,16 +151,20 @@ public class Day1State extends AbstractState {
             }
         }
 
-
-
-        // เช็คที่ 5.9 (ประมาณ 05:54 AM) ก่อนจะตัดจบวันตอน 06:00 AM
+        // ดักเวลาก่อน 6 โมงเช้า
         if (h >= 5.9 && !endCgTriggered) {
             endCgTriggered = true;
             isPlayingEndCG = true;
 
+            gamePanel.getSound().stopSound("bg1");
+            gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
+            gamePanel.getSound().loopSound("bg_dayEnd");
+
             gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน
             gamePanel.showingEnding = true;        // เข้าโหมดโชว์ CG
-            gamePanel.gameEnding.startEnding("CG3-BedRoom", StoryDialog.DAY1_BEDROOM); // โชว์ CG ห้องนอน
+
+            // เรียกใช้รูปห้องนอน
+            gamePanel.gameEnding.startEnding("CG3-BedRoom", StoryDialog.DAY1_BEDROOM);
             return;
         }
     }
@@ -172,10 +175,10 @@ public class Day1State extends AbstractState {
     public void setupNPC(){
         gamePanel.getNpcmanager().showAllNPCs();
 
-        gamePanel.getNpcmanager().janitor.setLocation("art", 1600);
-        gamePanel.getNpcmanager().hr.setLocation("office", 1100);
-        gamePanel.getNpcmanager().boss.setLocation("chiefoffice", 1600);
-        gamePanel.getNpcmanager().itsupport.setLocation("itsupport", 1400);
+        gamePanel.getNpcmanager().janitor.setLocation("art",1600);
+        gamePanel.getNpcmanager().hr.setLocation("office",1100);
+        gamePanel.getNpcmanager().boss.setLocation("chiefoffice",1600);
+        gamePanel.getNpcmanager().itsupport.setLocation("itsupport",1400);
     }
 
     public void setSpecialTask(){

@@ -82,11 +82,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (timeManager != null && timeManager.isDayEnded() && !isTransitioning) {
             isTransitioning = true;
-
-            if (sound != null) {
-                sound.stopSound("bg1");
-            }
-
             timeManager.setPaused(true);
 
             // เช็คเงื่อนไขหมดเวลาของวันที่ 4 และ วันที่ 5
@@ -158,11 +153,6 @@ public class GamePanel extends JPanel implements Runnable {
             timeManager.resetDay();
             timeManager.setPaused(false);
             isTransitioning = false;
-
-            if (sound != null) {
-                sound.setVolume("bg1", 0.05f);
-                sound.loopSound("bg1");
-            }
             this.requestFocusInWindow();
         }
     }

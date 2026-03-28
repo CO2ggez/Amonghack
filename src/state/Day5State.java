@@ -21,11 +21,17 @@ public class Day5State extends AbstractState{
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
+        gamePanel.getSound().setVolume("bg1", 0.5f);
+        gamePanel.getSound().loopSound("bg1");
+
+        // วาร์ปกลับไป lift ชั้น 1
+        gamePanel.getRoomManager().setRoom(gamePanel.getRoomManager().mapDataFloor1, 0);
+        // เซตตำแหน่งตัวละครให้กลับมาที่ลิฟต์
+        gamePanel.getPlayer().xDelta = 100;
+        gamePanel.getPlayer().checkRight = true;
+
         setupNPC();
         setSpecialTask();
-
-        gamePanel.getPlayer().xDelta=100;
-        gamePanel.getPlayer().checkRight=true;
 
         //task ในวันนี้
         taskList.add("lan");
