@@ -126,9 +126,8 @@ public class Day1State extends AbstractState {
         if(gamePanel.getInputManager().talkedToHR == true && hrWalked == false) {
             if (gamePanel.dialogBox == null || !gamePanel.dialogBox.isVisible()){
                 hrWalked = true;
-                gamePanel.getNpcmanager().hr.moveTo(-3200);
+                gamePanel.getNpcmanager().hr.moveTo(-320);
             }
-
         }
 
         h = this.gamePanel.timeManager.getHours();
