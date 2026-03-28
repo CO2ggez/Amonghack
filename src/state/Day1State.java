@@ -38,8 +38,6 @@ public class Day1State extends AbstractState {
 
     private ArrayList<String> objList = new ArrayList<>();
 
-
-
     public Day1State(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();

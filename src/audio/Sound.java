@@ -20,7 +20,7 @@ public class Sound {
         loadSound("walk", "/audio/SoundWAV/walk.wav",1f);
         loadSound("walk2", "/audio/SoundWAV/walk2.wav",1f);
         loadSound("door", "/audio/SoundWAV/door.wav",1f);
-        loadSound("bg1", "/audio/SoundWAV/bg1.wav",0.5f);
+        loadSound("bg1", "/audio/SoundWAV/bg1.wav",0.3f);
         loadSound("ringLift", "/audio/SoundWAV/ringLift.wav",0.5f);
         loadSound("click1", "/audio/SoundWAV/click1.wav",1f);
         loadSound("connect", "/audio/SoundWAV/connect.wav",1f);

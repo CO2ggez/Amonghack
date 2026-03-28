@@ -196,8 +196,6 @@ public class GamePanel extends JPanel implements Runnable {
         timeUI = new TimeUI(timeManager, gsm);
         dialogBox = new DialogBox();
         sound = new Sound();
-        sound.setVolume("bg1", 0.05f);
-        sound.loopSound("bg1");
 
         setFocusable(true);
         startGameThread();
