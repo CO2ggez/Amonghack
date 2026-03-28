@@ -312,10 +312,6 @@ public class InputManager implements KeyListener {
                         } else if (itsupportArea()) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_ITSUPPORT);
                             talkedToIT = true;
-                        } else if (room.equals("server") && !talkedToServer && isNear(500, 800)) { 
-                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_SERVER);
-                            talkedToServer = true;
-                            try { textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
                         }
                         break;
                         
@@ -503,7 +499,6 @@ public class InputManager implements KeyListener {
                 if (hrArea()) return "[E] คุยกับพนักงานแผนก HR";
                 if (itsupportArea()) return "[E] คุยกับ IT Support";
                 if (janitorArea()) return "[E] คุยกับภารโรง";
-                if (room.equals("server") && !talkedToServer && isNear(500, 800)) return "[E] ตรวจสอบ Log"; 
                 break;
             case 2:
                 if (bossArea()) return "[E] รับเรื่องจากหัวหน้า";

@@ -25,6 +25,7 @@ public class Day1State extends AbstractState {
     private boolean endCgTriggered = false;
 
     private boolean janitorWalked = false;
+    private boolean startedDialogue2 =false;
 
     private String[] cgList = {
             "CG1-JobApplication",
@@ -154,6 +155,16 @@ public class Day1State extends AbstractState {
                 }
                 objList.remove(getTextFromRoom(currentRoom));
 
+            }
+        }
+
+        if (minigameManager.afterMinigameDialogue && !startedDialogue2 ) {
+            startedDialogue2 = true;
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_SERVER);
+            try {
+                gamePanel.textBook.update();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
 

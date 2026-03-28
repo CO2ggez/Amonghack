@@ -50,6 +50,7 @@ public class Day3State extends AbstractState {
         taskList.add("terminal");
 
         minigameManager.resetTask();
+        minigameManager.afterMinigameDialogue=false;
 
         // มั่นใจว่าเริ่มวันมาต้องไม่ค้างหน้าจอ CG
         gamePanel.showingEnding = false;

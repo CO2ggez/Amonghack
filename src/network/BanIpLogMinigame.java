@@ -211,6 +211,9 @@ public class BanIpLogMinigame implements Minigame {
 
         if (missionCompleted) {
             if (lower.equals("exit")) {
+                if(manager.getGamePanel().getGSM().getCurrentDay() == 1||manager.getGamePanel().getGSM().getCurrentDay() == 3||manager.getGamePanel().getGSM().getCurrentDay() == 4){
+                    manager.afterMinigameDialogue = true;
+                }
                 manager.closeGame();
                 return true;
             }
@@ -262,7 +265,7 @@ public class BanIpLogMinigame implements Minigame {
 
         if (lower.equals("exit")) {
             manager.closeGame();
-            if(manager.getGamePanel().getGSM().getCurrentDay() == 3||manager.getGamePanel().getGSM().getCurrentDay() == 4){
+            if(manager.getGamePanel().getGSM().getCurrentDay() == 1||manager.getGamePanel().getGSM().getCurrentDay() == 3||manager.getGamePanel().getGSM().getCurrentDay() == 4){
                 manager.afterMinigameDialogue = true;
             }
             return true;
