@@ -24,13 +24,13 @@ public class MapLoader {
 
         int drawX;
         if (width < camera.getScreenWidth()) {
-            drawX = (camera.getScreenWidth() - width) / 2;
+            drawX = (camera.getScreenWidth() - width) / 2; //
         } else {
-            drawX = -camera.getX();
+            drawX = -camera.getX(); //ให้แมพเลื่อนซ้าย
         }
 
         g.drawImage(mapImage, drawX, (camera.getScreenHeight()-height) / 2, null);
-    }//ให้เมพเลื่อนตามกล้อง
+    }
 
     public int getWidth() {
         return width;
