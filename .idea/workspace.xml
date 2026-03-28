@@ -4,15 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="เพิ่มเสียง">
+    <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="ไฟนอลเดโม่1">
+      <change afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/ui/StoryDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/ui/StoryDialog.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/audio/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/Sound.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/GameStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GameStateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/TimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/TimeManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/state/Day1State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day1State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/state/Day2State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day2State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/state/Day3State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day3State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/state/Day4State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day4State.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/state/Day5State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day5State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/StoryDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/StoryDialog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +112,7 @@
       <updated>1774617548132</updated>
       <workItem from="1774625879420" duration="1914000" />
       <workItem from="1774643708979" duration="4354000" />
-      <workItem from="1774659463109" duration="1070000" />
+      <workItem from="1774659463109" duration="4883000" />
     </task>
     <task id="LOCAL-00003" summary="คอมมิท">
       <option name="closed" value="true" />
@@ -147,7 +162,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774658172551</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="เพิ่มเสียง day5">
+      <option name="closed" value="true" />
+      <created>1774660667460</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1774660667461</updated>
+    </task>
+    <task id="LOCAL-00010" summary="เพิ่มเสียง day5">
+      <option name="closed" value="true" />
+      <created>1774660680052</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1774660680052</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,6 +190,8 @@
     <MESSAGE value="คอมมิท" />
     <MESSAGE value="แก้ไขกิทระเบิด" />
     <MESSAGE value="เพิ่มเสียง" />
-    <option name="LAST_COMMIT_MESSAGE" value="เพิ่มเสียง" />
+    <MESSAGE value="เพิ่มเสียง day5" />
+    <MESSAGE value="ไฟนอลเดโม่1" />
+    <option name="LAST_COMMIT_MESSAGE" value="ไฟนอลเดโม่1" />
   </component>
 </project>

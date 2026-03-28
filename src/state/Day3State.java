@@ -32,7 +32,6 @@ public class Day3State extends AbstractState {
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
-        gamePanel.getSound().setVolume("bg1", 0.5f);
         gamePanel.getSound().loopSound("bg1");
 
         // วาร์ปกลับไป lift ชั้น 1
@@ -107,7 +106,6 @@ public class Day3State extends AbstractState {
             isPlayingEndCG = true;
 
             gamePanel.getSound().stopSound("bg1");
-            gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
             gamePanel.getSound().loopSound("bg_dayEnd");
 
             gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน

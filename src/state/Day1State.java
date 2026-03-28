@@ -63,7 +63,6 @@ public class Day1State extends AbstractState {
 
         //เล่น cgแรก
         if (startedEnding) {
-            gamePanel.getSound().setVolume("bg_cg_day0", 0.25f);
             gamePanel.getSound().loopSound("bg_cg_day0");
             startedEnding = false;
 
@@ -96,7 +95,6 @@ public class Day1State extends AbstractState {
                 } else {
                     //เริ่มเดินเวลา ตอนcg หมด
                     gamePanel.getSound().stopSound("bg_cg_day0");
-                    gamePanel.getSound().setVolume("bg1", 0.5f);
                     gamePanel.getSound().loopSound("bg1");
                     gamePanel.showingEnding = false;
                     gamePanel.timeManager.setPaused(false);
@@ -157,7 +155,6 @@ public class Day1State extends AbstractState {
             isPlayingEndCG = true;
 
             gamePanel.getSound().stopSound("bg1");
-            gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
             gamePanel.getSound().loopSound("bg_dayEnd");
 
             gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน

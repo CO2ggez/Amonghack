@@ -26,6 +26,9 @@ public class GameStateManager {
         if (currentDay < 5) {
             currentDay++;
             loadState(currentDay);
+        } else {
+            // จบวันที่ 5 แล้ว ให้เข้าสู่กระบวนการเช็คฉากจบ
+            checkEndGame();
         }
     }
 
@@ -56,21 +59,21 @@ public class GameStateManager {
 
         int bossScore = gamePanel.getMinigameManager().helpBossScore;
         int janitorScore = gamePanel.getMinigameManager().helpJanitorScore;
-        //int totalScore = gamePanel.getMinigameManager().score;
+        int totalScore = gamePanel.getMinigameManager().score;
 
-        /*if (totalScore < 8) {
+        if (totalScore < 8) {
             // ถ้าคะแนนไม่ถึง 8 ให้ Game Over ทันที
             gamePanel.gameEnding.startEnding("CG-gameover");
             currentEndingStep = 99; // กำหนดไว้เพื่อให้รู้ว่าไม่มีคิวต่อแล้ว
         } else {
-         */   // ถ้าคะแนนถึง 8 เซ็ตค่าว่าผ่านเงื่อนไขใครบ้าง
+            // ถ้าคะแนนถึง 8 เซ็ตค่าว่าผ่านเงื่อนไขใครบ้าง
             passBoss = (bossScore >= 4);
             passJanitor = (janitorScore >= 4);
 
             // เริ่มเล่นฉากจบคิวที่ 1
             currentEndingStep = 1;
             playNextEnding();
-       // }
+        } // ปิดบล็อก else (แก้ปีกกาที่หายไปตรงนี้)
     }
 
     // --- เมธอดใหม่สำหรับเช็คและเล่นฉากจบถัดไป ---

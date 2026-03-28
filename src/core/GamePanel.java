@@ -86,11 +86,11 @@ public class GamePanel extends JPanel implements Runnable {
 
             // เช็คเงื่อนไขหมดเวลาของวันที่ 4 และ วันที่ 5
             if (gsm != null) {
-                /*if (gsm.getCurrentDay() == 4 && minigameManager.score < 8) {
+                if (gsm.getCurrentDay() == 4 && minigameManager.score < 8) {
                     isTransitioning = false;
                     showingEnding = true;
                     gameEnding.startEnding("CG-gameover");
-                } else */if (gsm.getCurrentDay() == 5) {
+                } else if (gsm.getCurrentDay() == 5) {
                     isTransitioning = false;
                     gsm.checkEndGame();
                 } else {
