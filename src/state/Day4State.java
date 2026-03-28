@@ -122,7 +122,6 @@ public class Day4State extends AbstractState {
         if (minigameManager.afterMinigameDialogue && !startedDialoguelog) {
             gamePanel.getSound().playSound("ringtone");
             startedDialoguelog = true;
-
             gamePanel.dialogBox.startDialog(StoryDialog.DAY4_LOG);
             try { gamePanel.textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
         }

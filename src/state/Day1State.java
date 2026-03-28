@@ -24,6 +24,8 @@ public class Day1State extends AbstractState {
     private boolean isPlayingEndCG = false;
     private boolean endCgTriggered = false;
 
+    private boolean janitorWalked = false;
+
     private String[] cgList = {
             "CG1-JobApplication",
             "CG2-JobInterview",
@@ -104,9 +106,18 @@ public class Day1State extends AbstractState {
             return;
         }
 
+        //dialogue ตอนเข้าแมพ
         if (!startedDialogue) {
             startedDialogue = true;
             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_LIFT1);
+        }
+
+        if(gamePanel.getInputManager().talkedToJanitor == true && janitorWalked == false) {
+            if (gamePanel.dialogBox == null || !gamePanel.dialogBox.isVisible()){
+                janitorWalked = true;
+                gamePanel.getNpcmanager().janitor.moveTo(3200);
+            }
+
         }
 
         h = this.gamePanel.timeManager.getHours();
@@ -136,15 +147,13 @@ public class Day1State extends AbstractState {
         //ลบ objective ตามห้องที่ไป
         if (!objList.isEmpty()) {
 
-            String currentObj = objList.get(0);
-            String targetRoom = getRoomFromObjective(currentObj);
             String currentRoom = gamePanel.getRoomManager().getCurrentRoomName();
 
-            if (targetRoom != null && targetRoom.equals(currentRoom)){
-                if(currentObj.equals(minigameManager.taskText)){
+            if (objList.contains(getTextFromRoom(currentRoom))) {
+                if(getTextFromRoom(currentRoom).equals(minigameManager.taskText)){
                     minigameManager.taskText = "";
                 }
-                objList.remove(0);
+                objList.remove(getTextFromRoom(currentRoom));
 
             }
         }
@@ -183,13 +192,13 @@ public class Day1State extends AbstractState {
         gamePanel.getMinigameManager().taskJanitor = true;
     }
 
-    //หาชื่อห้องจากประโยคobjective
-    private String getRoomFromObjective(String obj) {
+    //หาชประโยตจาก ชื่อmap
+    private String getTextFromRoom(String obj) {
         switch (obj) {
-            case "ไปห้องหัวหน้า": return "chiefoffice";
-            case "ไปห้อง it support": return "itsupport";
-            case "ไปห้อง server": return "server";
-            case "ไปห้อง art": return "art";
+            case "chiefoffice": return "ไปห้องหัวหน้า";
+            case "itsupport": return "ไปห้อง it support";
+            case "server": return "ไปห้อง server";
+            case "art": return "ไปห้อง art";
         }
         return null;
     }

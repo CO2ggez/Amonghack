@@ -233,7 +233,7 @@ public class InputManager implements KeyListener {
                 gamePanel.showNotification("จัดเอกสารเรียบร้อยแล้ว");
 
 
-                if(minigameManager.helpBossScore==0) {
+                if(minigameManager.helpBossScore==0 && gamePanel.getGSM().getCurrentDay()!=2) {
                     gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_CHIEFOFFICE_HELP);
                 }else if(minigameManager.helpBossScore==2) {
                     gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_CHIEFOFFICE );
