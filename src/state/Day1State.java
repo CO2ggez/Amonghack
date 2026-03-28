@@ -24,6 +24,8 @@ public class Day1State extends AbstractState {
     private boolean isPlayingEndCG = false;
     private boolean endCgTriggered = false;
 
+    private boolean janitorWalked = false;
+
     private String[] cgList = {
             "CG1-JobApplication",
             "CG2-JobInterview",
@@ -106,9 +108,18 @@ public class Day1State extends AbstractState {
             return;
         }
 
+        //dialogue ตอนเข้าแมพ
         if (!startedDialogue) {
             startedDialogue = true;
             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_LIFT1);
+        }
+
+        if(gamePanel.getInputManager().talkedToJanitor == true && janitorWalked == false) {
+            if (gamePanel.dialogBox == null || !gamePanel.dialogBox.isVisible()){
+                janitorWalked = true;
+                gamePanel.getNpcmanager().janitor.moveTo(3200);
+            }
+
         }
 
         h = this.gamePanel.timeManager.getHours();
