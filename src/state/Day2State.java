@@ -21,6 +21,8 @@ public class Day2State extends AbstractState {
     private boolean isPlayingEndCG = false;
     private boolean endCgTriggered = false;
 
+    private boolean hrWalked = false;
+
     public Day2State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
         this.gamePanel = gamePanel;
@@ -77,6 +79,14 @@ public class Day2State extends AbstractState {
             gamePanel.dialogBox.startDialog(StoryDialog.DAY2_LIFT1);
         }
 
+        //ตอนคุยกับ hr ก่อน hr เดินออกฉากไป
+        if(gamePanel.getInputManager().talkedToHR == true && hrWalked == false) {
+            if (gamePanel.dialogBox == null || !gamePanel.dialogBox.isVisible()){
+                hrWalked = true;
+                gamePanel.getNpcmanager().hr.moveTo(-3200);
+            }
+        }
+
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
         h = this.gamePanel.timeManager.getHours();
 
@@ -127,7 +137,7 @@ public class Day2State extends AbstractState {
         gamePanel.getNpcmanager().janitor.setLocation("meeting", 2100);
         gamePanel.getNpcmanager().hr.setLocation("office", 1300);
         gamePanel.getNpcmanager().boss.setLocation(null, 1000);
-        gamePanel.getNpcmanager().itsupport.setLocation("itsupport", 2500);
+        gamePanel.getNpcmanager().itsupport.setLocation("itsupport", 2350);
     }
 
     public void setSpecialTask() {
