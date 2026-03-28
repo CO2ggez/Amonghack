@@ -40,9 +40,9 @@ public class Day2State extends AbstractState {
         //task ในวันนี้
         taskList.add("lan");
         taskList.add("terminal");
-        taskList.add("terminal");
         taskList.add("lan");
         taskList.add("terminal");
+        taskList.add("lan");
 
 
         minigameManager.resetTask();
