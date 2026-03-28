@@ -125,7 +125,7 @@ public class Day2State extends AbstractState {
         gamePanel.getNpcmanager().showAllNPCs();
 
         gamePanel.getNpcmanager().janitor.setLocation("meeting", 2100);
-        gamePanel.getNpcmanager().hr.setLocation("office", 1100);
+        gamePanel.getNpcmanager().hr.setLocation("office", 1300);
         gamePanel.getNpcmanager().boss.setLocation(null, 1000);
         gamePanel.getNpcmanager().itsupport.setLocation("itsupport", 2500);
     }

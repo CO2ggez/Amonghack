@@ -17,11 +17,11 @@ public class Day3State extends AbstractState {
     private ArrayList<String> taskList = new ArrayList<>();
     private boolean banIpLogTriggeredAtFive = false;
 
-    private String obj = "รายงานความผิดปกติกับหัวหน้า";
     private boolean startedDialogue = false;
     private boolean startedLightout = false;
 
     private boolean startedDialogue2 = false;
+    private boolean startedDialogue3 = false;
 
     // จัดการ CG คั่นก่อนจบวัน
     private boolean isPlayingEndCG = false;
@@ -59,6 +59,20 @@ public class Day3State extends AbstractState {
 
     @Override
     public void update() {
+
+        //dialogue ตอนเข้าแมพ
+        if (!startedDialogue3) {
+            startedDialogue3 = true;
+
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_LIFT1);
+            gamePanel.getInputManager().talkedToBoss = true;
+
+        }
+
+        if (gamePanel.getRoomManager().getCurrentRoomName().equals("chiefoffice")) {
+            gamePanel.getNpcmanager().boss.setLocation("chiefoffice",1600);
+        }
+
         // บังคับจบวัน CG ห้องนอน
         if (gamePanel.showingEnding) {
             if (gamePanel.gameEnding.isFinished()) {
@@ -117,16 +131,6 @@ public class Day3State extends AbstractState {
             return;
         }
 
-        //objective text ระหว่างว่าง task
-        if (!obj.equals("") && minigameManager.taskText.equals("")) {
-            minigameManager.taskText = obj;
-        } else if (gamePanel.finishedObjective) {
-            if (minigameManager.taskText.equals(obj)) {
-                minigameManager.taskText = "";
-            }
-            obj = "";
-        }
-
         if (minigameManager.taskLightOut) {
             startedLightout = true;
         }
@@ -153,6 +157,7 @@ public class Day3State extends AbstractState {
                 ex.printStackTrace();
             }
         }
+
 
     }
 

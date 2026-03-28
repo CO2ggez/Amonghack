@@ -54,9 +54,16 @@ public class Day5State extends AbstractState{
 
         h = this.gamePanel.timeManager.getHours();
 
+        if(h>= 3){
+            if (!obj.equals("") && minigameManager.taskText.equals("")) {
+                minigameManager.taskText = obj;
+            }
+        }
+
         if (gamePanel.getInputManager().progressDay5 == 0 && h>=3) {
             gamePanel.getInputManager().capture();
             minigameManager.taskText = "";
+
         }
 
         if (gamePanel.getInputManager().progressDay5 == 2&&!startedEnding) {
@@ -88,10 +95,6 @@ public class Day5State extends AbstractState{
             }
 
 
-        }
-
-        if (!obj.equals("") && minigameManager.taskText.equals("")) {
-            minigameManager.taskText = obj;
         }
 
     }

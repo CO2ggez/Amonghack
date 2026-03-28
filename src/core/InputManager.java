@@ -318,7 +318,7 @@ public class InputManager implements KeyListener {
                     case 2:
                         if (bossArea()) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_LIFT1);
-                            talkedToBoss = true; 
+                            talkedToBoss = true;
                         } else if (hrArea()) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_OFFICE);
                             talkedToHR = true;
@@ -327,24 +327,20 @@ public class InputManager implements KeyListener {
                             talkedToJanitor = true;
                         } else if (itsupportArea()) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_ITSUPPORT);
+                            progressDay2=1;
                             talkedToIT = true;
-                        } else if (room.equals("office") && progressDay2 == 0 && isNear(400, 600)) { 
+                        } else if (room.equals("office") && progressDay2 == 1 && isNear(850, 1200)) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_OFFICE_CHECK); 
-                            progressDay2 = 1;
-                        } else if (room.equals("server") && progressDay2 == 1 && isNear(500, 800)) { 
-                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_SERVER); 
                             progressDay2 = 2;
+                        } else if (room.equals("server") && progressDay2 == 2 && isNear(500, 800)) {
+                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY2_SERVER); 
+                            progressDay2 = 3;
                             try { textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
                         }
                         break;
                         
                     case 3:
-                        if (bossArea()) {
-                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_LIFT1);
-                            talkedToBoss = true;
-                            gamePanel.finishedObjective = true;
-                        
-                        } else if (itsupportArea() && progressDay3 == 0) {
+                        if (itsupportArea() && progressDay3 == 0) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_ITSUPPORT_PART1);
                             progressDay3 = 1;
 
@@ -382,24 +378,21 @@ public class InputManager implements KeyListener {
                         break;
                         
                     case 4:
-                        if (bossArea() && progressDay4 == 0) {
-                            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_LIFT1); 
-                            progressDay4 = 1;
-                        } else if (room.equals("server") && progressDay4 == 1 && isNear(600, 900)) { 
+                        if (room.equals("server") && progressDay4 == 0 && isNear(1350, 1550)) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_SERVER); 
-                            progressDay4 = 2;
+                            progressDay4 = 1;
                             try { textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
-                        } else if (bossArea() && progressDay4 == 2) {
+                        } else if (bossArea() && progressDay4 == 1) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_CHIEFOFFICE); 
-                            progressDay4 = 3;
-
-                        } else if (hrArea() && progressDay4 > 0) {
+                            progressDay4 = 2;
+                            talkedToBoss = true;
+                        } else if (hrArea()) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_OFFICE);
                             talkedToHR = true;
-                        } else if (itsupportArea() && progressDay4 > 0) {
+                        } else if (itsupportArea()) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_ITSUPPORT);
                             talkedToIT = true;
-                        } else if (janitorArea() && progressDay4 > 0) {
+                        } else if (janitorArea()) {
                             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_RESTROOM);
                             talkedToJanitor = true;
                         }
@@ -505,20 +498,18 @@ public class InputManager implements KeyListener {
                 if (hrArea()) return "[E] คุยกับพนักงานแผนก HR";
                 if (itsupportArea()) return "[E] คุยกับ IT Support";
                 if (janitorArea()) return "[E] คุยกับภารโรง";
-                if (room.equals("office") && progressDay2 == 0 && isNear(400, 600)) return "[E] ตรวจสอบเครื่องคอมพิวเตอร์ HR"; 
-                if (room.equals("server") && progressDay2 == 1 && isNear(500, 800)) return "[E] ตรวจ Log และตู้ Network"; 
+                if (room.equals("office") && progressDay2 == 1 && isNear(850, 1200)) return "[E] ตรวจสอบเครื่องคอมพิวเตอร์ HR";
+                if (room.equals("server") && progressDay2 == 2 && isNear(500, 800)) return "[E] ตรวจ Log และตู้ Network";
                 break;
             case 3:
-                if (bossArea()) return "[E] คุยกับหัวหน้า";
                 if (itsupportArea() && progressDay3 == 0) return "[E] คุยกับ IT Support";
                 break;
             case 4:
-                if (bossArea() && progressDay4 == 0) return "[E] ขออนุญาตหัวหน้าไล่สาย LAN";
-                if (room.equals("server") && progressDay4 == 1 && isNear(600, 900)) return "[E] สำรวจพื้นที่ต้องสงสัย"; 
-                if (bossArea() && progressDay4 == 2) return "[E] แจ้งหัวหน้าเรื่องอุปกรณ์แปลกปลอม";
-                if (hrArea()&& progressDay4 > 0) return "[E] คุยกับพนักงานแผนก HR";
-                if (itsupportArea()&& progressDay4 > 0) return "[E] คุยกับ IT Support";
-                if (janitorArea()&& progressDay4 > 0) return "[E] คุยกับภารโรง";
+                if (room.equals("server") && progressDay4 == 0 && isNear(1350, 1550)) return "[E] สำรวจพื้นที่ต้องสงสัย";
+                if (bossArea() && progressDay4 == 1) return "[E] แจ้งหัวหน้าเรื่องอุปกรณ์แปลกปลอม";
+                if (hrArea()) return "[E] คุยกับพนักงานแผนก HR";
+                if (itsupportArea()) return "[E] คุยกับ IT Support";
+                if (janitorArea()) return "[E] คุยกับภารโรง";
                 break;
             case 5:
                 break;

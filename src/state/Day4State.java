@@ -21,6 +21,8 @@ public class Day4State extends AbstractState {
     private boolean endCgTriggered = false;
 
     private boolean startedDialoguelog = false;
+    private boolean startedDialogue = false;
+
 
     private ArrayList<String> objList = new ArrayList<>();
 
@@ -57,6 +59,7 @@ public class Day4State extends AbstractState {
         objList.add("ตรวจตู้ Server");
         objList.add("รายงานหัวหน้า");
         objList.add("คุยกับทุกคน");
+
     }
 
     @Override
@@ -77,8 +80,17 @@ public class Day4State extends AbstractState {
             return;
         }
 
-        //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
+        if (!startedDialogue){
+            startedDialogue = true;
+            gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY4_LIFT1);
 
+        }
+
+
+        System.out.println(gamePanel.getInputManager().hrArea());
+        System.out.println(gamePanel.getInputManager().talkedToHR);
+        System.out.println(gamePanel.getInputManager().progressDay4);
+        //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
 
         h = this.gamePanel.timeManager.getHours();
 
@@ -134,23 +146,33 @@ public class Day4State extends AbstractState {
         }
 
         if (!objList.isEmpty()){
-            if((gamePanel.getInputManager().progressDay4==2 &&objList.getFirst().equals("ตรวจตู้ Server"))||
-                    (gamePanel.getInputManager().progressDay4==3 &&objList.getFirst().equals("รายงานหัวหน้า"))){
+            if((gamePanel.getInputManager().progressDay4==1 &&objList.getFirst().equals("ตรวจตู้ Server"))||
+                    (gamePanel.getInputManager().progressDay4==2 &&objList.getFirst().equals("รายงานหัวหน้า"))){
                 if(objList.getFirst().equals(minigameManager.taskText)){
                     minigameManager.taskText = "";
-                }objList.remove(0);
-
-                if(gamePanel.getInputManager().progressDay4==2){
-                    gamePanel.getNpcmanager().boss.setLocation("chiefoffice",1600);
                 }
-            } else if ((gamePanel.getInputManager().talkedToBoss && gamePanel.getInputManager().talkedToHR
+                objList.remove(0);
+
+            }if ((gamePanel.getInputManager().talkedToBoss && gamePanel.getInputManager().talkedToHR
                     && gamePanel.getInputManager().talkedToIT && gamePanel.getInputManager().talkedToJanitor
             && objList.contains("คุยกับทุกคน"))) {
+                if(objList.getFirst().equals(minigameManager.taskText)){
+                    minigameManager.taskText = "";
                 objList.remove("คุยกับทุกคน");
             }
         }
+        System.out.println(gamePanel.getInputManager().talkedToBoss);
+        System.out.println(gamePanel.getInputManager().talkedToHR);
+        System.out.println(gamePanel.getInputManager().talkedToIT);
+        System.out.println(gamePanel.getInputManager().talkedToJanitor);
 
 
+        if(gamePanel.getRoomManager().getCurrentRoomName().equals("chiefoffice")){
+            gamePanel.getNpcmanager().boss.setLocation("chiefoffice",1600);
+        }
+
+
+        }
     }
 
     @Override
