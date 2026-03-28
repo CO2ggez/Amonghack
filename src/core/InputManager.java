@@ -72,7 +72,6 @@ public class InputManager implements KeyListener {
                         gamePanel.getSound().playSound("click1");
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloor2, "lift2", 500);
-                            gamePanel.getSound().setVolume("ringLift", 0.08f);
                             gamePanel.getSound().playSound("ringLift");
                             em.closeEvent();
                         });
@@ -82,7 +81,6 @@ public class InputManager implements KeyListener {
                         gamePanel.getSound().playSound("click1");
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloor1, "lift1", 500);
-                            gamePanel.getSound().setVolume("ringLift", 0.08f);
                             gamePanel.getSound().playSound("ringLift");
                             em.closeEvent();
                         });
@@ -92,7 +90,6 @@ public class InputManager implements KeyListener {
                         gamePanel.getSound().playSound("click1");
                         gamePanel.startTransition(() -> {
                             roomManager.changeFloor(roomManager.mapDataFloorG, "liftG", 500);
-                            gamePanel.getSound().setVolume("ringLift", 0.08f);
                             gamePanel.getSound().playSound("ringLift");
                             em.closeEvent();
                         });
@@ -157,7 +154,6 @@ public class InputManager implements KeyListener {
             String roomName = roomManager.getCurrentRoomName();
 
             if (roomName.equals("stairG") && isNear(577, 864)) {
-                gamePanel.getSound().setVolume("stair", 2f);
                 gamePanel.getSound().playSound("stair");
                 gamePanel.startTransition(() -> {
                     roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500);
@@ -167,7 +163,6 @@ public class InputManager implements KeyListener {
 
             if (roomName.equals("stair1")) {
                 if (isNear(577, 864)) {
-                    gamePanel.getSound().setVolume("stair", 2f);
                     gamePanel.getSound().playSound("stair");
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloor2, "stair2", 500);
@@ -175,7 +170,6 @@ public class InputManager implements KeyListener {
                     return;
                 }
                 if (isNear(288, 576)) {
-                    gamePanel.getSound().setVolume("stair", 2f);
                     gamePanel.getSound().playSound("stair");
                     gamePanel.startTransition(() -> {
                         roomManager.changeFloor(roomManager.mapDataFloorG, "stairG", 500);
@@ -185,7 +179,6 @@ public class InputManager implements KeyListener {
             }
 
             if (roomName.equals("stair2") && isNear(288, 576)) {
-                gamePanel.getSound().setVolume("stair", 2f);
                 gamePanel.getSound().playSound("stair");
                 gamePanel.startTransition(() -> {
                     roomManager.changeFloor(roomManager.mapDataFloor1, "stair1", 500);

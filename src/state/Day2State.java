@@ -26,7 +26,6 @@ public class Day2State extends AbstractState {
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
-        gamePanel.getSound().setVolume("bg1", 0.5f);
         gamePanel.getSound().loopSound("bg1");
 
         // วาร์ปกลับไป lift ชั้น 1
@@ -72,7 +71,7 @@ public class Day2State extends AbstractState {
         }
 
         if (!startedDialogue) {
-            //sound phone ring ++++++++++++++++++++++++++++++++++++++++++++++++
+            gamePanel.getSound().playSound("ringtone");
             startedDialogue = true;
             gamePanel.dialogBox.startDialog(StoryDialog.DAY2_LIFT1);
         }
@@ -105,7 +104,6 @@ public class Day2State extends AbstractState {
             isPlayingEndCG = true;
 
             gamePanel.getSound().stopSound("bg1");
-            gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
             gamePanel.getSound().loopSound("bg_dayEnd");
 
             gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน

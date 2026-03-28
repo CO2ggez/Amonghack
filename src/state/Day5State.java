@@ -24,7 +24,6 @@ public class Day5State extends AbstractState{
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
-        gamePanel.getSound().setVolume("bg1", 0.1f);
         gamePanel.getSound().loopSound("bg1");
 
         // วาร์ปกลับไป lift ชั้น 1
@@ -65,7 +64,6 @@ public class Day5State extends AbstractState{
                 startedEnding = true;
                 gamePanel.getGSM().checkEndGame();
                 gamePanel.getSound().stopSound("bg1");
-                gamePanel.getSound().setVolume("ending", 0.5f);
                 gamePanel.getSound().loopSound("ending");
             }
         }

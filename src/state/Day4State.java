@@ -29,7 +29,6 @@ public class Day4State extends AbstractState {
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
-        gamePanel.getSound().setVolume("bg1", 0.5f);
         gamePanel.getSound().loopSound("bg1");
 
         // วาร์ปกลับไป lift ชั้น 1
@@ -109,7 +108,6 @@ public class Day4State extends AbstractState {
             isPlayingEndCG = true;
 
             gamePanel.getSound().stopSound("bg1");
-            gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
             gamePanel.getSound().loopSound("bg_dayEnd");
 
             gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน
@@ -122,6 +120,7 @@ public class Day4State extends AbstractState {
 
         //dialogue หลังเช็คlog
         if (minigameManager.afterMinigameDialogue && !startedDialoguelog) {
+            gamePanel.getSound().playSound("ringtone");
             startedDialoguelog = true;
             gamePanel.dialogBox.startDialog(StoryDialog.DAY4_LOG);
             try { gamePanel.textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }

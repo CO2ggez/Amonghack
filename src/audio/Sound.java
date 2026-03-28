@@ -17,46 +17,50 @@ public class Sound {
 
     public Sound() {
 
-        loadSound("walk", "/audio/SoundWAV/walk.wav");
-        loadSound("walk2", "/audio/SoundWAV/walk2.wav");
-        loadSound("door", "/audio/SoundWAV/door.wav");
-        loadSound("bg1", "/audio/SoundWAV/bg1.wav");
-        loadSound("ringLift", "/audio/SoundWAV/ringLift.wav");
-        loadSound("click1", "/audio/SoundWAV/click1.wav");
-        loadSound("connect", "/audio/SoundWAV/connect.wav");
-        loadSound("connect2", "/audio/SoundWAV/connect2.wav");
-        loadSound("menu_bg", "/audio/SoundWAV/menu_bg.wav");
-        loadSound("stair", "/audio/SoundWAV/stair.wav");
-        loadSound("success", "/audio/SoundWAV/success.wav");
-        loadSound("bg_cg_day0", "/audio/SoundWAV/bg_cg_day0.wav");
-        loadSound("bg_dayEnd", "/audio/SoundWAV/bg_dayEnd.wav");
-        loadSound("ending", "/audio/SoundWAV/ending.wav");
+        loadSound("walk", "/audio/SoundWAV/walk.wav",1f);
+        loadSound("walk2", "/audio/SoundWAV/walk2.wav",1f);
+        loadSound("door", "/audio/SoundWAV/door.wav",1f);
+        loadSound("bg1", "/audio/SoundWAV/bg1.wav",0.5f);
+        loadSound("ringLift", "/audio/SoundWAV/ringLift.wav",0.5f);
+        loadSound("click1", "/audio/SoundWAV/click1.wav",1f);
+        loadSound("connect", "/audio/SoundWAV/connect.wav",1f);
+        loadSound("connect2", "/audio/SoundWAV/connect2.wav",1f);
+        loadSound("menu_bg", "/audio/SoundWAV/menu_bg.wav",0.5f);
+        loadSound("stair", "/audio/SoundWAV/stair.wav",2f);
+        loadSound("success", "/audio/SoundWAV/success.wav",1f);
+        loadSound("bg_cg_day0", "/audio/SoundWAV/bg_cg_day0.wav",0.05f);
+        loadSound("bg_dayEnd", "/audio/SoundWAV/bg_dayEnd.wav",0.5f);
+        loadSound("ending", "/audio/SoundWAV/ending.wav",0.5f);
+        loadSound("ringtone", "/audio/SoundWAV/ringtone.wav",1f);
     }
 
-    private void loadSound(String name, String path) {
+    private void loadSound(String name, String path, float defaultVolume) {
         soundWorker.execute(() -> {
             try {
-                // ดึงไฟล์จาก Resource ภายในโปรเจกต์
                 InputStream is = getClass().getResourceAsStream(path);
+                if (is == null) return;
 
-                if (is == null) {
-                    System.err.println("ไม่พบไฟล์เสียงที่ Path: " + path);
-                    return;
-                }
-
-                // แปลงไฟล์เป็น Stream ที่ Java Sound เข้าใจ
                 InputStream bufferedIn = new BufferedInputStream(is);
                 AudioInputStream ais = AudioSystem.getAudioInputStream(bufferedIn);
-
                 Clip clip = AudioSystem.getClip();
                 clip.open(ais);
 
-                // เก็บลง HashMap
+                // --- เซตระดับเสียงทันทีหลังโหลดเสร็จ ---
+                if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+                    FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                    float dB = (float) (Math.log(defaultVolume) / Math.log(10.0) * 20.0);
+
+                    // Clamp ค่าให้อยู่ในระยะที่รองรับ
+                    if (dB < gainControl.getMinimum()) dB = gainControl.getMinimum();
+                    if (dB > gainControl.getMaximum()) dB = gainControl.getMaximum();
+
+                    gainControl.setValue(dB);
+                }
+
                 clips.put(name, clip);
-                System.out.println("โหลดสำเร็จ: " + name);
+                System.out.println("โหลดและเซตเสียงสำเร็จ: " + name + " (" + defaultVolume + ")");
 
             } catch (Exception e) {
-                System.err.println("เกิดข้อผิดพลาดในการโหลดเสียง: " + name);
                 e.printStackTrace();
             }
         });
