@@ -203,10 +203,10 @@ public class Player extends JPanel {
         //เพิ่มกรณีที่ map เล็กกว่าขนาดจอ ให้วาด player ให้อยุ่ใน map
         offsetX = 0;
 
-        if (camera.getWorldWidth() < camera.getScreenWidth()) {
+        if (camera.getWorldWidth() < camera.getScreenWidth()) {//finding the offset x
             offsetX = (camera.getScreenWidth() - camera.getWorldWidth()) / 2;
         }
-
+        //finding the place to draw player on
         int drawX = xDelta - camera.getX() + offsetX;
         int drawY = yDelta;
 
@@ -219,19 +219,18 @@ public class Player extends JPanel {
             if (currentFrame >= totalIdleFrames) currentFrame = 0;
             currentImg = idleFrames[currentFrame];
         }
-        
         if (currentImg == null) return;
 
         int originalWidth = currentImg.getWidth(null);
         int originalHeight = currentImg.getHeight(null);
 
         double scale = 1;
-        //คำนวน
+        //คำนวน widthที่จะdraw
         int width = (int) (originalWidth * scale);
         int height = (int) (originalHeight * scale);
 
         Component observer = (panel != null) ? panel : this;
-
+        //drawing it
         if (checkRight) {
             g2.drawImage(//parameter input
                     currentImg,
