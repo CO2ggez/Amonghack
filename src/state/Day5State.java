@@ -54,16 +54,15 @@ public class Day5State extends AbstractState{
 
         h = this.gamePanel.timeManager.getHours();
 
-        if(h>= 3){
+        if (gamePanel.getInputManager().progressDay5 == 0 && h>=3) {
+            gamePanel.getInputManager().capture();
             if (!obj.equals("") && minigameManager.taskText.equals("")) {
                 minigameManager.taskText = obj;
             }
         }
 
-        if (gamePanel.getInputManager().progressDay5 == 0 && h>=3) {
-            gamePanel.getInputManager().capture();
+        if (gamePanel.getInputManager().progressDay5 == 1) {
             minigameManager.taskText = "";
-
         }
 
         if (gamePanel.getInputManager().progressDay5 == 2&&!startedEnding) {
@@ -110,7 +109,7 @@ public class Day5State extends AbstractState{
         gamePanel.getNpcmanager().janitor.setLocation("restroom",758);
         gamePanel.getNpcmanager().hr.setLocation(null,1300);
         gamePanel.getNpcmanager().boss.setLocation("lift1",800);
-        gamePanel.getNpcmanager().itsupport.setLocation("itsupport",2740);
+        gamePanel.getNpcmanager().itsupport.setLocation("itsupport",1830);
 
         gamePanel.getInputManager().talkedToJanitor = false;
         gamePanel.getInputManager().talkedToHR = false;
