@@ -17,14 +17,14 @@ public class Day5State extends AbstractState{
     private boolean startedDialogue = false;
     private boolean startedEnding = false;
 
-    private String obj = "ไปหา “คนที่คุณก็รู้ว่าใคร”";
+    private String obj = "ไปหา “คนที่คุณก็รู้ว่าใคร” ที่ชั้น G";
 
     public Day5State(GamePanel gamePanel) {
         //ไว้จัดฉาก เตรียมสิ่งต่าง ๆ เช่นโหลดภาพ CG เริ่มวัน หรือเอา NPC มาวางรอไว้
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
-        gamePanel.getSound().setVolume("bg1", 0.5f);
+        gamePanel.getSound().setVolume("bg1", 0.1f);
         gamePanel.getSound().loopSound("bg1");
 
         // วาร์ปกลับไป lift ชั้น 1
@@ -64,6 +64,9 @@ public class Day5State extends AbstractState{
             if (gamePanel.dialogBox == null || !gamePanel.dialogBox.isVisible()){
                 startedEnding = true;
                 gamePanel.getGSM().checkEndGame();
+                gamePanel.getSound().stopSound("bg1");
+                gamePanel.getSound().setVolume("ending", 0.5f);
+                gamePanel.getSound().loopSound("ending");
             }
         }
 

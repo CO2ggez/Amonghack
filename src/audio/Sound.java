@@ -30,6 +30,7 @@ public class Sound {
         loadSound("success", "/audio/SoundWAV/success.wav");
         loadSound("bg_cg_day0", "/audio/SoundWAV/bg_cg_day0.wav");
         loadSound("bg_dayEnd", "/audio/SoundWAV/bg_dayEnd.wav");
+        loadSound("ending", "/audio/SoundWAV/ending.wav");
     }
 
     private void loadSound(String name, String path) {
