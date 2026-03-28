@@ -78,7 +78,6 @@ public class Day3State extends AbstractState {
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
 
 
-
         h = this.gamePanel.timeManager.getHours();
 
         if (!banIpLogTriggeredAtFive && h >= 5.0) {
@@ -91,7 +90,7 @@ public class Day3State extends AbstractState {
         if (h != lastH) {
             if ((h + 1) % 1.5 == 0 && !taskList.isEmpty()) {
                 //settask ทีละเกมแล้วลบออก
-                if(!minigameManager.taskLightOut){
+                if (!minigameManager.taskLightOut) {
                     minigameManager.setTask(taskList.getFirst());
                     taskList.remove(taskList.getFirst());
 
@@ -107,7 +106,6 @@ public class Day3State extends AbstractState {
             endCgTriggered = true;
             isPlayingEndCG = true;
 
-            }
             gamePanel.getSound().stopSound("bg1");
             gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
             gamePanel.getSound().loopSound("bg_dayEnd");
@@ -120,25 +118,25 @@ public class Day3State extends AbstractState {
             return;
         }
 
-        if(!obj.equals("")&&minigameManager.taskText.equals("")){
+        if (!obj.equals("") && minigameManager.taskText.equals("")) {
             minigameManager.taskText = obj;
         } else if (gamePanel.finishedObjective) {
-            if(minigameManager.taskText.equals(obj)){
+            if (minigameManager.taskText.equals(obj)) {
                 minigameManager.taskText = "";
             }
             obj = "";
         }
 
-        if(minigameManager.taskLightOut){
+        if (minigameManager.taskLightOut) {
             startedLightout = true;
         }
 
         //dialogue หลังไฟดับ
-        if (startedLightout && !startedDialogue&& !gamePanel.getLightOut()) {
+        if (startedLightout && !startedDialogue && !gamePanel.getLightOut()) {
             startedDialogue = true;
-            gamePanel.getNpcmanager().janitor.setLocation("liftG",1920);
+            gamePanel.getNpcmanager().janitor.setLocation("liftG", 1920);
             gamePanel.getNpcmanager().janitor.moveTo(500);
-            gamePanel.getPlayer().checkRight=true;
+            gamePanel.getPlayer().checkRight = true;
             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_LIFTG);
             gamePanel.getInputManager().progressDay3 = 3;
         }
@@ -149,7 +147,11 @@ public class Day3State extends AbstractState {
 
             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY3_SERVER);
             gamePanel.getInputManager().progressDay3 = 4;
-            try { gamePanel.textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
+            try {
+                gamePanel.textBook.update();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
 
     }
