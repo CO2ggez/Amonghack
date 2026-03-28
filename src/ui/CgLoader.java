@@ -13,6 +13,7 @@ public class CgLoader{
     private String currentText = "";
     private Font storyFont = FontUtil.THAI.deriveFont(Font.PLAIN, 50f);
     private Image dialogBoxImg;
+    private Image dialogBoxImg2;
 
     public CgLoader() {
         cgGallery = new HashMap<>();
@@ -23,6 +24,7 @@ public class CgLoader{
     private void loadDialogBox() {
         try {
             dialogBoxImg = new ImageIcon(getClass().getResource("/ui/DialogBox.png")).getImage();
+            dialogBoxImg2 = new ImageIcon(getClass().getResource("/ui/DialogBox2.png")).getImage();
         } catch (Exception e) {
             System.out.println("Could not load DialogBox.png");
         }
@@ -66,17 +68,18 @@ public class CgLoader{
             g.drawImage(currentCg, 0, 0, 1920, 1080, null);
 
             if (currentText != null && !currentText.isEmpty()) {
-                
-                if (dialogBoxImg != null) {
-                    int imgWidth = dialogBoxImg.getWidth(null);
-                    int imgHeight = dialogBoxImg.getHeight(null);
 
-                    g.drawImage(dialogBoxImg, 0, 0, null);
+                boolean hasName = currentText.contains(":");
+                Image boxToDraw = hasName ? dialogBoxImg : dialogBoxImg2;
 
-                    g.setColor(Color.WHITE); 
+                if (boxToDraw != null) {
+
+                    g.drawImage(boxToDraw, 0, 0, null);
+
+                    g.setColor(Color.WHITE);
                     g.setFont(storyFont);
 
-                    if (currentText.contains(":")) {
+                    if (hasName) {
                         String[] parts = currentText.split(":", 2);
 
                         String name = parts[0].trim();
@@ -89,19 +92,19 @@ public class CgLoader{
                         g.drawString(currentText, 70*6, 870);
                     }
 
-                    
+
                 } else {
-                    int boxX = 250; 
-                    int boxY = 750; 
-                    int boxWidth = 1420; 
+                    int boxX = 250;
+                    int boxY = 750;
+                    int boxWidth = 1420;
                     int boxHeight = 250;
-                    
-                    g.setColor(new Color(0, 0, 0, 150)); 
+
+                    g.setColor(new Color(0, 0, 0, 150));
                     g.fillRect(boxX, boxY, boxWidth, boxHeight);
 
-                    g.setColor(Color.WHITE); 
-                    g.setFont(storyFont); 
-                    g.drawString(currentText, boxX + 60, boxY + 60); 
+                    g.setColor(Color.WHITE);
+                    g.setFont(storyFont);
+                    g.drawString(currentText, boxX + 60, boxY + 60);
                 }
             }
         }

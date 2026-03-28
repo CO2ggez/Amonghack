@@ -8,6 +8,7 @@ import util.FontUtil;
 
 public class DialogBox {
     private BufferedImage img;
+    private BufferedImage imgNoName;
     private boolean isVisible = false;
     private String[] currentTexts; //เก็บชุดบท dialog
     private int textIndex = 0;
@@ -18,6 +19,7 @@ public class DialogBox {
     public DialogBox() {
         try {
             img = ImageIO.read(getClass().getResourceAsStream("/ui/DialogBox.png"));
+            imgNoName = ImageIO.read(getClass().getResourceAsStream("/ui/DialogBox2.png"));
         } catch (Exception e) {
             System.out.println("หาไฟล์รูป DialogBox ไม่เจอ");
             e.printStackTrace();
@@ -64,11 +66,13 @@ public class DialogBox {
         if (!isVisible || currentTexts == null) return;
 
         // 1. วาดกล่องข้อความก่อน (เป็นพื้นหลัง)
-        g.drawImage(img, 0, 0, null);
+        String currentLine = currentTexts[textIndex];
+        boolean hasName = currentLine.contains(":");
+        BufferedImage boxToDraw = hasName ? img : imgNoName;
+        g.drawImage(boxToDraw, 0, 0, null);
 
         // 2. วาดรูปตัวละครทับลงบนกล่องข้อความ
-        if (textIndex < currentTexts.length) {
-            String currentLine = currentTexts[textIndex];
+        if (textIndex < currentTexts.length && hasName) {
             BufferedImage portraitToDraw = null;
 
             // เช็คคำขึ้นต้นเพื่อเลือกรูป
@@ -107,7 +111,7 @@ public class DialogBox {
             int textY = 870;
 
             //แบ่งชื่อกับประโยค
-            if (currentTexts[textIndex].contains(":")) {
+            if (currentLine.contains(":")) {
                 String[] parts = currentTexts[textIndex].split(":", 2);
 
                 String name = parts[0].trim();
@@ -119,8 +123,6 @@ public class DialogBox {
             }else{
                 g.drawString(currentTexts[textIndex], textX, textY);
             }
-
-
         }
     }
 
