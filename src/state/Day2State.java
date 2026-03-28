@@ -43,6 +43,7 @@ public class Day2State extends AbstractState {
         taskList.add("terminal");
         taskList.add("terminal");
         taskList.add("lan");
+        taskList.add("terminal");
 
 
         minigameManager.resetTask();
@@ -88,7 +89,7 @@ public class Day2State extends AbstractState {
 
 
         if (h != lastH) {
-            if ((h + 1) % 1.5 == 0 && !taskList.isEmpty()) {
+            if ((h + 0.7) % 1.2 == 0 && !taskList.isEmpty()) {
                 //settask ทีละเกมแล้วลบออก
                 minigameManager.setTask(taskList.get(0));
                 taskList.remove(0);

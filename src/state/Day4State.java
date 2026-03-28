@@ -123,7 +123,6 @@ public class Day4State extends AbstractState {
         //dialogue หลังเช็คlog
         if (minigameManager.afterMinigameDialogue && !startedDialoguelog) {
             startedDialoguelog = true;
-
             gamePanel.dialogBox.startDialog(StoryDialog.DAY4_LOG);
             try { gamePanel.textBook.update(); } catch (Exception ex) { ex.printStackTrace(); }
         }
