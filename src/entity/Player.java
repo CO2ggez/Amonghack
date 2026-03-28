@@ -226,14 +226,14 @@ public class Player extends JPanel {
         int originalHeight = currentImg.getHeight(null);
 
         double scale = 1;
-
+        //คำนวน
         int width = (int) (originalWidth * scale);
         int height = (int) (originalHeight * scale);
 
         Component observer = (panel != null) ? panel : this;
 
         if (checkRight) {
-            g2.drawImage(
+            g2.drawImage(//parameter input
                     currentImg,
                     drawX + width,
                     drawY,

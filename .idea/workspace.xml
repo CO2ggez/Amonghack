@@ -5,29 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fcc999f-01b1-469d-b5cc-86af910d6f4c" name="Changes" comment="ไฟนอลเดโม่1">
-      <change afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day1State.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/audio/Sound.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/GameStateManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/InputManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/core/TimeManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day2State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day3State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day4State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project_op/state/Day5State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audio/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/Sound.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/GameStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/GameStateManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/InputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/InputManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/TimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/TimeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/Day1State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day1State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/Day2State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day2State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/Day3State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day3State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/Day4State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day4State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/Day5State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/Day5State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,8 +61,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
       </set>
     </attachedChunks>
   </component>
@@ -193,5 +171,10 @@
     <MESSAGE value="เพิ่มเสียง day5" />
     <MESSAGE value="ไฟนอลเดโม่1" />
     <option name="LAST_COMMIT_MESSAGE" value="ไฟนอลเดโม่1" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Amonghack$Game.ic" NAME="Game Coverage Results" MODIFIED="1774660864757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>main.*</FILTER>
+    </SUITE>
   </component>
 </project>
