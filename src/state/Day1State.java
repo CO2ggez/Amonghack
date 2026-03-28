@@ -20,6 +20,10 @@ public class Day1State extends AbstractState {
     private int cgIndex = 0;
     private boolean startedDialogue = false;
 
+    // จัดการ CG คั่นก่อนจบวัน
+    private boolean isPlayingEndCG = false;
+    private boolean endCgTriggered = false;
+
     private String[] cgList = {
             "CG1-JobApplication",
             "CG2-JobInterview",
@@ -59,6 +63,8 @@ public class Day1State extends AbstractState {
 
         //เล่น cgแรก
         if (startedEnding) {
+            gamePanel.getSound().setVolume("bg_cg_day0", 0.25f);
+            gamePanel.getSound().loopSound("bg_cg_day0");
             startedEnding = false;
 
             gamePanel.timeManager.setPaused(true);
@@ -69,10 +75,19 @@ public class Day1State extends AbstractState {
             gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
             return;
         }
+
         //เล่น cg ต่อตอนเสร็จ cg นั้นๆ
         if (gamePanel.showingEnding) {
-
             if (gamePanel.gameEnding.isFinished()) {
+
+                // เช็คว่าเป็น CG จบวัน
+                if (isPlayingEndCG) {
+                    gamePanel.getSound().stopSound("bg_dayEnd");
+                    gamePanel.showingEnding = false;
+                    isPlayingEndCG = false;
+                    gamePanel.timeManager.forceEndDay();
+                    return;
+                }
 
                 cgIndex++;
 
@@ -80,6 +95,9 @@ public class Day1State extends AbstractState {
                     gamePanel.gameEnding.startEnding(cgList[cgIndex], dialogList[cgIndex]);
                 } else {
                     //เริ่มเดินเวลา ตอนcg หมด
+                    gamePanel.getSound().stopSound("bg_cg_day0");
+                    gamePanel.getSound().setVolume("bg1", 0.5f);
+                    gamePanel.getSound().loopSound("bg1");
                     gamePanel.showingEnding = false;
                     gamePanel.timeManager.setPaused(false);
                 }
@@ -104,6 +122,7 @@ public class Day1State extends AbstractState {
 
         if (h != lastH) {
             if ((h + 1) % 1.5 == 0 && !taskList.isEmpty()) {
+                //settask ทีละเกมแล้วลบออก
                 minigameManager.setTask(taskList.get(0));
                 taskList.remove(0);
                 lastH = h;
@@ -132,7 +151,22 @@ public class Day1State extends AbstractState {
             }
         }
 
+        // ดักเวลาก่อน 6 โมงเช้า
+        if (h >= 5.9 && !endCgTriggered) {
+            endCgTriggered = true;
+            isPlayingEndCG = true;
 
+            gamePanel.getSound().stopSound("bg1");
+            gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
+            gamePanel.getSound().loopSound("bg_dayEnd");
+
+            gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน
+            gamePanel.showingEnding = true;        // เข้าโหมดโชว์ CG
+
+            // เรียกใช้รูปห้องนอน
+            gamePanel.gameEnding.startEnding("CG3-BedRoom", StoryDialog.DAY1_BEDROOM);
+            return;
+        }
     }
 
     @Override

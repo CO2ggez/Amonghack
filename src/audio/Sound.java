@@ -28,6 +28,8 @@ public class Sound {
         loadSound("menu_bg", "/audio/SoundWAV/menu_bg.wav");
         loadSound("stair", "/audio/SoundWAV/stair.wav");
         loadSound("success", "/audio/SoundWAV/success.wav");
+        loadSound("bg_cg_day0", "/audio/SoundWAV/bg_cg_day0.wav");
+        loadSound("bg_dayEnd", "/audio/SoundWAV/bg_dayEnd.wav");
     }
 
     private void loadSound(String name, String path) {

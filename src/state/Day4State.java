@@ -13,8 +13,12 @@ public class Day4State extends AbstractState {
 
     private double h;
     private double lastH; //เพื่อเช็คว่าคำสั่งนั้นถูกเรียกใช้ครั้งที่แล้วเมื่อใด
-    private ArrayList<String> taskList = new ArrayList<>();;
+    private ArrayList<String> taskList = new ArrayList<>();
     private boolean banIpLogTriggeredAtFive = false;
+
+    // จัดการ CG คั่นก่อนจบวัน
+    private boolean isPlayingEndCG = false;
+    private boolean endCgTriggered = false;
 
     private boolean startedDialoguelog = false;
 
@@ -25,19 +29,30 @@ public class Day4State extends AbstractState {
         this.gamePanel = gamePanel;
         minigameManager = gamePanel.getMinigameManager();
 
+        gamePanel.getSound().setVolume("bg1", 0.5f);
+        gamePanel.getSound().loopSound("bg1");
+
+        // วาร์ปกลับไป lift ชั้น 1
+        gamePanel.getRoomManager().setRoom(gamePanel.getRoomManager().mapDataFloor1, 0);
+        // เซตตำแหน่งตัวละครให้กลับมาที่ลิฟต์
+        gamePanel.getPlayer().xDelta = 100;
+        gamePanel.getPlayer().checkRight = true;
+
         setupNPC();
         setSpecialTask();
 
-        gamePanel.getPlayer().xDelta=100;
-        gamePanel.getPlayer().checkRight=true;
-
-        //task ในวันนี้taskList.add("terminal");
-        taskList.add("terminal");
+        //task ในวันนี้
+        taskList.add("lan");
         taskList.add("terminal");
         taskList.add("lan");
-        taskList.add("lan");
+        taskList.add("terminal");
 
         minigameManager.resetTask();
+
+        // มั่นใจว่าเริ่มวันมาต้องไม่ค้างหน้าจอ CG
+        gamePanel.showingEnding = false;
+        gamePanel.timeManager.setPaused(false);
+
         minigameManager.afterMinigameDialogue=false;
 
         objList.add("ตรวจตู้ Server");
@@ -47,6 +62,22 @@ public class Day4State extends AbstractState {
 
     @Override
     public void update() {
+        // บังคับจบวัน CG ห้องนอน
+        if (gamePanel.showingEnding) {
+            if (gamePanel.gameEnding.isFinished()) {
+                if (isPlayingEndCG) {
+                    gamePanel.getSound().stopSound("bg_dayEnd");
+                    gamePanel.showingEnding = false;
+                    isPlayingEndCG = false;
+                    gamePanel.timeManager.forceEndDay();
+                } else {
+                    gamePanel.showingEnding = false;
+                    gamePanel.timeManager.setPaused(false);
+                }
+            }
+            return;
+        }
+
         //เขียนเงื่อนไขดักเหตุการณ์ประจำวัน เช่น "ถ้าเวลาในเกมเดินถึงตี 2 ให้ทริกเกอร์ไฟดับ"
 
 
@@ -64,14 +95,29 @@ public class Day4State extends AbstractState {
 
             if((h+1)%1.5 == 0  && !taskList.isEmpty()){
                 //settask ทีละเกมแล้วลบออก
-                minigameManager.setTask(taskList.getFirst());
-                taskList.remove(taskList.getFirst());
+                minigameManager.setTask(taskList.get(0));
+                taskList.remove(0);
 
                 lastH = h;
                 System.out.println(taskList.size());
             }
+        }
 
+        // ดักเวลาก่อน 6 โมงเช้า
+        if (h >= 5.9 && !endCgTriggered) {
+            endCgTriggered = true;
+            isPlayingEndCG = true;
 
+            gamePanel.getSound().stopSound("bg1");
+            gamePanel.getSound().setVolume("bg_dayEnd", 0.5f);
+            gamePanel.getSound().loopSound("bg_dayEnd");
+
+            gamePanel.timeManager.setPaused(true); // หยุดเวลาก่อน
+            gamePanel.showingEnding = true;        // เข้าโหมดโชว์ CG
+
+            // เรียกใช้รูปห้องนอน
+            gamePanel.gameEnding.startEnding("CG3-BedRoom", StoryDialog.DAY4_BEDROOM);
+            return;
         }
 
         //dialogue หลังเช็คlog

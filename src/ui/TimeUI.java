@@ -27,7 +27,7 @@ public class TimeUI {
         //จบวัน
         if (tm.isDayEnded()) {
 
-            g.setColor(new Color(0, 0, 0, 200));
+            g.setColor(new Color(0, 0, 0, 255));
             g.fillRect(0, 0, 1920, 1080);
 
             g.setColor(Color.WHITE);
