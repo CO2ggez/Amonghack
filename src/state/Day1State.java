@@ -25,6 +25,7 @@ public class Day1State extends AbstractState {
     private boolean endCgTriggered = false;
 
     private boolean janitorWalked = false;
+    private boolean hrWalked = false;
     private boolean startedDialogue2 =false;
 
     private String[] cgList = {
@@ -52,10 +53,10 @@ public class Day1State extends AbstractState {
         taskList.add("terminal");
         taskList.add("lan");
 
-        objList.add("ไปห้องหัวหน้า");
-        objList.add("ไปห้อง it support");
-        objList.add("ไปห้อง server");
-        objList.add("ไปห้อง art");
+        objList.add("ไปพบหัวหน้าที่ห้อง Chief Office");
+        objList.add("ไปพบเพื่อนร่วมงานที่ห้อง IT Support");
+        objList.add("ไปห้อง Server Room");
+        objList.add("ไปห้อง Art Department");
 
         minigameManager.resetTask();
     }
@@ -112,10 +113,20 @@ public class Day1State extends AbstractState {
             gamePanel.dialogBox.startDialog(ui.StoryDialog.DAY1_LIFT1);
         }
 
+        //ตอนคุยกับ janitor ที่ห้อง art
         if(gamePanel.getInputManager().talkedToJanitor == true && janitorWalked == false) {
             if (gamePanel.dialogBox == null || !gamePanel.dialogBox.isVisible()){
                 janitorWalked = true;
                 gamePanel.getNpcmanager().janitor.moveTo(3200);
+            }
+
+        }
+
+        //ตอนคุยกับ hr ก่อน hr เดินออกฉากไป
+        if(gamePanel.getInputManager().talkedToHR == true && hrWalked == false) {
+            if (gamePanel.dialogBox == null || !gamePanel.dialogBox.isVisible()){
+                hrWalked = true;
+                gamePanel.getNpcmanager().hr.moveTo(-3200);
             }
 
         }
@@ -192,7 +203,7 @@ public class Day1State extends AbstractState {
         gamePanel.getNpcmanager().showAllNPCs();
 
         gamePanel.getNpcmanager().janitor.setLocation("art",1600);
-        gamePanel.getNpcmanager().hr.setLocation("office",1100);
+        gamePanel.getNpcmanager().hr.setLocation("office",1300);
         gamePanel.getNpcmanager().boss.setLocation("chiefoffice",1600);
         gamePanel.getNpcmanager().itsupport.setLocation("itsupport",1400);
     }
@@ -205,10 +216,10 @@ public class Day1State extends AbstractState {
     //หาชประโยตจาก ชื่อmap
     private String getTextFromRoom(String obj) {
         switch (obj) {
-            case "chiefoffice": return "ไปห้องหัวหน้า";
-            case "itsupport": return "ไปห้อง it support";
-            case "server": return "ไปห้อง server";
-            case "art": return "ไปห้อง art";
+            case "chiefoffice": return "ไปพบหัวหน้าที่ห้อง Chief Office";
+            case "itsupport": return "ไปพบเพื่อนร่วมงานที่ห้อง IT Support";
+            case "server": return "ไปห้อง Server Room";
+            case "art": return "ไปห้อง Art Department";
         }
         return null;
     }

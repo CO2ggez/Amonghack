@@ -164,10 +164,10 @@ public class Day3State extends AbstractState {
     public void setupNPC() {
         gamePanel.getNpcmanager().showAllNPCs();
 
-        gamePanel.getNpcmanager().janitor.setLocation(null, 1600);
+        gamePanel.getNpcmanager().janitor.setLocation("stair1", 750);
         gamePanel.getNpcmanager().hr.setLocation(null, 1100);
         gamePanel.getNpcmanager().boss.setLocation("lift1", 230);
-        gamePanel.getNpcmanager().itsupport.setLocation("itsupport", 350);
+        gamePanel.getNpcmanager().itsupport.setLocation("itsupport", 1830);
     }
 
     public void setSpecialTask() {
