@@ -70,6 +70,7 @@ public class Day2State extends AbstractState {
             return;
         }
 
+        //start dialogue
         if (!startedDialogue) {
             gamePanel.getSound().playSound("ringtone");
             startedDialogue = true;
