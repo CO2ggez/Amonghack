@@ -19,6 +19,10 @@ public class LightOuts implements Minigame {
 
     private boolean waiting = false; //เอาไว้กันกด ตอนรอปิดมินิเกม
 
+    @Override
+    public JPanel getPanel() {
+        return this.breaker;
+    }
     public LightOuts(MinigameManager l_manager) {
         setManager(l_manager);
         initialize();
@@ -105,10 +109,7 @@ public class LightOuts implements Minigame {
         }
     }
 
-    @Override
-    public JPanel getPanel() {
-        return this.breaker;
-    }
+
 
     public void setManager(MinigameManager manager) {
         this.l_manager = manager;
